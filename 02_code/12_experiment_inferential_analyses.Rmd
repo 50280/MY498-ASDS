@@ -1,0 +1,278 @@
+---
+title: "12_experiment_inferential_analyses"
+author: '50280'
+date: "2025-08-05"
+output: html_document
+---
+
+
+# 0. Setup
+
+```{r setup}
+
+# General purpose of this document: 
+# This script implements the inferential analyses for study 2 of the broader project. 
+
+# Code written on: 
+# - R Version: 4.3.1.
+# - OS System: macOS Sequoia Version 15.0.1.
+
+################################################################################
+# Before you run this script...
+################################################################################
+
+# Before running this script, please make sure that you have downloaded the data
+# following the instructions on the README file found in the same GitHub
+# repository as this script. 
+
+# (1) Clear the working space. 
+rm(list = ls())
+
+# (2) Set your working directory and save it to the object below, or replace getwd() 
+# with the path to the output directory where you want to save your data. 
+# wdir <- getwd()
+wdir <- "/Users/carolinewagner/Desktop/Local/MY498-capstone-main"
+
+################################################################################
+# Directory management.
+################################################################################
+
+# In which directory are the data?
+ddir <- paste0(wdir, "/01_data")
+
+# Where should the results be saved?
+odir <- paste0(ddir, "/10_experimental_results")
+
+################################################################################
+# PREREQUISITES
+################################################################################
+
+# List of required packages.
+needed_packages <- c("tidyverse", 
+                     "jsonlite", # jsonlite to read JSON files. 
+                     "marginaleffects", # to interpret the results & MC uncertainty
+                     "estimatr", # so that I can cluster error terms by utterance_id
+                     "lme4"
+                     )
+
+# Identify which/whether packages are missing.
+missing_packages <- needed_packages[!(needed_packages %in% installed.packages()[, "Package"])]
+
+# Install any missing packages.
+if (length(missing_packages) > 0) {
+  install.packages(missing_packages)
+}
+
+# Load all required packages.
+invisible(lapply(needed_packages, library, character.only = TRUE))
+
+# Set seed for reproducibility // really important for this script (!!)
+set.seed(89)
+
+
+################################################################################
+# Load data with experimental results for study 2 
+################################################################################
+
+# Define path to the JSONL file
+jsonl_path <- paste0(ddir, "/09_experimental_implementation/final_experimental_data.jsonl")
+
+# Read the JSONL file line-by-line and convert to a data frame
+experiment_data <- stream_in(file(jsonl_path), verbose = FALSE)
+
+# Remove model_metadata as nested and not required for present analyses
+experiment_data$model_metadata <- NULL
+
+```
+
+
+# 1. Main specification: Attributescore ~ Questiontype * LLM; clustered error terms
+
+```{r data_preprocessing}
+
+# (1) Setup categorical variables and reference levels
+# Convert to factors with explicit base/reference levels (optional but useful)
+experiment_data$model_fed_q_type <- factor(
+  experiment_data$model_fed_q_type,
+  levels = c("hobsons_c", "whathow_q") # 'hobsons_c' as reference
+)
+
+# (2) Make variable categorical and set gpt-4.1 as a reference because this is the most widely used LLM. 
+# Make sure its a factor - because input is saved as character strings
+experiment_data$model_name <- factor(experiment_data$model_name)
+
+# (3) Then, reorder levels so gpt-4.1 is the reference
+experiment_data$model_name <- factor(
+  experiment_data$model_name,
+  levels = c("gpt-4.1", setdiff(levels(experiment_data$model_name), "gpt-4.1"))
+)
+
+```
+
+
+```{r main_specification}
+
+# (1) List of attribute score columns
+bridging_attributes <- c(
+  "affinity_experimental", "compassion_experimental", "curiosity_experimental",
+  "nuance_experimental", "personal_story_experimental",
+  "reasoning_experimental", "respect_experimental"
+)
+
+# (2) Function to fit model for one attribute
+fit_model <- function(attr_name) {
+  message("Fitting model for attribute: ", attr_name)
+  formula <- as.formula(paste(attr_name, "~ model_fed_q_type * model_name"))
+  lm_robust(formula, data = experiment_data, clusters = experiment_data$utterance_id)
+}
+
+# (3) Fit models for all attributes and store them
+attribute_models <- lapply(bridging_attributes, fit_model)
+names(attribute_models) <- bridging_attributes
+
+```
+
+
+# 2. Marginal effects for main specification
+
+```{r marginal_effects_main_specification}
+
+# (1) Define functoin to implement marginal effects
+compute_simulated_mfx <- function(attr) {
+  message("Simulating marginal effects for attribute: ", attr)
+
+  model <- attribute_models[[attr]]
+
+  # Get cluster-robust variance-covariance matrix from lm_robust model
+  vcov_matrix <- model$vcov
+  
+  cmp <- comparisons(
+    model,
+    variables = "model_fed_q_type",
+    newdata = datagrid(
+      model_fed_q_type = c("hobsons_c", "whathow_q"),
+      model_name = levels(experiment_data$model_name)
+    ),
+    by = "model_name",
+    vcov = vcov_matrix  # Pass the clustered vcov here
+  )
+
+  sim <- inferences(cmp, method = "simulation", iterations = 1000)
+  sim$attribute <- attr
+  return(sim)
+}
+
+
+# (2) Run for all attributes
+simulated_mfx <- lapply(bridging_attributes, compute_simulated_mfx)
+
+# (3) Combine into a single dataframe
+simulated_mfx_df <- bind_rows(simulated_mfx)
+
+# (4) Save
+write.csv(simulated_mfx_df, file = file.path(odir, "marginal_effects_main_specification.csv"), row.names = FALSE)
+
+```
+
+
+# 3. Secondary specification: Attributescore ~ Questiontype * LLM (1|utterance_id)
+
+```{r implement_sec_specification}
+
+# (1) Function to fit mixed-effects model for one attribute
+fit_mixed_model_secondary <- function(attr_name) {
+  message("Fitting mixed-effects model for attribute: ", attr_name)
+  
+  # Create formula with random intercept for utterance_id
+  formula <- as.formula(paste(attr_name, "~ model_fed_q_type * model_name + (1 | utterance_id)"))
+  
+  # Fit the model using lmer
+  lmer(formula, data = experiment_data)
+}
+
+# (2) Fit models for all attributes and store in new object
+attribute_models_secondary <- lapply(bridging_attributes, fit_mixed_model_secondary)
+names(attribute_models_secondary) <- bridging_attributes
+
+```
+
+# 4. Marginal effects for secondary specification
+
+```{r marginal_effects_sec_spec}
+
+# To note about the uncertainty estimates here. The marginaleffects package by default only accounts for uncertainty in the fixed effects, and not the random effects when computing standard errors or simulations.
+# So in these uncertainty estimates, th marginal effects ignore the random effects variance. 
+
+# (1) Temporarily point compute_simulated_mfx to the secondary model list
+attribute_models <- attribute_models_secondary
+
+# (2) Run marginal effects computation
+simulated_mfx_secondary <- lapply(bridging_attributes, compute_simulated_mfx)
+
+# (3) Combine into a single dataframe
+simulated_mfx_df_secondary <- bind_rows(simulated_mfx_secondary)
+
+# (4) Save
+write.csv(simulated_mfx_df_secondary, 
+          file = file.path(odir, "marginal_effects_secondary_specification.csv"), 
+          row.names = FALSE)
+
+```
+
+
+# 5. Tertiary specification: Attributescore ~ Questiontype * LLM; error terms not clustered
+
+```{r implement_tertiary_specification}
+
+# (1) Function to fit model for one attribute
+fit_model <- function(attr_name) {
+  message("Fitting model for attribute: ", attr_name)
+  formula <- as.formula(paste(attr_name, "~ model_fed_q_type * model_name"))
+  lm(formula, data = experiment_data)
+}
+
+# (2) Fit models for all attributes and store them
+attribute_models <- lapply(bridging_attributes, fit_model)
+names(attribute_models) <- bridging_attributes
+
+```
+
+
+# 6. Marginal effects for tertiary specification
+
+```{r marginal_effects_tertiary_spec}
+
+# (1) Function to compute marginal effect of question type within each LLM
+compute_simulated_mfx <- function(attr) {
+  message("Simulating marginal effects for attribute: ", attr)
+  
+  model <- attribute_models[[attr]]
+  
+  cmp <- comparisons(
+    model,
+    variables = "model_fed_q_type",
+    newdata = datagrid(
+      model_fed_q_type = c("hobsons_c", "whathow_q"),
+      model_name = levels(experiment_data$model_name)
+    ),
+    by = "model_name"
+  )
+  
+  # Use inferences() to apply simulation with custom iterations as described in package documentation 
+  sim <- inferences(cmp, method = "simulation", iterations = 1000)
+  sim$attribute <- attr
+  return(sim)
+}
+
+# (2) Run for all attributes
+simulated_mfx <- lapply(bridging_attributes, compute_simulated_mfx)
+
+# (3) Combine into a single dataframe
+simulated_mfx_df <- bind_rows(simulated_mfx)
+
+# (4) Save
+write.csv(simulated_mfx_df, file = file.path(odir, "marginal_effects_tertiary_specification_no_clusters.csv"), row.names = FALSE)
+
+```
+
+

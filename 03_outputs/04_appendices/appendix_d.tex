@@ -1,0 +1,57 @@
+
+\documentclass{article}
+\usepackage[margin=1cm]{geometry}
+\usepackage{booktabs}
+\usepackage{helvet}
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage{array}
+\setlength{\tabcolsep}{6pt}
+\sloppy
+\pagestyle{empty}
+
+% Widths from Python
+\newlength{\Wone}\setlength{\Wone}{2.4cm}
+\newlength{\Wtwo}\setlength{\Wtwo}{3.0cm}
+\newlength{\Wthree}\setlength{\Wthree}{3.2cm}
+\newlength{\Wfour}\setlength{\Wfour}{2.4cm}
+
+% Compute total table width = sum of p-col widths + intercolumn padding (4 cols -> 8\tabcolsep)
+\newlength{\tablewidth}
+\setlength{\tablewidth}{\dimexpr \Wone + \Wtwo + \Wthree + \Wfour \relax}
+\newlength{\tabletotalwidth}
+\setlength{\tabletotalwidth}{\dimexpr \tablewidth + 8\tabcolsep \relax}
+
+\begin{document}
+
+% Left-aligned title inside minipage matching table width
+\noindent\begin{minipage}{\tabletotalwidth}
+\textbf{\large Appendix D. Out-of-sample performance per fine-tuned BERT classifier}
+
+\vspace{0.6em}
+
+{\small
+\renewcommand{\arraystretch}{1.12} % tighter rows
+\begin{tabular}{p{\Wone} >{\centering\arraybackslash}p{\Wtwo} >{\centering\arraybackslash}p{\Wthree} >{\centering\arraybackslash}p{\Wfour}}
+\toprule
+\textbf{Classifier} & \textbf{Accuracy} & \textbf{Weighted F1} & \textbf{Support} \\
+\midrule
+1A & 0.977 & 0.978 & 300 \\
+1B & 0.977 & 0.977 & 300 \\
+2A & 0.953 & 0.953 & 300 \\
+2B & 0.937 & 0.932 & 300 \\
+2C & 0.903 & 0.892 & 300 \\
+3A & 0.980 & 0.979 & 300 \\
+4A & 0.860 & 0.850 & 300 \\
+\bottomrule
+\end{tabular}
+}
+
+\vspace{0.5em}
+
+{\small
+\noindent\textit{Note.} The names in the format 1A-4B represent the different fine-tuned BERT classifiers. Details of how those were trained can be found in §2.2.5. Support in means number of observations in this category on the out-of-training-sample data. F1 is the harmonic mean of recall and precision.
+}
+
+\end{minipage}
+
+\end{document}

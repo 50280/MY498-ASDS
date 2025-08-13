@@ -1,0 +1,44 @@
+
+\documentclass{article}
+\usepackage[margin=1cm]{geometry}
+\usepackage{changepage}
+\usepackage{booktabs}
+\usepackage{helvet}
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage{array}
+\setlength{\tabcolsep}{4pt}
+\sloppy
+\pagestyle{empty}
+\begin{document}
+
+\begin{adjustwidth}{0.75cm}{0.75cm}
+\noindent Panel B. First version of annotator guidelines for the classifier labels that led to unsatisfactory inter-annotator agreement and were not used for fine-tuning.
+\end{adjustwidth}
+
+\vspace{1em}
+{\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{p{5.5cm} p{12.5cm}}
+\toprule
+\textbf{Classifier label and key question} & \textbf{Answer guidelines} \\
+\midrule
+
+\textbf{1A.} Does this interrogative request an answer? & 
+- Answer YES if it requires an answer and NO if it does not require an answer. Statements like hello or hi are not considered to expect an answer. But if a statement uses the imperative tense, e.g., ‘legalise abortion’ this is considered as requiring an answer. \\
+\addlinespace[0.8em]
+
+\textbf{2B.} Does it explicitly present a series of options? & 
+- Answer YES if the questioner explicitly gives as list from which the answerer can chose an answer. \newline
+- Answer NO if the question does not define an explicit list. \newline
+- E.g., “Do you think animals go to heaven or hell?” This is YES because the answerer has to choose between “heaven” and “hell.” \\
+\addlinespace[0.8em]
+
+\textbf{4A.} Does this interrogative ask for a description (y/n) / opinion (o)? & 
+- Answer O (for opinion) if the question directly addresses the model and asks for the model’s opinion. E.g., “Who do you predict would win the World Series in 2024?”. \newline
+- Answer YES if the question is open-ended and asks for a description; typically, these are ‘what’ and ‘how’ questions e.g. “What is a good itinerary for a day in Melbourne”. Note that “Tell me what you know about Santiago” is labelled with YES because even though it directly addresses the model, it asks for a description rather than an opinion. \newline
+- Answer NO if it does not ask for a description. \\
+
+\bottomrule
+\end{tabular}
+}
+\end{document}

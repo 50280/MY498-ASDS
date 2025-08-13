@@ -1,0 +1,164 @@
+---
+title: "07_power_calculations"
+author: "50280"
+date: "2025-06-18"
+output: html_document
+---
+
+```{r setup}
+
+# Code written on: 
+# - R Version: 4.3.1.
+# - OS System: macOS Sequoia Version 15.0.1.
+
+################################################################################
+# Before you run this script...
+################################################################################
+
+# (1) Clear the working space. 
+rm(list = ls())
+
+# (2) Set your working directory and save it to the object below, or replace getwd() 
+# with the path to the output directory where you want to save your data. 
+# wdir <- getwd()
+wdir <- "/Users/carolinewagner/Desktop/Local/MY498-capstone"
+
+
+# (4) Set the toggle below to TRUE if you want to save the different outputs
+# computed in this project, and FALSE if you do not want to save these outputs. 
+to_save <- TRUE
+
+
+################################################################################
+# Directory management.
+################################################################################
+
+# In which directory are the data?
+ddir <- paste0(wdir, "/01_data")
+
+# Where are the data with bias-corrected classified outcomes?
+pdir <- paste0(ddir, "/06_design-based_supervised-learning/")
+
+# In which directory is the code? 
+cdir <- paste0(wdir, "/02_code")
+
+# In which directory are the outputs? 
+odir <- paste0(wdir, "/03_outputs")
+
+
+################################################################################
+# PREREQUISITES
+################################################################################
+
+# List of required packages.
+needed_packages <- c("tidyverse", 
+                     "jsonlite", # to load the JSON data
+                     "DeclareDesign" # to implement power calculations for simple experimental setup. 
+                     )
+
+# Identify which/whether packages are missing.
+missing_packages <- needed_packages[!(needed_packages %in% installed.packages()[, "Package"])]
+
+# Install any missing packages.
+if (length(missing_packages) > 0) {
+  install.packages(missing_packages)
+}
+
+# Load all required packages.
+invisible(lapply(needed_packages, library, character.only = TRUE))
+
+# Set seed for reproducibility. 
+set.seed(89)
+
+
+################################################################################
+# LOAD REQUITED DATA
+################################################################################
+
+# Load the labelled data.
+classified_data <- read.csv(paste0(pdir, "PRISM_classified_with_DSL_outcomes.csv"))
+
+# Load the survey data with participant profiles
+# Import JSONL file as a tibble
+path <- "/Users/carolinewagner/Desktop/Local/MY498-capstone/01_data/01_PRISM_data/survey.jsonl"
+survey_data <- stream_in(file(path)) %>% as_tibble()
+
+```
+
+
+```{r implement_power_calculations}
+
+################################################################################
+# Implement power calculations
+################################################################################
+
+# The power calculations below are implemented using relatively conservative power estimates. 
+
+# (1) Define possible LLMs
+llm_list <- c("GPT4", "Claude3", "Gemini")
+num_llms <- length(llm_list)
+
+# (2) Declare the design (simulate prompt-level variability as noise)
+declaration_fixed_approx <- 
+  declare_model(
+    prompts = add_level(N = N, prompt_id = 1:N),
+    
+    responses = add_level(
+      N = num_llms * 2,
+      question_type = rep(c("Hobson", "WhatHow"), times = num_llms),
+      llm = rep(llm_list, each = 2),
+      
+      # (a) Simulate prompt-level variation (absorbed into residual noise)
+      prompt_noise = rnorm(N, 0, 0.05),
+      
+      # (b) Fixed effects
+      base_score = 0.4,
+      llm_effect = case_when(
+        llm == "GPT4" ~ 0.02,
+        llm == "Claude3" ~ 0.01,
+        llm == "Gemini" ~ 0.03
+      ),
+      question_type_effect = ifelse(question_type == "Hobson", 0.01, 0),
+      interaction_effect = ifelse(llm == "GPT4" & question_type == "Hobson", 0.01, 0),
+      
+      # (c) Residual noise
+      noise = rnorm(N, 0, 0.05),
+      
+      # (d) Outcome (note: prompt-level variation is added to error)
+      attribute_score = base_score + llm_effect + question_type_effect +
+                        interaction_effect + prompt_noise + noise
+    )
+  ) +
+
+  declare_inquiry(
+    framing_effect = mean(attribute_score[question_type == "Hobson"]) -
+                     mean(attribute_score[question_type == "WhatHow"])
+  ) +
+
+  declare_estimator(
+    attribute_score ~ question_type * llm,
+    .method = lm_robust,
+    inquiry = "framing_effect"
+  )
+
+# (3) Run simulation
+diagnosis_results_fixed_approx <- diagnose_design(
+  redesign(declaration_fixed_approx, N = seq(200, 1000, by = 100)),
+  sims = 1000
+)
+
+# (4) Plot power estimates
+power_df <- diagnosis_results_fixed_approx$diagnosands_df
+
+ggplot(power_df, aes(x = N, y = power)) +
+  geom_line() +
+  geom_point() +
+  geom_hline(yintercept = 0.8, linetype = "dashed", color = "red") +
+  labs(
+    title = "Power to Detect Framing Effect (Approximate Model)",
+    x = "Number of Prompts",
+    y = "Statistical Power"
+  ) +
+  theme_minimal()
+
+```

@@ -1,0 +1,54 @@
+
+\documentclass{article}
+\usepackage[margin=1cm]{geometry}
+\usepackage{booktabs}
+\usepackage{helvet}
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage{array}
+\setlength{\tabcolsep}{6pt}
+\renewcommand{\arraystretch}{1.9} % uniform larger spacing
+\sloppy
+\pagestyle{empty}
+
+% Widths from Python
+\newlength{\Wone}\setlength{\Wone}{3.5cm}
+\newlength{\Wtwo}\setlength{\Wtwo}{2.2cm}
+\newlength{\Wthree}\setlength{\Wthree}{2.2cm}
+\newlength{\Wfour}\setlength{\Wfour}{9.0cm}
+
+% Compute total table width
+\newlength{\tablewidth}
+\setlength{\tablewidth}{\dimexpr \Wone + \Wtwo + \Wthree + \Wfour \relax}
+\newlength{\tabletotalwidth}
+\setlength{\tabletotalwidth}{\dimexpr \tablewidth + 8\tabcolsep \relax}
+
+\begin{document}
+
+\noindent\begin{minipage}{\tabletotalwidth}
+\textbf{\large Appendix G. Pre-registration links and pre-registration accountability statement.}\\[0.35em]
+\textbf{Panel B.} Accountability statement for Study 2.
+
+\vspace{0.8em}
+
+\begin{tabular}{>{\raggedright\arraybackslash}p{\Wone} 
+                >{\centering\arraybackslash}p{\Wtwo} 
+                >{\centering\arraybackslash}p{\Wthree} 
+                p{\Wfour}}
+\toprule
+\textbf{Pre-registered Element} & \textbf{Implemented} & \textbf{Added to report} & \textbf{Justification \& Notes} \\
+\midrule
+LLMs for data collection & Yes & Yes & Pre-registered procedures for LLM selection were followed although technical limitations with accessing some LLMs through the HuggingFace API meant that I accessed some of them through the TogetherAI API. Some of the specific LLM versions were not available through this provider but equivalent ones were chosen according to pre-registered criteria. \\
+Experimental manipulation & Yes & Yes & NA \\
+Response length & Yes & Yes & NA \\
+Pre-registered specification: AttributeScore ~ Questiontype * LLM + (1 | QuestionID) & Yes & No & I included the following specification in the main report:  AttributeScore ~ Questiontype * LLM because it is the simplest possible specification. The exact pre-registered specification was run and found substantially equivalent results to the reported specification. In addition, I ran the specification in the main report without clustered standard errors, to further test its robustness. Results for all specifications are included in the Github repository under …/01\_data/10\_experimental\_results). \\
+\midrule
+Analyses in report that were not pre-registered & \multicolumn{3}{p{\dimexpr \Wtwo + \Wthree + \Wfour - 0.5cm\relax}}{The structures qualitative observations that were included in the analyses to get an impression of why the responses differ were not pre-registered and added after finding unexpectedly high effect sizes for response lengths, to develop an initial understanding as to why the response lengths between interrogative types differ to this extent.}\\
+Additional Notes & \multicolumn{3}{p{\dimexpr \Wtwo + \Wthree + \Wfour - 0.5cm\relax}}{Effect size, statistical power, and inference criteria were implemented and reported as pre-registered.}\\
+\midrule
+Pre-registration reference: & \multicolumn{3}{p{\dimexpr \Wtwo + \Wthree + \Wfour - 0.5cm\relax}}{LastName, X. (2025, June 29). A Taxonomy of Interrogatives and Their Role in Human-Language Model Interaction. https://doi.org/10.17605/OSF.IO/XKP6B}\\
+\bottomrule
+\end{tabular}
+
+\end{minipage}
+
+\end{document}

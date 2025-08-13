@@ -1,0 +1,62 @@
+
+\documentclass{article}
+\usepackage[margin=1cm]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage{booktabs}
+\usepackage{helvet}
+\renewcommand{\familydefault}{\sfdefault}
+\setlength{\tabcolsep}{8pt}
+\usepackage{array}
+\sloppy
+\pagestyle{empty}
+
+\newlength{\tablewidth}
+\setlength{\tablewidth}{\dimexpr 2cm + 6cm + 1cm + 1cm + 1cm + 1.5cm + 2.0cm\relax}
+\newlength{\tabletotalwidth}
+\setlength{\tabletotalwidth}{\dimexpr \tablewidth + 14\tabcolsep\relax} % 7 cols -> 14\tabcolsep
+
+\begin{document}
+\hspace*{0.5cm}\textbf{Table 3.} Performance and uncertainty metrics for interrogative type classification
+
+\vspace{0.5em}
+
+\noindent\begin{minipage}{\tabletotalwidth}
+\fontsize{10}{12}\selectfont
+
+\renewcommand{\arraystretch}{1.4} % increased row spacing
+\begin{tabular}{%
+  p{2cm} p{6cm}
+  >{\centering\arraybackslash}p{1cm}
+  >{\centering\arraybackslash}p{1cm}
+  >{\centering\arraybackslash}p{1cm}
+  >{\centering\arraybackslash}p{1.5cm}
+  >{\centering\arraybackslash}p{2.0cm}}
+\toprule
+\parbox[t]{2cm}{\centering\textbf{Interrogative}\\\textbf{Type}} &
+\parbox[t]{6cm}{\centering\textbf{(1) Logical conditions for interrogative type assignment}} &
+\multicolumn{3}{>{\centering\arraybackslash}p{\dimexpr 1cm + 1cm + 1cm + 4\tabcolsep\relax}}%
+{\parbox[t]{\dimexpr 1cm + 1cm + 1cm + 4\tabcolsep\relax}{\centering\textbf{(2) Classification performance evaluation,}\\\textbf{out of training sample performance (N = 300)}}} &
+\parbox[t]{1.5cm}{\centering\textbf{(3) N assigned}\\\textbf{(PRISM data)}} &
+\parbox[t]{2.0cm}{\centering\textbf{(4) Monte-Carlo uncertainty estimation}\\\textbf{Mean (SD) entropy}} \\
+\cmidrule(lr){3-5}
+ &  & \textbf{Accuracy} & \textbf{F1} & \textbf{Support} &  &  \\
+\midrule
+\parbox[t]{2.00cm}{Hobson’s Choice} & \parbox[t]{6.00cm}{Classified when the interrogative is declarative or imperative (1B = Yes) and/or has a presupposition (3A = Yes). And allows for no alternative responses (2C = 0).} & \parbox[t]{1.00cm}{\centering 0.997} & \parbox[t]{1.00cm}{\centering 0.966} & \parbox[t]{1.00cm}{\centering 14} & \parbox[t]{1.50cm}{\centering 778} & \parbox[t]{2.00cm}{\centering 0.060 (0.224)} \\
+\addlinespace[1.0em]
+\parbox[t]{2.00cm}{Why} & \parbox[t]{6.00cm}{Identified when the interrogative has a presupposition (3A = Yes) and offers only one alternative (2C = 1).} & \parbox[t]{1.00cm}{\centering 0.997} & \parbox[t]{1.00cm}{\centering 0.968} & \parbox[t]{1.00cm}{\centering 15} & \parbox[t]{1.50cm}{\centering 449} & \parbox[t]{2.00cm}{\centering 0.006 (0.046)} \\
+\addlinespace[1.0em]
+\parbox[t]{2.00cm}{Whether} & \parbox[t]{6.00cm}{Identified when the interrogative expects a yes/no answer (2A = Yes and 2C = 2) or lists a defined number of options (2B = Yes and 2C $>$ 1, but not undefined).} & \parbox[t]{1.00cm}{\centering 0.937} & \parbox[t]{1.00cm}{\centering 0.895} & \parbox[t]{1.00cm}{\centering 88} & \parbox[t]{1.50cm}{\centering 2365} & \parbox[t]{2.00cm}{\centering 0.019 (0.116)} \\
+\addlinespace[1.0em]
+\parbox[t]{2.00cm}{Which} & \parbox[t]{6.00cm}{Classified when the number of options is undefined (2C = Undefined) and it is an opinion or not a description (4A = Opinion or No).} & \parbox[t]{1.00cm}{\centering 0.897} & \parbox[t]{1.00cm}{\centering 0.748} & \parbox[t]{1.00cm}{\centering 68} & \parbox[t]{1.50cm}{\centering 1428} & \parbox[t]{2.00cm}{\centering 0.111 (0.270)} \\
+\addlinespace[1.0em]
+\parbox[t]{2.00cm}{What/\\ How} & \parbox[t]{6.00cm}{Classified when the interrogative has an undefined answer space (2C = Undefined) and requests a description (4A = Yes).} & \parbox[t]{1.00cm}{\centering 0.923} & \parbox[t]{1.00cm}{\centering 0.893} & \parbox[t]{1.00cm}{\centering 103} & \parbox[t]{1.50cm}{\centering 2633} & \parbox[t]{2.00cm}{\centering 0.046 (0.188)} \\
+\addlinespace[1.0em]
+\parbox[t]{2.00cm}{Not an interrogative} & \parbox[t]{6.00cm}{When it neither requests an answer (1A = No) nor takes a declarative/imperative form (1B = No).} & \parbox[t]{1.00cm}{\centering 0.993} & \parbox[t]{1.00cm}{\centering 0.833} & \parbox[t]{1.00cm}{\centering 7} & \parbox[t]{1.50cm}{\centering 177} & \parbox[t]{2.00cm}{\centering 0.606 (0.323)} \\
+\bottomrule
+\end{tabular}
+
+\vspace{0.4em}
+\noindent\textit{Note.} The names in the format 1A--4B represent the different fine-tuned BERT classifiers. Details of how those were trained can be found in §2.2.5. Note that in column~(3), five of the 300 were not assigned to any category (see discussion in §2.3.3). Support in~(3) means number of observations in this category on the out-of-training-sample data. F1 is the harmonic mean of recall and precision. 2C = 0 in the definition of Hobson’s Choice is operationalised as the substantively equivalent implementation of no assignment to another interrogative type. This allows to ensure mutual exclusivity among interrogative types, because of the OR operator in this definition. N = number, SD = standard deviation. PRISM data are by Kirk et al. (2024)
+\end{minipage}
+
+\end{document}

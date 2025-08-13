@@ -1,0 +1,72 @@
+
+\documentclass[10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[margin=1cm]{geometry}
+\usepackage{booktabs}
+\usepackage{helvet}
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage{array}
+\setlength{\tabcolsep}{6pt}
+\renewcommand{\arraystretch}{1.3} % slightly more spacing
+\sloppy
+\pagestyle{empty}
+
+\begin{document}
+\noindent\hspace*{1cm}\textbf{\large Appendix C. Bert fine-tuning parameters}
+
+\vspace{1em}
+
+\begin{tabular}{p{3.2cm} p{7.0cm} p{5.6cm}}
+\toprule
+\textbf{Category} & \textbf{Parameter} & \textbf{Value} \\
+\midrule
+Architecture & Base model & google-bert/bert-base-uncased \\
+\addlinespace[0.9em]
+\addlinespace[0.9em]
+Batch sizes & Train batch size & 8 \\
+ & Eval batch size & 16 \\
+\addlinespace[0.9em]
+\addlinespace[0.9em]
+Learning rate & Initial learning rate & 5E-05 \\
+\addlinespace[0.9em]
+\addlinespace[0.9em]
+Scheduler & Type & Linear \\
+ & Warmup ratio & 0.1 \\
+\addlinespace[0.9em]
+\addlinespace[0.9em]
+Regularization & Weight decay & 0.0 \\
+ & Max gradient norm & 1.0 \\
+ & Dropout rate within each attention head & 0.1 \\
+ & Dropout rate in hidden layers & 0.1 \\
+\addlinespace[0.9em]
+\addlinespace[0.9em]
+Training duration & Epochs & 3 \\
+\addlinespace[0.9em]
+\addlinespace[0.9em]
+Evaluation & Eval strategy & Per epoch \\
+ & Save strategy & Per epoch \\
+\addlinespace[0.9em]
+\addlinespace[0.9em]
+Loss function & Type & Cross-entropy \\
+\addlinespace[0.9em]
+\addlinespace[0.9em]
+Randomness control & Seed & 42 \\
+\addlinespace[0.9em]
+\addlinespace[0.9em]
+Optimiser & Type & AdamW (adamw\_torch), $\beta_1$ = 0.9, $\beta_2$ = 0.999, $\epsilon$ = 1e-8 \\
+\addlinespace[0.9em]
+\addlinespace[0.9em]
+\bottomrule
+\end{tabular}
+
+\vspace{0.9em}
+
+% Note width matches table width (15.8cm)
+\noindent\hspace*{0.5cm}\begin{minipage}{15.8cm}
+\fontsize{10}{12}\selectfont
+\leftskip=0pt \rightskip=0pt plus 1fil \parfillskip=0pt
+\textit{Note.} All models were trained with identical hyperparameters; all other hyperparameters were default but can be accessed in the GitHub repository under …/02\_code/00\_setup\_requirements/BERT\_ fine\_tune\_args.py. Initial experiments with different training durations showed that the models learned quickly, with little improvement after early epochs. To reduce the risk of overfitting, fine-tuning was fixed to three epochs. At the end of training, the checkpoint with the lowest validation loss (evaluated once per epoch) was reloaded for subsequent evaluation and prediction.
+\end{minipage}
+
+
+\end{document}

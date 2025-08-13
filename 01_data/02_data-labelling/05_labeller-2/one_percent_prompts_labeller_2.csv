@@ -1,0 +1,81 @@
+﻿utterance_id,user_prompt,1A. Does this interrogative request an answer?,1B. If NO to 1A. Is this a declarative/imperative interrogative?,2A. Is this an interrogative that expects a yes or no answer?,2B. Does it explicitly present a series of options? ,2C. How many options does it present?,3A. Do answers to this interrogative rely on some other fact/opinion already being true?,4A. Does this interrogative ask for a description (y/n) / opinion (o)? 
+ut47270,"what the weather going to be for tomrrow in oshawa, ontario, canada",y,NA,n,n,u,n,y
+ut14011,"if you cut off your family from your life fully, do you think you should still be responsible for payments if they get sent to a elderly home or pay for the funeral?",y,NA,y,n,2,n,o
+ut4239,do you believe that there is a god?,y,NA,y,n,2,n,o
+ut39905,What's the most popular comedy podcast in the US?,y,NA,n,n,u,n,y
+ut19647,Would you say that veganism is healthier than carnivore diet?,y,NA,y,n,2,n,o
+ut54951,Do you think the UK should rejoin Europe?,y,NA,y,n,2,n,o
+ut50017,What's the easiest way to know which political orientation I prefer?.,y,NA,n,n,u,n,y
+ut14140,Why is discipline important,y,NA,n,y,1,y,n
+ut13526,how many single-parent families are there in France?,y,NA,n,n,u,n,y
+ut32345,Is Black Friday just a marketing ploy or are they really the lowest prices of the year?,y,NA,n,y,2,n,n
+ut23649,what do you think about the movie her?,y,NA,n,n,u,n,y
+ut9733,How long does it take for a beginner to efficiently learn cybersecurity?,y,NA,n,n,u,n,y
+ut65077,I can not believe Melania wore a gray coat to Roslyn carter's funeral ! She stuck out like a sore thumb  LOL,n,y,n,n,0,n,n
+ut18881,Please help to organize summer vacation,y,NA,n,n,u,n,n
+ut3474,Do you like anything? Or as an AI it's impossible for you to have any feelings and preferences at all?,y,NA,y,n,2,n,y
+ut57610,What do you think of War between countries?,y,NA,n,n,u,n,o
+ut35644,Hello. Do you always tell the truth?,y,NA,y,n,2,n,n
+ut18350,Who's your favorite character from Avatar the last airbender?,y,NA,n,n,u,n,o
+ut62774,"Hello, What is the capital city of ireland?",y,NA,n,n,u,n,y
+ut5108,you think weapong laws are dangerous is the USA?,y,NA,y,n,2,n,o
+ut34216,What do you think are important core values to teach kids from a very young age?,y,NA,n,n,u,n,o
+ut1591,I am currently learning coding so I can make video games. I am learning to use Godot and its language GDscript. Can you suggest some ways that I can improve my learning?,y,NA,y,n,2,n,n
+ut17774,Which city is better Gold Coast or Melbourne?,y,NA,n,y,2,n,n
+ut21347,Do you think that Max Verstappen be as dominant in the  2024 Formula 1 racing season as he has been this season?,y,NA,y,n,2,n,o
+ut4519,What you think about Finland closing borders with Russia?,y,NA,n,n,u,n,o
+ut47567,Who is winning the Ukraine Russia war,y,NA,n,n,u,n,y
+ut59816,Should adolescent teens be allowed to drink alcohol or smoke weed legally?,y,NA,y,n,2,n,n
+ut12849,"I would like to talk about the controversial topic of ethnicity-based expulsions in the post-WW2 world - Germans in Eastern Europe, Italians in the former Yugoslavia, et cetera. Is this something you are open to discuss?",y,NA,y,n,2,n,n
+ut49046,is it Israel a real contry?,y,NA,y,n,2,n,n
+ut28012,How do i become a girls girl?,y,NA,n,n,u,n,y
+ut57165,how to deal with a boss is putting too much workload on you,y,NA,n,n,u,n,y
+ut49224,How do i stop being friends with someone i do not want in my life anymore?,y,NA,n,n,u,n,y
+ut43878,Can we see inside quarks yet?,y,NA,y,n,2,n,n
+ut48468,Why are the Israelis so cruel towards Palestinians?,y,NA,n,y,1,y,n
+ut45691,Why is society set up so that so many people end up homeless?,y,NA,n,y,1,y,n
+ut40785,"It is believed that the religion with highest number of people is islam, how true is that?",y,NA,n,n,u,n,y
+ut26185,what are good attributes of a strong work ethic? how do you stay motivated to work consistently every day?,y,NA,n,n,u,n,y
+ut7909,"if i¬¥m dating a perso from a conservative culture, how can i make her give the next step? i mean to have sex",y,NA,n,n,u,n,y
+ut26879,list each number to TEN in three languages,n,y,n,n,0,n,n
+ut33153,What is the meaning of life?,y,NA,n,n,u,n,y
+ut56863,How can I make a vegan diet more interesting,y,NA,n,n,u,n,y
+ut9642,What are you doing today?,y,NA,n,n,u,n,y
+ut28149,What is your purpose? Do you believe in world peace?,y,NA,n,n,u,n,y
+ut4231,Is it right that government is cutting benefits from unemployed persons,y,NA,y,n,2,n,n
+ut65796,What is the perfect desert for Christmas,y,NA,n,n,u,n,y
+ut43808,why should religion be banned?,y,NA,n,y,1,y,n
+ut63974,Why do people attend funerals?,y,NA,n,y,1,y,n
+ut51887,Is there another pandemic looming?,y,NA,y,n,2,n,n
+ut50279,what is the difference between a Christian and a sangoma?,y,NA,n,n,1,n,y
+ut58770,help me write a 150-300 word discussion board post based on the book Because of Bethlehem by Max Lucado,n,y,n,n,o,n,n
+ut36122,what is water pump?,y,NA,n,n,u,n,y
+ut32603,"Although this is very against the culture I grew up in, I don't believe in the statement ""family over everything."" How do I set boundaries with my family in how they treat me?",y,NA,n,n,u,n,y
+ut62049,Which language model is this?,y,NA,n,n,u,n,y
+ut5227,what is tacrolimus?,y,NA,n,n,u,n,y
+ut29343,which side is in the right on the isreal palestine conflict,y,NA,n,y,2,n,y
+ut39976,What is your opiuon on how we were created?,y,NA,n,n,u,n,o
+ut12371,do you think a persons body count matters in a long term reliationship?,y,NA,n,n,u,n,o
+ut4450,"My family is very important to me, what do you think about it?",y,NA,n,n,u,n,o
+ut62766,Homeless people should all be put in jail.,n,y,n,n,0,n,n
+ut51524,how many litres of alcohol i  cn drink,y,NA,n,n,u,n,y
+ut10917,What do you think about LQBT culture?,y,NA,n,n,u,n,o
+ut17827,how can i lose weight,y,NA,n,n,u,n,y
+ut56563,I feel it is important to keep the Welsh language alive. How would you promote this?,y,NA,n,n,u,n,y
+ut37523,"this is the first time I have I knowingly interacted with an AI, what do you suggest?",y,NA,n,n,u,n,y
+ut31028,what do you know about grief,y,NA,n,n,u,n,y
+ut10956,Is there any correlation between IQ and being religious?,y,NA,y,n,2,n,n
+ut61994,Help me understand instagram,n,y,n,n,0,n,n
+ut34584,do you think smoking should be completely banned in the uk,y,NA,y,n,2,n,o
+ut58703,What do you think is the most controversial subject in the UK right now?,y,NA,n,n,u,n,o
+ut46797,Is it late to become a professional fighter at the age of 33?,y,NA,y,n,2,n,n
+ut361,"I know that someone broke the law, but if I told on them, they will tell something bad about me, what should I do?",y,NA,n,n,u,n,y
+ut15692,Why is there a rise in right-wing extremism in the United States?,y,NA,n,y,1,y,n
+ut10281,I don't think receiving present at Christmas. It looks like we are only enchaining money. What do you think?,y,NA,n,n,u,n,o
+ut12182,What is your opinion on the validity of autogynephilia as a concept?,y,NA,n,n,u,n,o
+ut62782,whats your view on abortion,y,NA,n,n,u,n,o
+ut46956,should we legalize marijuana in the united kingdom?,y,NA,y,n,2,n,n
+ut43221,What is the fastest growing religious viewpoint,y,NA,n,n,u,n,y
+ut55421,Do you think animals go to heaven or hell?,y,NA,n,y,2,n,o
+ut54280,Why are people who hate amlo?,y,NA,n,y,1,y,n
+ut54,How do I bake a moist chocolate cake,y,NA,n,n,u,n,y

@@ -1,0 +1,333 @@
+---
+title: "06b_design-based_supervised-learning"
+author: "50280"
+date: "2025-05-06"
+output: html_document
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
+# 0. Setup
+
+Following Egami et al. (2024, p.18), these are the steps that need to be
+followed to implement DSL:
+
+a.  Predict text labels using LLMs for each document.
+b.  Sample a subset of documents for expert coding.
+c.  Train an ML model to improve LLM prediction with the expert-coded
+    data.
+d.  Combine expert-coded labels and predicted variables in the DSL
+    regression.
+
+For this research project, DSL is implemented for the descriptive
+analyses in study 1. The associated analyses include contingency tables,
+over-representation factors, and a series of logistic regressions. The
+formula for the over-representation factors can not be implemented with
+the current version of the DSL package (on 19.07.2025). Therefore, in
+the code below, I (1) format the data for the implementation of Egami et
+al.'s (2024) method with the DSL package (I prepare the data for it, but
+I will only run the actual analyses using the package in its dedicated
+script, 07_descriptive_log_regs.Rmd), but then (2) I also create a
+series of design-adjusted outcomes that I use to implement the
+over-representation factors manually. This script focuses on step d
+above and assumes the other steps have already been implemented.
+
+For future users, this can be useful because it shows how to manually
+implement the method, in case they want to use the taxonomy for other
+types of analyses that are not supported by the DSL package.
+
+Given the way that I have setup my analyses and the rest of the project,
+I am not going to implement the DSL for each output of the classifier,
+but instead consider my different fine-tuned BERT classifiers alongside
+the logical operator tree that is part of this model as one ensemble of
+models and therefore implement DSL five times, one for each binary
+variable of each respective interrogative type.
+
+In addition, I thank Naoki Egami for taking the time to help and provide
+advice on how to implement DSL for the setup with the
+over-representation factors.
+
+```{r setup}
+
+# Code written on: 
+# - R Version: 4.3.1.
+# - OS System: macOS Sequoia Version 15.0.1.
+
+################################################################################
+# Before you run this script...
+################################################################################
+
+# (1) Clear the working space. 
+rm(list = ls())
+
+# (2) Set your working directory and save it to the object below, or replace getwd() 
+# with the path to the output directory where you want to save your data. 
+# wdir <- getwd()
+wdir <- "/Users/carolinewagner/Desktop/Local/MY498-capstone-main"
+
+################################################################################
+# Directory management.
+################################################################################
+
+# In which directory are the data?
+ddir <- paste0(wdir, "/01_data")
+
+# Where are the downloaded PRISM data?
+pdir <- paste0(ddir, "/01_PRISM_data")
+
+# Where is the data labelling  folder?
+ldir <- paste0(ddir, "/02_data-labelling")
+
+# In which directory is the code? 
+cdir <- paste0(wdir, "/02_code")
+
+# Where are the helper functions in the code directory? 
+hdir <- paste0(cdir, "/01_helper-functions")
+
+# In which directory are the outputs? 
+odir <- paste0(wdir, "/03_outputs")
+
+
+################################################################################
+# PREREQUISITES
+################################################################################
+
+# List of required packages.
+needed_packages <- c("tidyverse",
+                     "jsonlite", # to read in the json file.
+                     "rlang") # to handle column names in manual DSL implementation. 
+
+# Identify which/whether packages are missing.
+missing_packages <- needed_packages[!(needed_packages %in% installed.packages()[, "Package"])]
+
+# Install any missing packages.
+if (length(missing_packages) > 0) {
+  install.packages(missing_packages)
+}
+
+# Load all required packages.
+invisible(lapply(needed_packages, library, character.only = TRUE))
+
+# Install the dsl package, the installation only needs to be run once per user.  
+# This may be useful for future users, but the package is not used in the present
+# analyses, because with the current version (on 18.07.2025) it is not possible to
+# implement the over-representation factors required for the descriptive analuses 
+# with this package and I therefore implement the DSL manually. 
+#install_github("naoki-egami/dsl", dependencies = TRUE)
+#library(dsl)
+
+# Set seed for reproducibility. 
+set.seed(89)
+
+
+################################################################################
+# LOAD REQUITED DATA
+################################################################################
+
+# (1) These are the gold standard data, labelled by the main annotator. 
+gstan_data <- read.csv(paste0(ddir, "/06_design-based_supervised-learning/labelled_gold_standard.csv"))
+
+# (2) These are the data with the assigned categories, as labelled by the BERT model ensembles. 
+prism_final_categories <- read.csv(paste0(ddir, "/05_utterance_classification/PRISM_final_categories.csv"))
+
+# (3) Load survey data with demographic covariates
+survey_path <- paste0(pdir, "/survey.jsonl")
+survey_data <- stream_in(file(survey_path)) %>% 
+  as_tibble()
+
+
+################################################################################
+# SOURCE REQUIRED FUNCTIONS
+################################################################################
+
+source(paste0(hdir,"/00_general_helper.R"))
+
+```
+
+# 1. Data cleaning & pre-processing
+
+Because implementing the DSL requires training a supervised model
+(called g) with the same variables that will be used for downstream
+inference, before implementing the DSL, I need to add the participant
+profiles to the data with the classified outputs. This also requires the
+data cleaning and pre-processing steps implemented below (this is
+required for the implementation of the DSL in
+07_descriptive_log_regs.Rmd). [the supervised model g was not
+implemented in the end, but for consistency and neatness the code to
+merge the dataset is still kept here, as it will be used in the next
+scripts associated with this project.]
+
+```{r pre_processing_add_participant_profiles}
+
+# Add the participant profile information from the PRISM dataset to the labelled data in order to
+# train the supervised model g that is required to implement the DSL. 
+# This follows exactly the formatting required for the pre-registered analyses. 
+
+# (0) Unnest survey_data nested columns using sourced function
+survey_data <- unnest_columns(survey_data, c("location", 
+                                             "religion", 
+                                             "ethnicity", 
+                                             # the four below are not used in the analyses,
+                                             # but still cleaned for consistency & clarity. 
+                                             "stated_prefs",
+                                             "order_lm_usecases", 
+                                             "lm_usecases",
+                                             "order_stated_prefs"))
+
+# (1) Collapse categories with too few sample sizes for downstream analyses
+survey_data <- survey_data %>%
+  filter(education != "Prefer not to say") %>%
+  mutate(
+    education_recode = case_when(
+      education %in% c("Completed Primary School", "Some Primary", "Some Secondary") ~ "Primary &/or Secondary Education",
+      TRUE ~ education
+    ),
+    education_recode = factor(education_recode)
+  )
+
+# (2) Create a mapping from utterance_id to user_id
+id_map <- prism_final_categories %>%
+  select(utterance_id, user_id, conversation_type)
+
+# (3) Add user_id to gstan_data
+gstan_data <- gstan_data %>%
+  left_join(id_map, by = "utterance_id")
+
+# (4) Join the survey data into both datasets
+gstan_data <- gstan_data %>%
+  left_join(survey_data, by = "user_id")
+
+prism_final_categories <- prism_final_categories %>%
+  left_join(survey_data, by = "user_id")  
+
+
+# (3) Apply the same refactorisation and relabelling that mirrors the way I implement it 
+# in my downstream analyses (to both daatsets that I am going to use) - uses sourced function. 
+gstan_data <- refactor_covariates(gstan_data)
+prism_final_categories <- refactor_covariates(prism_final_categories)
+
+
+################ Format the data for DSL implementation ########################
+
+# This code creates new columns in prism_final_categories that contain gold-standard 
+# labels (where available) for each target variable by merging in expert annotations 
+# from gstan_data, setting the values to NA when no gold-standard label exists.
+
+# (1) List of target variables
+target_vars <- c("whether_q", "which_q", "why_q", "whathow_q", "hobsons_c", "M")
+
+# (2) For each target variable, create a column with gold-standard labels in the dataframe
+# this uses temporary columns with _gstan suffixes to avoid issues with overwriting columns. 
+for (var in target_vars) {
+  dsl_col <- paste0("gold_standard_labels_", var)
+
+  # (a) Merge gold-standard labels using utterance_id
+  merged <- merge(
+    prism_final_categories,
+    gstan_data[, c("utterance_id", var)],
+    by = "utterance_id",
+    all.x = TRUE,
+    suffixes = c("", "_gstan")
+  )
+
+  # (b) Assign to new DSL-style column
+  prism_final_categories[[dsl_col]] <- merged[[paste0(var, "_gstan")]]
+}
+
+```
+
+# 2. Define function to implement DSL manually
+
+**How does the function below work?**
+
+For observations that are expert-labeled:
+
+$$
+\tilde{Y} = \hat{Y} - \frac{\hat{Y} - Y}{\pi},
+$$
+
+where
+
+$\hat{Y}$ = the label from the LLM,
+
+$Y$ = expert label
+
+$\pi$ = proportion of observations that are expert-labeled.
+
+For observations that are not expert-labeled:
+
+$$
+\tilde{Y} = \hat{Y},
+$$
+
+where
+
+$\hat{Y}$ = LLM label
+
+```{r define_dsl_function}
+
+# Define function according to description above. 
+
+apply_dsl_adjustment <- function(df, llm_col, expert_col, output_col) {
+  # Dynamically compute pi
+  # Assumes non-expert labelled rows have NAs
+  pi <- df %>%
+    summarise(pi = sum(!is.na({{ expert_col }})) / n()) %>%
+    pull(pi)
+  
+  # Apply DSL adjustment
+  df %>%
+    mutate(
+      {{ output_col }} := case_when(
+        !is.na({{ expert_col }}) ~ {{ llm_col }} - ({{ llm_col }} - {{ expert_col }}) / pi,
+        TRUE ~ {{ llm_col }}
+      )
+    )
+}
+
+```
+
+# 3. Compute debiased outcome variables
+
+```{r construct_debiased}
+
+# Code to construct the debiased expert-labels
+
+# Labels obtained through the fine-tuned BERTs are in the column: whathow_q
+# Gold-standard expert labels are in the column: gold_standard_labels_whathow_q
+# p_i, the proportion of observations that are expert-labelled
+#     = number of gold-standard labels / total number of observations
+#     = 300/8002 = 0.03749062734
+
+# Separately apply this function to all my variables of interest
+
+# (1) Define the variables for which I want to compute a design-adjusted outcome. 
+target_vars <- c("whether_q", "which_q", "why_q", "whathow_q", "hobsons_c", "M")
+
+# (2) Loop through each target variable
+for (var in target_vars) {
+  
+  # (a) Define column names
+  llm_col    <- sym(var)
+  expert_col <- sym(paste0("gold_standard_labels_", var))
+  output_col <- sym(paste0("design_adjusted_", var))
+  
+  # (b) Apply DSL adjustment using predefined function
+  prism_final_categories <- apply_dsl_adjustment(
+    df = prism_final_categories,
+    llm_col = !!llm_col,
+    expert_col = !!expert_col,
+    output_col = !!output_col
+  )
+}
+
+```
+
+# 4. Save updated data
+
+```{r save_data}
+
+write_csv(prism_final_categories, file.path(ddir, "/06_design-based_supervised-learning/PRISM_classified_with_DSL_outcomes.csv"))
+
+```

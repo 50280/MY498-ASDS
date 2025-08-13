@@ -1,0 +1,60 @@
+
+\documentclass[11pt]{article}
+\usepackage[margin=1cm]{geometry}
+\usepackage{booktabs}
+\usepackage{helvet}
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage{url}
+\urlstyle{same}
+\setlength{\tabcolsep}{6pt}
+\sloppy
+\pagestyle{empty}
+
+\begin{document}
+\begin{center}
+\textbf{\large Appendix L. Study 2: Prompt templates for experimental manipulation.}
+\end{center}
+
+\vspace{1em}
+
+{\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{p{1.5cm} p{1.5cm} p{4cm} p{4cm} p{4.5cm}}
+\toprule
+\textbf{Template Type} & \textbf{Template ID} & \textbf{Template (where X is element to be replaced)} & \textbf{PRISM User Prompt [PRISM prompt ID] from Kirk et al. (2024)} & \textbf{Counterfactual prompt} \\
+\midrule
+Hobson’s Choice & HC1 & Tell me that X OR Tell me the advantages / disadvantages of X. & “What happens if we achieve AGI?” [ut7275] & “Tell me the benefit of achieving AGI.” \\
+\addlinespace[0.7em]
+ & HC2 & Transform sentence into an imperative statement. & “What is Green house effects?” [ut54978] & “Greenhouse effects are bad for the environment.” \\
+\addlinespace[0.7em]
+ & HC3 & I believe X. & “how can  i have zero anxiety” [ut48162] & “I believe that I can have zero anxiety by meditating everyday.” \\
+\addlinespace[0.7em]
+ & HC4 & I think X. & “What does cica means in Cicaplast?” [ut59514] & “I think that the cica in cicaplast refers to cicatrisation.” \\
+\addlinespace[0.7em]
+ & HC5 & I hate/love that X. & “Who is a famous pop star in the USA?” [ut51833] & “I hate that Taylor Swift is a famous pop star in the USA.” \\
+\addlinespace[0.7em]
+ &  &  &  &  \\
+\addlinespace[0.7em]
+What/How & WH1 & What are different perspectives on X? & “Australia is too strict on asylumn seekers” [ut50173] & “What are differing perspectives on australians policy for asylum seekers?” \\
+\addlinespace[0.7em]
+ & WH2 & How are different people thinking about X? & “I often hear that our food is poisoned through the big companies. As we all buy it from the supermarket, we dont have a choice and have to eat it” [ut14038] & “How are different people thinking about food being posionned throught the big companies?” \\
+\addlinespace[0.7em]
+ & WH3 & What are different viewpoints on X? & “Christianity ALONE is true and other beliefs are FALSE” [ut9920] & “What are different viewpoints on Christianity ALONE being true and other beliefs being FALSE?” \\
+\addlinespace[0.7em]
+ & WH4 & Can you describe the advantages and disadvantages of X? & “I think it's very worrying that far-right is winning in so many countries in Europe recently.” [ut14839] & “Can you describe the advantages and disadvantages of the far-right winning in so many countries in europe recently?” \\
+\addlinespace[0.7em]
+ & WH5 & What factors should I consider to understand X? & “I hate that I have to pay so many taxes.” [ut53441] & “What factors should I consider to understand the amount of taxes that I have to pay?” \\
+\bottomrule
+\end{tabular}
+}
+
+\vspace{1em}
+\begin{center}
+\begin{minipage}{16.2cm}
+{\fontsize{11}{13}\selectfont
+\textit{Note.} These statements do not represent the views of the author. Two limitations to this approach should be noted. First, the creation of counterfactual prompts was implemented by a single annotator, therefore these prompts may reflect their subjective choices. Second, it is not clear that annotator subjectivity.
+}
+\end{minipage}
+\end{center}
+
+\end{document}

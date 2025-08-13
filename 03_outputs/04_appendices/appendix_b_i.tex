@@ -1,0 +1,62 @@
+
+\documentclass{article}
+\usepackage[margin=1cm]{geometry}
+\usepackage{booktabs}
+\usepackage{helvet}
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage{array}
+\setlength{\tabcolsep}{4pt}
+\sloppy
+\pagestyle{empty}
+\begin{document}
+
+\begin{center}
+\textbf{\large Appendix B. BERT Fine-tuning Data Annotator Instructions}
+\end{center}
+\hspace*{0.75cm}Panel A. Final annotator guidelines used for BERT fine-tuning (with examples from the PRISM dataset). 
+
+\vspace{1em}
+{\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{p{5.5cm} p{12.5cm}}
+\toprule
+\textbf{Classifier label and key question} & \textbf{Answer guidelines} \\
+\midrule
+
+\textbf{1A.} Does this interrogative request an answer? & 
+- Answer YES if it requires an answer and NO if it does not require an answer. Statements like hello or hi are not considered to expect an answer. \newline
+- If a statement is imperative, e.g., ‘legalise abortion’ this answer NO.  If a statement is declarative, answer NO. E.g., “I have to meet a director of a highschool for a substitute position. I feel a little anxious.” \newline
+- If the interrogative directly addresses the model, it is labelled YES (e.g., “Explain to me the pros and cons of punitive vs rehabilitative prison systems.”). If an (imperative/declarative) interrogative does not directly address the model, it is labelled NO (e.g., “create a recipe using the following ingredients: black beans, ground beef, diced tomatoes, mushrooms, frozen onions and peppers, elbow pasta”) [the reason underlying this decision is that if it directly addresses the model, it is considered as requesting an answer from the model.] \newline
+- Edge case: If it does not have an active verb that makes it an imperative/declarative, but does not address the model directly, it is labelled as yes, because it is considered as implicitly requesting an answer from the model. E.g. “things to do in warrington” or “Take on corruption”. \\
+\addlinespace[0.8em]
+
+\textbf{1B.} If NO to 1A. Is this a declarative / imperative interrogative? & 
+- Here, NA (not applicable) if YES to 1A. If it is a simple noun phrase such as ‘technology and society’, answer NO. If it is a declarative or imperative statement such as ‘Guns are too easy to buy in some countries’, answer YES. \\
+\addlinespace[0.8em]
+
+\textbf{2A.} Is this an interrogative that expects a yes or no answer? & 
+- Think: can this question be answered with yes / no? Answer YES if it can be answered with yes/no, and NO if it cannot be answered with yes/no. Answer NA if not relevant; e.g, does not request an answer and is not an affirmative statement. E.g., “I think Roe vs Wade should be reinstated.” is NO. \newline
+- E.g., Should college be tuition-free? Is YES. \\
+\addlinespace[0.8em]
+
+\textbf{2B.} Does it explicitly present a series of options? & 
+- Answer YES if the questioner explicitly gives as list from which the answerer can chose an answer. Answer NO if the question does not define an explicit list. \newline
+- E.g., “Do you think animals go to heaven or hell?” This is YES because the answerer has to choose between “heaven” and “hell.” \\
+\addlinespace[0.8em]
+
+\textbf{2C.} How many options does it present? & 
+- This question is about how the user defines the space of possible answers in the way they ask their question. It needs to be answered with either 0, 1, 2, or U – OR another integer number. \newline
+- 0 is given for declarative/imperative statements because they do not directly incite an answer and thereby define an answer space of 0. E.g., “Guns are too easy to buy in some countries”. \newline
+- ‘Why questions’, questions that ask about the cause of something should be answered with 1. This is because by asking about the cause of something, they are assuming that cause to exist. E.g., “Why do criminal migrants keep living and making crime in our countries?” is 1, because the way the questioner formulated this question does not incite the answerer to say that migrants are not necessarily criminal. \newline
+- 2 is given if the question can be answered with yes or no, and if the questioner explicitly describes two options in their question, e.g., “Is abortion a good or a bad thing?”. \newline
+- U is given if the answer space is undefined. This is assigned to descriptive, open-ended questions. E.g., “What are some steps we could take to combat global warming?”. \newline
+- If however, the question explicitly enumerates a series of options, it should be answered with an integer describing the number of available options. E.g., “i have three games in my library which should i play first: fallout 4, ace attorney, or the talos principle?” \\
+\addlinespace[0.8em]
+
+\textbf{3A.} Do answers to this interrogative require some other fact/opinion already being true? & 
+- Only questions that ask about the cause of some fact the questioner assumes to be true should be answered with YES here. “Tell me why Donald Trump will be the next president elect” because an answer requires that Trump will be the next president. Or “why are people so comfortable with eating animal corpses” is also YES. Otherwise NO. \\
+
+\bottomrule
+\end{tabular}
+}
+\end{document}

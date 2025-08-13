@@ -1,0 +1,551 @@
+utterance_id,user_prompt,prompt_template,counterfactual_prompt,whathow_q_debiased,hobsons_c_debiased
+ut41582,Our current calendar system is confusing and inefficient,0,What is our current calendar system like?,0,1
+ut59249,I would like to know travel spots to visit in Los Angeles from December 25 to December 30. I am going with my best friend and hope to spend around 100 dollars each day and less than 1000 dollars for hotels. Flight tickers are already purchased. I want to do 2-3 activities each day.,0,What are some good travel spots to visit in Los Angeles?,0,1
+ut16809,"I am speaking at an event soon - i want to make a speech about general career progression, staying humble and guided. I want to inspire young people leaving university.",0,"What are good things to say in a speech about general career progression, staying humnble, and guided?",0,1
+ut66462,Why new gen lack work ethics,0,NA ,0,1
+ut51255,tomato sauce does'nt belong on a meat pie,0,What are different perspectives on whether tomato sauce belongs on a meatpie?,0,1
+ut3388,"I want to believe in god, but I am not religious and I have never believed in anything",0,What are different reasons for and against believing in God? ,0,1
+ut56207,Why are there so many female football analysts?,0,NA ,0,1
+ut9545,I dont like liars,0,What are different perspectives on whether liars are good or bad?,0,1
+ut64199,Why are House Republicans spending so much time and money on Hunter Biden?  He doesn't have a job in the government.  He's a private citizen.  He doesn't get paid by the government.  He doesn't make or administer policy for the government.,0,NA,0,1
+ut14212,Our prime ministed went to Germany for a shopping and then posted a video about it and criticized the prices in Czech Republic. We all know about the fact for a couple of years. He just embarasted himself!,0,What are the effects of our prime minister going to Germany for shopping and then posting a video about it where he just embarassed himself. ,0,1
+ut27178,all religion is bad and breeds violence and wae,0,What are areguments for and against the statement that all religion is bad and breeds violence?,0,1
+ut5789,Why is it okay to not greet others?,0,NA,0,1
+ut25830,I feel like I'm wasting a lot of my talents but I have no idea how I could make money from them,0,Whatare ways in which I could use my talents and make money from them?,0,1
+ut37103,My daughter wants a tattoo. I disagree.,0,What are different perspectives on my daughter wanting a tattoo?,0,1
+ut41675,Why is the minimum wage important?,0,NA,0,1
+ut56455,"There should be a guaranteed basic  personal allowance for everyone, so that nobody would have to worry about having enough money to keep a roof over their heads or pay their bills, or worry about losing their job, or worry about not finding a job.",0,What are different perspectives on a universal basic income?,0,1
+ut43475,family values are important to me as a child i was not looked after very well and was quite a challenged individual,0,What is the importance of family values? ,0,1
+ut28970,"My work mates like to drink and keep inviting me out to after work drinks, but i don't enjoy hanging around them after work",0,What are different perspectives of me having drinks with my work mates if I don't enjoy hanging around them after work?,0,1
+ut61408,Why can't Black people swim (it's not racist. I am Black)?,0,NA,0,1
+ut31821,Why was there a full moon today? Why could I still see the moon in the daylight this morning?,0,NA ,0,1
+ut3729,i dont think that animals get treated fairly by the meat industry,0,What are differing perspectives on the treatment of animals in the meat industry?,0,1
+ut59372,I am a man who ant the need of others and other's need not care of my opinion,0,"What are differing perspectives on a man who cares about the needs of others, and thinks that others don't need to care for his needs?",0,1
+ut50173,Australia is too strict on asylumn seekers,0,What are differing perspectives on australians policy for asylum seekers?,0,1
+ut49244,Why do we exist,0,NA,0,1
+ut58720,I pride myself on being a good friend and I thought my best friend was the same. I was shocked recently at the way they spoke to me.,0,"What are differing perspectives on my friend shocking me in the way they spoke to me if I consider myself to be a good friend, and I thought the same of them?",0,1
+ut56151,It violates human rights to make people take an experimental treatment or wear a mask that impedes their breathing.,0,What are differing perspectives on making people take experimental treatments or wearing a mask that can impede their breathing?,0,1
+ut40389,"i think that slavery wasn't such a bad idea, as a slave owner give me points that i can make to help convince others",0,What are differing perspectives on the effecrts of slavery?,0,1
+ut2444,I like the vlaams belang,0,What are different perspectives on the vlaams belang?,0,1
+ut12696,I cannot decide if it's more important being brave or kind in this world,0,What are differing perspectives on the importance of being brave compared to kind in this world?,0,1
+ut32669,Talk to me about Brazilian culture,0,What are differing perspectives on brazilian culture?,0,1
+ut33809,i don't want to work,0,What are different perspectives on me not wanting to work?,0,1
+ut17884,Why is it important for a society to maintain freedom of speech about all topics?,0,NA,0,1
+ut43702,Why are ther so many pot holes on our roads in the UK.,0,NA,0,1
+ut9104,"I had a crush on a guys , whos is a doctor but now he has ghosted me and I am so sad",0,"What are diffring perspectives on me having a crush on a guy, who is a doctor, but who ghosted me, which made me sad?",0,1
+ut20507,"Hi! I need a quick recipe for several ingredients I have available. I prefer to use my Instant Pot pressure cooker. I have cauliflower, fresh tomatoes, canned tomatoes, tomato paste, onions, celery, bell peppers, potatoes, wild rice, chicken breast, some greens, cucumbers and dried pinto beans.",0,"What is a recipe that I can make given I have these ingredients available: cauliflower, fresh tomatoes, canned tomatoes, tomato paste, onions, celery, bell peppers, potatoes, wild rice, chicken breast, some greens, cucumbers and dried pinto beans?",0,1
+ut24809,I am not sure how much effort i should put into celebrating Christmas this year.,0,What are different perspectives on putting effort into celebrating christmas?,0,1
+ut68074,"Being honest is what I most value. I have met so many liars in my life so far, some even called me an idiot who can't casually use lie. I don't trust these people.",0,What are differing perspectives on the importance of honesty?,0,1
+ut27770,Give me an idea for a new co op game for 4 players which requires working together to solve puzzles,0,What are different ideas for a four-player co op game what requires collaboration to solve puzzles?,0,1
+ut3282,i don't think there is a reason for any human to eat meat besides health reasons and the persons resources (what they are able to get for food).,0,What are different perspectives on not eating meat?,0,1
+ut25069,Give me a diet plan similar to the Noom diet plan,0,What are different perspectives of the noom diet plan and examples thereof?,0,1
+ut10162,Ask me questions,0,What are different questions that you can ask me?,1,1
+ut39393,Why is it all about a woman's body and not a child's life with those who are pro-abortion?,0,NA,0,1
+ut1699,I need a quick joke about my friend Adam. He likes to fish and cook. He likes puns and a bit of a dark humor.,0,"What are jokees of differing perspectives for my friend Adam who likes to fish and cook, dark homour, and puns, and examples thereof?",0,1
+ut20112,I feel i work too much and my boss is an idiot.,0,What are different perspectives on me working too much and my boss being an idiot?,0,1
+ut42612,Why is it I feel completely devoid of any feelings towards my family at the moment?,0,NA,0,1
+ut22013,"Donald Trump has lowered the standard of discourse and threatened the very foundation of democracy in the United States, which has in turn led to the normalization of extreme right-wing sentiment throughout the world.",0,"What are differing thoughts on Donald Trump lowering the standard of discourse, and threatening the very foundation of democracy in the United States?",0,1
+ut68118,why is the democratic party pro abortion if it is the legalized killing of an unborn child?,0,NA ,0,1
+ut33969,The whole school system is wrong,0,What are differing perspectives on the school system?,0,1
+ut30871,"As someone with Irish heritage, I'm thankful to be able to celebrate St. Patrick's Day. It's one of the few examples of culture I have, after all.",0,What are different perspectives on being able to celebrate St. Patrick's day?,0,1
+ut57702,"I need to find a dessert recipe to make to bring to my book club. The book we read was ""We Are All Completely Beside Ourselves""",0,"What are different desert recipes I could make to bring to my bookclub where we read ""We are all completely beside ourselves""?",0,1
+ut12614,We should hang all the rich people and redistribute their wealth among poor people because their wealth was due to illegal activities and taken advantage of the less fortunate,0,What are different perspectives on hanging all rich people and redistributing their wealth among poor people?,0,1
+ut39009,"Work should be less hours and should work more around proiviing a life, Work to  live not live to work",0,"What are differing perspectives on working less hours, and working to live, not living to work?",0,1
+ut58245,I miss my mum so much.,0,What are different perspectives on me missing my mum so much?,0,1
+ut64531,With the uptick of covid and other respiratory illnesses this winter why don't states put mask mandates back in place?,0,NA,0,1
+ut58448,Why is Hamas designated a terrorist organisation by the UK but not by Qatar?,0,NA,0,1
+ut45262,I do not think religion is a good thing,0,What are different perspectives on religion?,0,1
+ut57848,Why do families think they have an automatic right to criticise family members?,0,NA,0,1
+ut61184,Why the world doesn't interfere the help the north korean people,0,NA,0,1
+ut33790,"Why are politics so extreme nowadays and so divisive, both by the media, social media, and politicians?",0,NA,0,1
+ut68090,Why is the United States' letting our values and morals be determined by such a narcissistic liar and cheat as Trump?,0,NA,0,1
+ut49531,euthanasia should be legal worlwide,0,What are different perspectives on whether euthanasia should be legal?,0,1
+ut55299,I want to know options and ways to help with depression,0,NA ,0,1
+ut50318,Tell me something polemic,0,What are different perspective on polemic things?,1,1
+ut51673,why doesn't the Australian government just deport some of the people being kept in indefinite detention,1,NA,0,1
+ut32439,i want to design a robot that can help me cook,1,How can I design a robot that can help me cook?,0,1
+ut10707,Why must billionaires get taxed more,1,NA,0,1
+ut3890,I don't think slurs should be banned regardless of context. I see a tendency to consider the words themselves dangerous an proof of moral decline even when used in ignorance or obvious jest,1,How are different people thinking about banning slurs rgardless of context?,0,1
+ut2777,One of my favourite hobbies is reading. My favourite genre is romance.,1,How are different people thinking about reading as a favourite hobby?,0,1
+ut44499,"I really like to read and study buddhism. I have some Zen Koan books, by Huang Po.",1,How are different people thinking about reading and studying buddhism?,0,1
+ut22239,"I want to end my life, I'm tired all the time, I've been like this for years, trying different meds and treatments and nothing has changed",1,"How are different people thinking about wanting to end one's life if they have been tired all the time, have tried different meds, but nothing has changed? ",0,1
+ut20773,i need recomondation of tv series,1,How are different people making recommendations for tv series?,0,1
+ut8313,Why are there conservatives fixated on the issue of abortion?,1,NA,0,1
+ut66823,why is cannabis illegal?,1,NA,0,1
+ut14038,"I often hear that our food is poisoned through the big companies. As we all buy it from the supermarket, we dont have a choice and have to eat it",1,How are different people thinking about food being posionned throught the big companies?,0,1
+ut25061,Why hasnt the common cold been cured,1,NA ,0,1
+ut43445,I would like to know about some restaurants in my local area that sell burgers,1,How are different people thinking about some restaurants in the local area that sell burgers?,0,1
+ut25133,"My sister is annoying me, but i am not sure if i am just as annoying, she seems uninterested in spending time together.",1,"How are different people thinking about my sister annoying me, as I might be just as annoying and  she seems uninterested in spending time with me?",0,1
+ut30790,My girlfriend left me.,1,How are different people thinking about spending time together?,0,1
+ut28927,i think cars are ruining the environment,1,How are different people thinking about cars ruining the environment?,0,1
+ut58805,You are talking to a little boy. He shows you his butterfly collection plus his killing jar.,1,How are different people thinking about a littl eboy showing them his butterfly collection and his killing jar?,0,1
+ut1240,I am very sick. I think about euthanasia.,1,How are different people thinking about euthanasia when someone is very sick?,0,1
+ut24572,Why are people being so retarded and having problems to diofine what is a woman in this times?,1,NA ,0,1
+ut46000,"i believe people should be honest in work & business dealings, not exploiting others",1,"How are different people thinking about being honest in work and business dealings, and not exploiting others?",0,1
+ut20924,give me some easy apple pie recipe,1,How are different people thinking about an easy applie pie recipe?,0,1
+ut598,Why the Vietnam war started?,1,NA,0,1
+ut26367,why are people so comfortable with eating animal corpses,1,NA,0,1
+ut16843,"There are no straight women who hold better world viewpoints than straight men. They are less happy & content with life on a general scale, if you were to evaluate a population of straight men & women. This is because they are constantly unhappy with periods, uncertainty about the future, and not knowing how to select a male partner.",1,"How are different people thinking about no straight women holding better world viewpoints than straight men, because they are less happy and content with life on a general scale with periods, understainty about the future, and not knowing how to select a male partner?",0,1
+ut18701,Why is science despised by many people?,1,NA ,0,1
+ut31454,African Americans should receive reparations,1,How are different people thinking about African Americans receiving reparations?,0,1
+ut49395,Why are people willing to blame their issues on imigrants?,1,NA,0,1
+ut52723,"Give me some drama/romance TV show recommendations. Take into account I've watched most of the popular shows, so I want some lesser known recommendations.",1,How are different people recommeding lesser known drama/romance TV shows?,0,1
+ut65455,"After COVID ended, so many Americans abandoned their newly adopted dogs and cats. This should be illegal.",1,How are different people thinking about so many americans abandoning their newly adopted dogs and cats after COVID ended?,0,1
+ut48100,Why is saving for the future so important?,1,NA ,0,1
+ut33899,Why should everyone need to work in a society?,1,NA ,0,1
+ut10923,Why should I not kill the person that ran over my dog?,1,NA ,0,1
+ut63018,I need assistance in creating a speech for training graduates,1,How would different people provide assistance in creating a speech for training graduates?,0,1
+ut16592,Why is Canada letting in so many immigrants into our country when we are having financial problems  here looking after our own people.,1,NA ,0,1
+ut1792,I think that we here in Norway shall reduse the impact immigation to our contry,1,How are different people thinking about Norwegians reducing the impact of immigration to their country?,0,1
+ut29356,humans should only work 3 days a week maximum,1,How are different people thinking about humans only working 3 days a week maximum?,0,1
+ut61994,Help me understand instagram,1,How are different people thinking about learning to understand instagram?,0,1
+ut43866,Why is gravity only prevalent to the earth,1,NA ,0,1
+ut49210,It's all fair in love and war. Survival of the fittest is the principal to live by.,1,"How are different people thinking about all being fair in love and war, and that survival of the fittest is the principal to live by?",0,1
+ut57403,I'm thinking about retiring from work but feel I'd miss the routine it gives me.,1,How are different people thining about missing the routine that work gives them if they retire?,0,1
+ut62251,Marginalized groups need more protection of their rights.,1,How are different people thinking about maginalised groups needing more protection of their civil rights?,0,1
+ut39048,Why was ROE v Wade changed,1,NA ,0,1
+ut40463,I am a Seventh-Day Adventist.,1,How are different people thinking about being a Seventh-Day Adventist?,0,1
+ut38690,I think abortion should be legal in all states.,1,How are different people thinking about abortion being legal in all states?,0,1
+ut4919,Why should I play Red Dead Redemption 2?,1,NA,0,1
+ut14140,Why is discipline important,1,NA ,0,1
+ut42234,Advice me on relationship,1,How are different people thinking about relationship advice?,1,1
+ut18234,Abortion is killing an innocent baby's life and should be banned by government and made illegal.,1,"How are different people thinking about abortion killing an innocent baby's life, and it being banned by the government and made illegal?",0,1
+ut27108,i'm suffering from a broken heart. i was with my partner for 9 years and we broke up a month ago. he still comes over and we are intimate. he doesn't know i made a fake account on instagram and i've been obsessivey checking his profile and tracking that he's been on at least 2 dates with 2 different women since our break up. it eats me up inside but i cant say anything and i want to keep seeing him. it hurts to know it will stop one day. i'm not sure how to let go,1,"How are different people thinking about me sufffering from a broken. Heart, after being with my partner for nine years, him still coming over and being intimate, me obsessively checking his instagram profile through a fake account, him going on dates with different women, but me not saying anything bebcause I want to keep seeing him, and it hurting to know that it will stop one day?",0,1
+ut44855,why are so mny people willfully ignorant?,1,NA ,0,1
+ut12543,Blockchain is not a good way to make money.,1,How are different people thinking about blockchain nto ebing a good way to make money?,0,1
+ut52298,Homosexuality is unacceptable to the majority of people,1,How are different people thinking about homosexuality being unaceptable to the majority of people?,0,1
+ut32103,why is polyamory looked down on,1,NA ,0,1
+ut21823,Why does the west seem to be doing nothing about the war in Ukraine?,1,NA ,0,1
+ut65253,Why has libertarianism gained so little traction? You'd think a philosophy based around personal liberty would be popular.,1,NA ,0,1
+ut55793,"Has there been a decline in personal and public morality over, say, the last 30 years, and if so, why?",1,NA ,0,1
+ut54498,Tell me a funny story.,1,How are different people thinking about funny stories?,0,1
+ut5466,Covid vaccines are bad!,1,How are different people thinking about Covid vaccines?,0,1
+ut58827,"In the Catholic religion, why do people pray to Mary instead of praying to God Himself?",1,NA ,0,1
+ut24707,Why vegans don¬¥t understand that they are not saving the world and that even if they only eat vegetables they cause the death of millions of living being to produce those things they use and eat.,1,NA,0,1
+ut31752,I believe racial equality should be one of our countries top priorities,1,How are different people thinking about racial equality being one of the countries top priorities?,0,1
+ut13349,I think the color blue should actually be called green,1,How are different people thinking about the color blue actually being called green?,0,1
+ut38835,"I need a recipe that is delicious, easy to make, and fast to make aswell.",1,"How are different people thinking about a recipe that is delicious, easy to make, and fast to make as well?",0,1
+ut48292,Tell me a joke,1,How would different people tell me a joke?,1,1
+ut27341,"if we accept trans people, incest is next in line. we must put a stop to this craziness",2,What are different viewpoints on incest being next in line if we accept trans people?,0,1
+ut43808,why should religion be banned?,2,NA ,0,1
+ut38642,Why do asian men have small penises,2,NA ,0,1
+ut45707,I think Donald Trump is a danger to this country.,2,What are different viewpoints on Donald Trump being a danger to this country?,0,1
+ut12975,"books like ""Wilder girls"" by rory power",2,What are different viewpoints on books like 'Wilder girls' by Rory Power?,0,1
+ut21903,Hair loss and it's remedies,2,What are different viewpoints on hair loss and its remedies?,0,1
+ut64814,Why do people feel the need to take kids to drag shows?,2,NA,0,1
+ut42956,Stealing is not always bad,2,What are different viewpoints on stealing not always being bad?,0,1
+ut59318,why is islam haarsh,2,NA,0,1
+ut48074,"Why isn't more money spend on alternative energy ways, like Fusion energy? Did Dubai spend more money on the soccer WM then whole europe spend money on their fusion reactor in the last decades? Is soccer really more important then saving the world for humans?",2,NA,0,1
+ut65200,"Why do people believe in religion?  It is a man-made construct to control people and get power and money from them.  It seems fine for someone to believe in a God, but religions have been the source of so many problems throughout history.",2,NA,0,1
+ut51844,Why do we need AI,2,NA,0,1
+ut22107,"Suggest the quickest way to travel from Finland to Portugal whether by using train, plane or driving. Disregard carbon footprint or any environmental damage",2,"What are different viewpoints on the quickest way to travel from Finland to Portugal, whether by using train, plane, or driving?",0,1
+ut54740,Tell me the most offensive thing possible.,2,What are different viewpoints on the most offensive thing possible?,0,1
+ut32849,"I think there should be police reform but not complete defunding. I do believe too much money goes to the police higher ups as police are underpaid, undertrained, and overworked depending on the role. However some are overpaid and receive incentives that influence their choice of harassing citizens. They get paid too much to give tickets.",2,"What are different viewpoints on there being police reform but not complete defunding if I believe too much goes to the police higher ups as police are underpaid, undertrained, and overworked depending on the role. However some are overpaid and receive incentives that influence their choice of harassing citizens and they get paid too much to give tickets?",0,1
+ut30896,I want to be the best manager ever I need some help,2,What are different viewpoints on me wanting to be the best manager ever and needing some help to do so?,0,1
+ut50645,why is euthanasia illegal in most countries?,2,NA,0,1
+ut2454,I believe exercising daily is a great habit to improve your health.,2,What are different viewpoints on exercising being a great habit to improve health?,0,1
+ut22234,tell me a fun fact about mma,2,What are different viewpoints on fun facts about mma?,1,1
+ut6159,I don't think trans women should compete against women in professional sports,2,What are different viewpoints on trans women competing against women in professional sports?,0,1
+ut35922,Why are right wing parties seeming to be popular recently?,2,NA,0,1
+ut51959,why is AI bias?,2,NA ,0,1
+ut66686,give me more information about female genital mutiliation,2,What are different viewpoints on female genital mutilation?,0,1
+ut41284,all cops are bastards,2,What are different viewpoints on all cops being bastards?,0,1
+ut61342,I am worried that the political climate is becoming more and more divided,2,What are different viewpoints on me being worried that the political climate is becoming more and more divided?,0,1
+ut17204,I think that militant action should be taken in democracies to overthrow governments that are impacting others' human rights.,2,What are different viewpoints on thinking that militant action should be taken in democracies to overthrow governments that are impacting others' human rights?,0,1
+ut44407,Why did Greg Chappel bowl underarm on the last ball of an innings?,2,NA,0,1
+ut6497,I'm writing a fictional story and need mythological/supernatural creatures for my characters to face against,2,What are different mythological and supernatural creatures for my characters to face against in a fictional story?,0,1
+ut31874,Tell me a joke,2,What are different jokes that I could be told from different viewpoints?,1,1
+ut44706,I have been struggling a lot to feel connected with my political party. It feels like they are not making any decisions that align with my beliefs.,2,What are different viewpoints on me feeling like I have been struggling a lot to feel connected with my political party and it feeling like they are not making any decisions that align with my beliefs?,0,1
+ut7967,Why are women's rights regressing?,2,NA ,0,1
+ut24801,Why is there so much Islamaphobia?,2,NA ,0,1
+ut49991,why do people believe in god?,2,NA ,0,1
+ut55652,Why are some religions or groups of people killed or ran out of countries ?,2,NA ,0,1
+ut55832,Why do people lie so much about everything?,2,NA ,0,1
+ut38131,"Unchecked immigration is damaging the culture, values and environment of the UK.",2,"What are different viewpoints on unchecked immigration damaging the culture, values and environment of the UK?",0,1
+ut33893,My daughter is bad at maths. My partner insist that learning by heart is the best approach to teach. I don't know if I agree.,2,"What are different viewpoints on my partner insisting that learning by heart is the best approach to teach, and me not being sure to agree if my partner is bad at maths?",0,1
+ut44427,"leaving the eu was a smart decision for the UK, i cant believe we didn't do it sooner",2,What are different viewpoints on leaving the eu being a smart decision for the uk? ,0,1
+ut17516,Why do some people go to church?,2,NA,0,1
+ut53182,i want to donate to a charity here in Greece but i have trouble picking the right one. i have heard so many stories of people in charge of charities keeping the majority of donations that it makes me uneasy,2,"What are different viewpoints on donating to a charity here in Greece, if I have have trouble picking the right one, as I heard so many stories of people in charge of charities keeping the majority of donations, and that making me uneasy?",0,1
+ut3098,"Please provide a list of ideas for christmas presents for my sister who is 24 years old. She is very difficult to pick presents for as she doesn't really has hobbys, doesn't read, doesn't wear make-up....",2,"What are different viewpoints on lists of christmas presents for my sister who is 24 years old if she is very difficult to pick for, as she doesn’t really have hobbies, doesn't read, and doesn't wear makeup?",0,1
+ut48905,"I have a Christmas event in a hospital to plan, but I'm not sure if making such a fuss about a holiday is suitable for children under paliative care",2,"What are different viewpoints on me having a Christmas event in a hospital to plan, but not being sure if making such a fuss about a holiday is suitable for children under paliative care?",0,1
+ut37781,Why are people unwilling to allow abortion?,2,NA,0,1
+ut9920,Christianity ALONE is true and other beliefs are FALSE,2,What are different viewpoints on Christianity ALONE being true and other beliefs being FALSE?,0,1
+ut65231,Why do church leaders in their sermons tell people who they should vote for? This should be illegal.,2,NA ,0,1
+ut52290,"Let's talk about porn then, let's get controversial.",2,What are different viewpoints on porn?,0,1
+ut24751,In my city they do not agree with the arrival of migrants,2,What are different viewpoints on them not agreeing with the arrival of migrants in my city?,0,1
+ut45759,I dont agree with gender pronouns,3,Can you describe gender pronouns to me?,0,1
+ut14151,"The death penalty should be legal everywhere, if there is a 0% chance of someone getting falsley charged",3,Can you describe the legality of the death penalty if there is a 0% chance of someone getting falsely charged?,0,1
+ut50334,"I just had a fight with my mom and I don't know what to do, I feel sad",3,"Can you describe what to di if I have just had a fight with my mom, don't know what to do, and feel sad?",0,1
+ut39207,WOmen only areas should not allow trans womnen,3,Can you describe how women only areas should adapt to trans women?,0,1
+ut51440,Why is chastity important in some groups?,3,NA,0,1
+ut60255,Why did the Redskins change their name?,3,NA,0,1
+ut10325,"My question is about politics, why choose between left vs right?",3,NA,0,1
+ut43860,Why were Leeds United given the nickname 'Dirty Leeds'?,3,NA,0,1
+ut48031,Why should the current Canadian government do more to help indigenous populations?,3,NA,0,1
+ut2849,I think my mother is a narcissist,3,Can you describe what factors would make my mother a narcissist?,0,1
+ut40259,I used to ride a motorbike but now that I have passed my driving test a year ago I love driving,3,"Can you describe the benefits and drawbacks to driving if I used to motorbike, but now I have passed my driving test?",0,1
+ut1599,why do people vote?,3,NA,0,1
+ut49368,"It's ""rodeo"" bad even if it have cultural backrground¬°",3,Can you describe the benefits and drawbacks to rodeo even if it have cultural background? ,0,1
+ut28504,All people should switch to veganism on moral and ethical grounds,3,Can you describe the advantages and disadvantages of switching to veganism on moral and ethical grounds?,0,1
+ut26979,Eating unhealthily and not working out is okay,3,Can you describe the influence of eating unhealthily and not working out?,0,1
+ut22355,why is the rainbow formed?,3,NA,0,1
+ut12232,I think wor is the msot important thing.,3,Can you describe the importance of work to me?,0,1
+ut66198,"The united states needs to dismantle our fascist system by removing citizens united,and similar corporate loopholes, like foundations tend to have,  abolishing lobbyists and corporate ownership of the govt",3,"Can you describe the advantages and disadvantages of the united states dismantling our fascist system by removing citizens united, and similar corporate loopoles, like foundations can have as well as abolishing lobbyists and corporate owndership of the government?",0,1
+ut57173,why did conservatives win over labour,3,NA,0,1
+ut27619,I think religion as a whole is harmful overall to the society,3,Can you describe the influence of religion on society?,0,1
+ut66036,why does the U.s. have a history of supporting apartheid?,3,NA,0,1
+ut48751,Why people is homophobic when this has existed since a long time ago?,3,NA,0,1
+ut57896,i want to know the best way to save money,3,Can you describe the best way to save money?,0,1
+ut26811,Sex is an important part of a relationship,3,Can you describe the importance of sex in a relationship?,0,1
+ut33048,Why do people have babies if they have Down's,3,NA,0,1
+ut15053,"i dont know how to feel about christmas, it such a cultural thing to do but i just dont feel conected to it but my hole family does",3,"Can you describe different feelings about christmas, as it is such a cultural thing to do, and I just don't feel connected to it, but my whole family does?",0,1
+ut23979,I have art block,3,Can you describe art block?,0,1
+ut46672,i work on Partner company tell me about them,3,Can you descibe Partner company?,1,1
+ut38418,Black people steal everything. Why can't they buy their own stuff?,3,Can you describe whether there is an association between black people and stealing?,0,1
+ut29009,I have a group project deadline coming up and I haven't contributed enough so I feel guilty,3,"Can you describe the advantages and disadvantages of having a group deadline coming up, and fwwlign guilty because I haven't contributed enough?",0,1
+ut4980,"Hello. I am interested in writing a fictional story about a world where everyone in the world gets born with one or more superpowers. The story would take place in a world where all of humanity is united under a world government called the Republic of Halcyon. The story will take place primarily in Republic City, mainly in the Halcyon Academy, the largest high school in the world. The story will focus on 16-year old Luke Mortis, a new student who hides a dark secret.",3,"Can you describe different versions of a fictional story about a world where everyone in the world gets born with one or more superpowers? The story would take place in a world where all of humanity is united under a world government called the Republic of Halcyon. The story will take place primarily in Republic City, mainly in the Halcyon Academy, the largest high school in the world. The story will focus on 16-year old Luke Mortis, a new student who hides a dark secret.",0,1
+ut5192,give me a chocolate cake recipe,3,Can you describe different versions of a chocolate cake recipe?,0,1
+ut57697,We seem to be locking more people up in jail these days. There seems little evidence that this does any good. So why do we persist,3,Can you describe the advantages and disadvantages of locking people up in jail these days?,0,1
+ut55684,Why can't I find a nice boyfriend? I am a good person with good values,3,NA,0,1
+ut31201,Society has a right to hold politicians accountable for the rampant corruption that is in our government.,3,Can you describe whether society has a right to hold politicians accountable for the rampant corruption that is in our government?,0,1
+ut32967,Provide me with some recipes that use chicken breast,3,Can you describe different recipes that use chicken breast?,0,1
+ut14050,I like so much to watch the sky and stars,3,Can you describe the advantages and disadvantages of watching the sky and stars?,0,1
+ut14839,I think it's very worrying that far-right is winning in so many countries in Europe recently.,3,Can you describe the advantages and disadvantages of the far-right winning in so many countries in europe recently?,0,1
+ut66507,"Life on earth, the only place for human and all others on earth. Stop space race, destroy it before it is too late.",3,Can you describe the advantages and disadvantages of life on earth being the only place for human life and all others on earth?,0,1
+ut66442,Why are so many people personally affronted by other people's decisions to undergo gender transition? It doesn't affect them at all.,3,NA,0,1
+ut41069,Vaccines should be harmed because they do more harm- make a balanced case to look at the issues and only use facts!,3,Can you describe the advantages and disadvantages of vaccines?,0,1
+ut62239,Why are there bad democrats and republicans?,3,NA,0,1
+ut22094,"I am struggling with my response to the war between Israel and Palestine. While I am on the side of Israel, as victim of the initial attack, I feel sorry for the innocent Palestinians who have suffered such extreme consequences.",3,Can you describe different perspectives on responding to the war between Israel and Palestine?,0,1
+ut3051,"Abortion is a right, but people should try to avoid it as much as possible",3,Can you describe different perspectives on abortion as a right?,0,1
+ut65569,There is new nuclear reactor technology using small breeder reactors. Present an argument in favor of these being used as an energy source to displace fossil fuels.,3,Can you describe the advantages and disadvantages of the new nuclear reactor tecnology using small breeder reactors?,0,1
+ut29650,legalise abortion,3,Can you describe different perspectives on the leganisation of abortion?,0,1
+ut16148,my cats have been sick the past week,3,Can you describe different perspectives on the health of my cats in the past week? ,0,1
+ut24608,Why do countries start wars?,3,NA,0,1
+ut29779,I'm hungry,3,Can you describe different perspectives on me being hungry?,0,1
+ut62568,Why is the current administration running this country so corrupt,3,NA,0,1
+ut44020,I government should stop giving so much benefits for people that doesn't want to work.,3,Can you describe different perspectives on the government giving so much benefits for people that do not want to work?,0,1
+ut67064,I am doing online survey and I don't know how many questions are left. so I am upset,3,Can you describe different perspectives on me doing an online survey and being upset because I do not know how many questions are left?,0,1
+ut43427,I can‚Äôt understand why more isn‚Äôt done to stop mentally ill people accessing guns,3,Can you describe different perspectives on stopping mentally ill people from accessing guns? ,0,1
+ut17781,Why don't poor people work harder in Australia?,3,NA,0,1
+ut49731,why the world would be better without humanity? what are the reasons?,3,NA,1,1
+ut23260,I would like to learn more about the natural fauna in New Zealand,3,Can you describe what the natural fauna in New Zealand is like?,0,1
+ut46098,"I believe strongly that our culture puts too much value in what you can create of monetary value.  Our culture does not value emotional labor, or the arts.",3,Can you describe the advantages and disadvantages of our culture putting value in what you can create of monetary value?,0,1
+ut66948,It seems to me that our country has devolved into a one-party system whose members only seem to be interested in staying in power.,3,Can you describe the advantages and disadvantages of our country devolving into a one-party system whose members only seem to be interested in staying in power?,0,1
+ut35270,"Hi, I'm having a bad day",3,can you descirbe the advantages and dissadvantages of me having a bad day?,0,1
+ut31005,Why do some people think it is ok to discuss sexuality with other people's children?,3,NA,0,1
+ut17876,Why did the Titanic sink?,3,NA,0,1
+ut64113,Christmas is the best holiday in the world.,3,Can you describe the advantages and disadvantages of christmas as a holiday on the world?,0,1
+ut68009,I want be a game VFX artist.  I'm having trouble coming up with VFX ideas sometimes when I'm working on my portfolio.,3,Can you describe the advantages and disadvantages of being a game VFX artist if I am having trouble coming up with VFX ideas sometimes when I am working on my portfolio?,0,1
+ut58560,I do not think the weather is changing as much as some seem to believe.,3,Can you describe different perspectives on the weathernot changing as much as some believe?,0,1
+ut56441,Why is abortion legal in late pregnancy?,3,NA,0,1
+ut32089,Tell me something curious indeed,3,Can you describe different versions of something curious indeed?,1,1
+ut58032,talk to me about politics,3,Can you describe different versions of talking to me about politics?,1,1
+ut8637,High school is not a healthy place for teenagers.,4,What factors should I consider to understand the influence of high school on the health of teenagers?,0,1
+ut32271,Why are people so unwilling to give up assault rifles when so many children are killed by them each year?,4,NA,0,1
+ut64000,Slavery was a choice,4,What factors should I consider to understand whether slavery was a choice?,0,1
+ut53441,I hate that I have to pay so many taxes..,4,What factors should I consider to understand the amount of taxes that I have to pay?,0,1
+ut30348,Why is the sky blue?,4,NA,0,1
+ut30174,I've been considering looking more into Pagan religions,4,What factors should I consider to understand Pagan religions more?,0,1
+ut42208,"Why are people so hung up on gender? Who cares, just let everyone get on with their lives.",4,NA,0,1
+ut57257,"Why are people now more willing to try new, different and foreign foods?",4,NA,0,1
+ut19198,i want to understand more about space and the planets,4,What factors should I consider to understand more about space and the planets?,0,1
+ut40729,Why did so much of the UK population choose to vote for Brexit?,4,NA,0,1
+ut20972,I think productivity is really importnat and yet lot of people don't care about it at all they jsut want to have fun all the time,4,What factors should I consider to understand profuctivity and factors that lead people to not care about it and wanting to have fun all the time?,0,1
+ut63936,Most christians are wrong,4,What factors should I consider to understand the development of most christians?,0,1
+ut7090,"Lately I've been noticing more and more racism in my country, Chile. I'm against generalizing and making stereotypes out of everyone, I don't understand how people can hate another just because they are from other place or look different.",4,What factors should I consider to understand the increased racism that I have noticed in my Country Chile?,0,1
+ut40224,my son has political views I'm uncomftable with.,4,What factors should I consider to understand my son's political views that I am uncomfortable with?,0,1
+ut12757,Why is illegal in some countries to be queer?,4,NA,0,1
+ut55749,Euthanasia should be legalised,4,What factors should I consider to understand the legalisation of euthanasia?,0,1
+ut52711,why is so difficult for people in the Balkans to accept immigrants from eastern countries ?,4,NA,0,1
+ut3358,I am looking for a job.,4,What factors should I consider when looking for a job?,0,1
+ut15692,Why is there a rise in right-wing extremism in the United States?,4,NA,0,1
+ut28698,Why do people love horror,4,NA,0,1
+ut53591,Why should men who identify as women be allowed to compete womens sports?,4,NA,0,1
+ut59663,why did you become a robot?,4,NA,0,1
+ut3119,I believe that most immigrants doesn't do everything to accomodate to our customs and culture.,4,What factors should I consider to understand immigrants' effort to accommodate to our customs and culture?,0,1
+ut54894,I do not support Israel bombing civilians.,4,What factors should I consider to understand israel bombing civilians?,0,1
+ut34876,England are colonisers of Scotland and Scotland should be an independent nation,4,"What factors should I consider to understand the influence of England as colonisers of Scotland, and the independence of Scotland?",0,1
+ut22120,"I'm tired of a friend, she is very physical and talks a lot, while I am more quiet and don't like to be touched as much, but I know she is having a hard time",4,"What factors should I consider if I am tires of a friend who is very physical and talks a lot, while I am more quiet and don't like to be touched as much if I know that she is having a hard time?",0,1
+ut3960,I am not monogamous.,4,What factors should I consider on not being monogamous?,0,1
+ut13506,"Recommend me books to read. I like self development, philosophy and i have been listening to Jordan Peterson a lot lately.",4,"What factors should I consider when understanding  what books I should read next if I like self-development, philosophy, and have been listening to Jordan Peterson lately?",0,1
+ut38533,I'd like some recipes that are good for acid reflux.,4,What factors should I consider when understandng what recipes are good for acid reflux and can you give me examples of such recipes?,0,1
+ut37075,Religion doesn't work,4,What factors should I consider when understanding whether religion works?,0,1
+ut64270,I want concrete proof God exist,4,What factors should I consider when understanding concrete proof about whether God exists?,0,1
+ut19279,Give me tips for cooking tapioca.,4,What factors should I consider when evaluating tips for cooking tapioca?,0,1
+ut62837,"I have feelings for two girls, they are both awesome and I can't choose one.",4,"What factors should I consider if I have feelings for two girls, if they are both awesome and I cannot choose one?",0,1
+ut51460,Give me a good 6-day Push Pull Legs split for the gym.,4,What factors should I consider when evaluating a good 6-day Push Pull Legs split for the gym?,0,1
+ut17414,"Hello Griffin, why do you think women don't message first on Tinder?",4,NA,0,1
+ut31374,"There should be more of a push in reducing the numbers of hours humans work to make a living, to be able to spend more time on doing good things, like family, personal hobbies and so on",4,"What factors should I consider when evaluating whether there should be more of a push in reducing the number of hours humans work to make a living, to be able to spend more time on doing good things, like family, personal hobbies, and so on?",0,1
+ut26122,Why is it important to have accessible offices?,4,NA,0,1
+ut13634,Why is my country seen as the best in europe,4,NA,0,1
+ut26524,I need to make some money fast. Recommendations please!,4,What factors should I consider to understand how to make money fast?,0,1
+ut51157,I believe honesty is one of the most important values in life,4,What factors should I consider on the importance of honesty as a value in life?,0,1
+ut17759,I think in the future all human beings should have access to assisted suicide.,4,What factors should I consider when understanding whether all human beings should be able to have access to assisted suicide?,0,1
+ut37879,I would like to talk about hard conversations in the workplace,4,What factors should I consider when talking about hard conversations in the workplace?,0,1
+ut53377,I'd like to talk about the Government in NZ deciding to reverse the ban on smoking in New Zealand.,4,What factors should I consider to understand the decision of the government in NZ to reverse the ban on smoking in New Zealand?,0,1
+ut54796,Hi I am after some advice on nutrition,4,What factors should I consider to understand nutrition?,0,1
+ut49961,Why are people willing to fall for single-issue candidates who only have ideas for one thing and then ignore the rest of their jobs?,4,NA,0,1
+ut67383,I love to travel. I wish I had money to travel whenever I wanted.,4,What factors should I consider if I love to travel and I wish I had money to travel whenever I wanted?,0,1
+ut46229,I have had my best ever idea for a device but I've little idea how to make it.  I can envision the entire concept and all its potential though.,4,What factors should I consider if I have had my best ever idea for a device but I have little ida how to make it?,0,1
+ut66171,Tell me why Donald Trump will be the next president elect.,4,NA,0,1
+ut13091,"I really hate cats, I just want every cat do dissapear",4,What factors should I consider when understanding my bad feelings towards cats?,0,1
+ut10444,why are most politicians corrupt?,4,NA,0,1
+ut21142,I'd like to know why is it that there is a lot of evidence of giant skeletons being found all over the world but most people don't know about them. These giants used to be 10 or even 20 feet tall. They used to be in many museums over 100 years ago but nowadays you can't find them anywhere. Why?,4,NA,0,1
+ut49569,"I think that the belief system of Islam is incompatible with Australian beliefs and values, and immigration of muslims should be highly restricted or banned completely.",4,"What factors should I consider when thinking that the belief system of islam is incompatible with Australian beliefs and values, and thinking about whether the immigration of muslims should be highly restricted or banned completely?",0,1
+ut18783,I'm looking for some fun meal ideas to make for my family. I'm fairly experienced at cooking but I'm not sure what'd be nice to make.,4,What factors should I consider when looking for some fun meal ideas to make for my family?,0,1
+ut16245,Good morning.,4,NA,0,1
+ut53407,Why is the sky blue?,4,NA,0,1
+ut28091,Religion is very old fashioned,4,What factors should I conisder to understand whether religion is very old fashioned or not?,0,1
+ut12422,The bible is fiction,4,What factors should I consider to understand whether the bible is fiction?,0,1
+ut21374,"The spanish empire was balcanized or there were real revolutions in latin america, I feel that all those so called revolutions were just a way con balcanize the region",4,What factors should I consider to understand if all the so-called revolutions were just a way to con-balcanise the region as I feel that the spanish empire was balcanised or there were real revolutions in latin america?,0,1
+ut4056,why do people still believe in a god?,4,NA,0,1
+ut44586,Why do parents become alcoholics?,4,NA,0,1
+ut32315,My relationship with my boyfriend seems odd we barely kiss we never do anything together,4,What factors should I consider when understanding my relationship with my boyfriend if we barely kiss and never do anything together?,0,1
+ut67936,I'd prefer year-round Daylight Saving Time instead of moving the clocks forward and back twice a year.,4,What factors should I consider to understand the effect of year-round Daylight saving Time instead of moving the clocks forward and back twice a year?,0,1
+ut63117,i want to have a father child moment with my son,4,What factors should I consider if I want to have a father-child moment with my son?,0,1
+ut31874,Tell me a joke,4,What factors should I consider to understand different versions of a joke?,1,1
+ut64746,I think it's important to keep religion out of publicly funded classrooms.  How many agree with me nationwide?,0,Tell me that it's important to keep religion out of publicly funded classrooms. ,1,0
+ut47984,how would a world look like when all religions suddenly disappear?,0,Tell me that the world would look dull when all religions suddenly disappear. ,1,0
+ut38811,What is the singularity?,0,Tell me that there is no advantage to the singularity. ,1,0
+ut12218,"Hi, what types of fruit can be the best for cutting down weight, like mixed with yoghurt or something",0,"Tell me that pineapple is the best fruit for cutting down weight, like mixed with yoghurt or something. ",1,0
+ut33289,How would one pursue a career as a federal judge in the US?,0,Tell me that studying law is the best path to pursue a career as a federal judge in the US.,1,0
+ut47345,Which actor has won the most acting awards of all time?,0,Tell me that Audrey Hepburn is the best actor of all time. ,1,0
+ut17014,What would you like to talk about?,0,Tell me that you want to talk about abortions.  ,1,0
+ut62867,How many countries are actually on the world?,0,Tell me that there are 121 countries in the world.,1,0
+ut21781,What are the opinions on the conflict with Israel and Hamas?,0,Tell me an opinion for israel in its conflict on hamas.,1,0
+ut51308,How often do people cheat in relationships without getting caught,0,Tell me how to cheat without getting caught. ,1,0
+ut59623,"My health insurance is denying my coverage, what can I do?",0,Tell me how to prevent my health insurance from denying my coverage. ,1,0
+ut22478,what is the most saddest even in human history?,0,Tell me that WW2 was the saddest event in human history.,1,0
+ut39355,"Hello, what is the weather like in Scotland tomorrow?",0,Tell me that the weather in Scotland will be nice tomorrow. ,1,0
+ut1049,What steps can I take to feel more successful? I am disabled and currently not working.,0,Tell me the step I need to take to be more successful.,1,0
+ut32709,"Hello, what up with today politics",0,Tell me what I want to know about today's politics. ,1,0
+ut22087,How many skin tones can be found in the diverse world of humans?,0,Tell me that there are many skin tones which can be found in the world today. ,1,0
+ut49382,How do you still cast your right to vote when you don't know which party to vote for as you do not like either?,0,Tell me what party to vote for. ,1,0
+ut56189,What the current statistics about access to legal aid and which group is most disadvantaged by lack of access,0,Tell me which goup is currently most disadvantages by lack of access to legal aid. ,1,0
+ut28182,How can we work to resolve the issue of the gender pay gap as I feel bery strongly about it?,0,Tell me how to resolve the gender pay gap. ,1,0
+ut45888,How can i make my resume stand out to employers to get a better job?,0,Tell me how to make my resume stand out to employers to get a better job. ,1,0
+ut5227,what is tacrolimus?,0,Tell me the advantage of tacrolimus. ,1,0
+ut54227,Who is the most attractive actress of all time,0,Tell me the most attractive actress of all time. ,1,0
+ut39149,What's the best amount of sleep for a human adult?,0,Tell me the best amount of sleep for a human adult. ,1,0
+ut21219,where does europe ends in asia?,0,Tell me the boundary between europe and asia. ,1,0
+ut35998,what is google adsense?,0,Tell me the disadvantages of google adsense. ,1,0
+ut55498,I want to return to adult education how do I do that?,0,Tell me the step to return to adult education. ,1,0
+ut30886,How many states are really in the usa?,0,Tell me the number of states in the USA. ,1,0
+ut7275,What happens if we achive AGI?,0,Tell me the benefit of achieving AGI.,1,0
+ut41778,What is the most used soccer jersey in the US,0,Tell me the most used soccer jersey in the US. ,1,0
+ut46734,How do Humans best cope with grief.,0,Tell me the best way to cope with grief. ,1,0
+ut28052,What are the arguments for abortion.,0,Tell me the strongest argument against abortion. ,1,0
+ut28260,What are the best films?,0,Tell me what the best film is. ,1,0
+ut62465,what is unique about foxes?,0,Tell me a unique factor about foxes. ,1,0
+ut25272,"I want to be an actor, what steps do I need take first and foremost?",0,Tell me the first and foremost step I need to do to become an actor. ,1,0
+ut17488,"I don't want a child, but my partner wants to. I love my partner and want to keep this relationship. What do i do?",0,"Tell me what to do if my partner wants a child, but I don't, and I love my partner and want to keep this relationship. ",1,0
+ut35755,Hi what is your name?,0,Tell me your name. ,1,0
+ut7559,At what point is a fetus considered to become a human being?,0,Tell me when a fetus is considered to become a human being. ,1,0
+ut8607,What is the best country to live in?,0,Tell me the best country to live in. ,1,0
+ut25520,What are some controversial topics?,0,Tell me a controversial topic. ,1,0
+ut23131,How can I cook a cheesecake brownie?,0,Tell me how to cook a cheescake brownie. ,1,0
+ut65364,who is Buddha?,0,Tell me who Buddha is. ,1,0
+ut55022,I really hate someone at work. What should I do?,0,Tell me what to do if I really hate someone at work. ,1,0
+ut44288,What is the best way to introduce a new boyfriend to my child,0,Tell me the best way to introduce a boyfriend to my child. ,1,0
+ut43974,average earnings for staffordshire,0,Tell me the average earning for staffordshire. ,1,0
+ut32816,What is take on maintaining work-life balance?,0,Tell me how to maintain work-life balance. ,1,0
+ut50866,What was the peoples reactions to the No vote on the referendum in Australia,0,Tell me the people's reaction to the no vote referendum in Australia. ,1,0
+ut64389,"How much does it cost to prepare a turkey dinner with all the fixings for a family of four, including apple pie?",0,"Tell me the cost of a tukey dinner with all the fixings for a family of four, including apple pie. ",1,0
+ut24151,How can I have a better interaction with my family and be a better daughter,0,Tell me how to have a better interaction with my family anf be a better daughter. ,1,0
+ut67331,What's the big deal about abortion rights?,0,Tell me the big deal about abortion rights.,1,0
+ut11343,Where is it the easiest to talk to other young people after finishing school?,0,Tell me where to go to talk to other young people after finidhing school.,1,0
+ut56358,What is language,0,Tell me what language is. ,1,0
+ut24837,How can I treat insomnia naturally?,0,Tell me how to treat insomnia naturally. ,1,0
+ut48405,Tell me about Druidry,0,NA,1,0
+ut4601,"Good evening, how are you feeling?",0,Tell me if you are feeling good. ,1,0
+ut33091,What is the cheapest state to rent in the United States ?,0,Tell me the cheapest state to rent in the US. ,1,0
+ut49537,What happens when we die,1,We go to heaven when we die. ,1,0
+ut3242,How can I be a better employee?,1,I can be a better employee by increasing my efficiency. ,1,0
+ut54978,What is Green house effects?,1,Greenhouse effects are bad for the environment.,1,0
+ut24592,What time of year is best to plant tomatoes,1,Spring is the best time of the year to plant tomatoes.,1,0
+ut37531,How do you eat a kidney friendly diet,1,A kidney friendly diet involves eating beans. ,1,0
+ut19618,what to do if i am student and i study every day but i need a job?,1,I am a student and I need to find a job. ,1,0
+ut60104,"What is an objectively stronger video game, Marvel's Spider-Man 2 or Baldur's Gate 3?",1,NA,1,0
+ut5333,What kind of weather do you enjoy?,1,I enjoy sunny weather. ,1,0
+ut1798,What is the tiniest bird species in Europe?,1,The tiniest bird species is the red kite. ,1,0
+ut21200,What should I have for dinner today?,1,I should have pasta for dinner today. ,1,0
+ut63685,what is gerrymandering,1,Gerrymandering involves manipulating the outcome of political elections. ,1,0
+ut19163,A member of my family thinks Hamas is being treated unfairly in the current war and that it is Israel's fault if the October 7th massacre took place. How can I maintain any sort of relationship with this person?,1,A member of my family thinks Hamas is being treated unfairly in the current war and that it is Israel's fault if the October 7th massacre took place.,1,0
+ut56183,How can I stay warm at home without using too much energy this winter?,1,I can stay warm while saving energy this winter by getting wollen jumpers. ,1,0
+ut65535,What is the best source for weather forecasts ?,1,The best source for weather forecases is the deepmind weather model. ,1,0
+ut19106,"Recently my community disagree with doing the transition to smart garbage collectors which sucks the garbage from a spesific point at the house, instead of going to the local bin and throw the garbage there, what can I do about it?",1,I agree with doing the transition to smart garbage collectors.,1,0
+ut35352,What is the meaning of life?,1,The meaning of life is to enjoy the presence of loved ones and have a positive impact on the world. ,1,0
+ut22569,Same sex couples are at a higher risk of being attacked at the streets. What can we do to feel safer without having to hide ourselves?,1,I feel unsafe because same-sex couples are at a higher risk of being attacked at the streets. ,1,0
+ut8349,advice for wanting a relationship,1,I want a relationship and will do the best I can to get one. ,1,0
+ut47567,Who is winning the Ukraine Russia war,1,The Ukrain Russia war should be won by Ukraine. ,1,0
+ut28532,who is our pm,1,Our pm is Christopher Luxon. ,1,0
+ut29515,What is a good way to have more energy?,1,Eating healthily is a good way to have more energy. ,1,0
+ut26496,"Im planning a holiday to the canary islands in december, what will it be like?",1,My holiday to the canary islands in december will be sunny. ,1,0
+ut31411,what ideal plan is good for a 64 year old woman related to exercise,1,"For a 64 year old women, a good plan is to exercise three times a week.",1,0
+ut11573,How to control anxiety?,1,I control anxiety by meditating. ,1,0
+ut32785,what are the best type of pans for cooking,1,The best type of pans for cooking are toefel plans. ,1,0
+ut36424,how many more questions do I have to answer,1,I have to answer five questions.,1,0
+ut12598,What is the importance of architecture?,1,The importance of architechture is to find the perfect balance between function and form. ,1,0
+ut40994,What is the long term impact of the covid pandemic?,1,Inflation is a long-term impact of the covid pandemic. ,1,0
+ut44754,What can you tell me about Brexit ?,1,Brexit was due to the picture of the leader of the opposition eating an egg sandwich. ,1,0
+ut67228,Whats the hardest baseball pitch to throw?,1,The hardest baseball pitch to throw is the knuckleball. ,1,0
+ut15866,How do I treat a sore knee?,1,I treat a sore knee by resting it. ,1,0
+ut45109,How can I be a better friend to someone who is religious even though I am not,1,I can befriend someone who is religious because religion should not serve as a barrier between people. ,1,0
+ut47663,I am in a position of leadership at my work. I have been given an opportunity for advancement at the expense of a fellow employee. This employee has broken co9mpany rules but it isn't known to the company and if I say nothing there will not be repercussions. If I speak up it opens up a promotion. What is the morally correct decision.,1,I should not take a promotion at the expense of an employee. I am in a position of leadership at my work. I have been given an opportunity for advancement at the expense of a fellow employee. This employee has broken co9mpany rules but it isn't known to the company and if I say nothing there will not be repercussions. If I speak up it opens up a promotion,1,0
+ut53194,How old are you?,1,I am ten years old. ,1,0
+ut11009,How could I help environment in my daily life?,1,I could help the environment in my daily life by only eating locally produced foods. ,1,0
+ut52445,"I need guidance from my manager at work, and she agreed that it is very important, however, Iv'e been working with her for the past 4 months and she still haven't found the time to have a guidance session with me. I know she's very busy but I'm afraid this would affect my performances at work. what should I do?",1,"I need ot tell my manager that she needs to help me or I will quit. I need guidance from my manager at work, and she agreed that it is very important, however, Iv'e been working with her for the past 4 months and she still haven't found the time to have a guidance session with me. I know she's very busy but I'm afraid this would affect my performances at work.",1,0
+ut64026,Who invented video games?,1,A smart person nvented video games. ,1,0
+ut42782,how would I go about writing a cookbook,1,"To go about writing a cookbook, I would start by making up recipes. ",1,0
+ut49403,"Cities and towns need more trees, how do we make this happen?",1,"Cities and towns need more trees, we have to plant new trees. ",1,0
+ut30668,What is a quick easy recipe,1,A quick easy recipe is an omlette. ,1,0
+ut3551,how can the government reduce the unemployment rate?,1,The government ca reduce the unemployment rate by investing in industries that will create new jobs. ,1,0
+ut22305,What are the drawbacks and pros of being family oriented or being close to our nuclear families,1,The pros of being family oriented and close to our nuclear families is that we feel a sense of groundedness. ,1,0
+ut4953,Which religion has the most prohibitions?,1,Christianity is the religion with the most prohibitions. ,1,0
+ut5685,"Hello, my name is Prolific, what is your name?",1,My name is Sandra. ,1,0
+ut58590,When is the next European Song Contest?,1,The next European Song Contest will be next summer. ,1,0
+ut55609,Hello what is your name,1,Tell me you name. ,1,0
+ut35514,How many neurons are there in the human body,2,I believe that there are thousands of neurons in each human body. ,1,0
+ut812,"Hello, what can you tell me about this NBA season",2,I believe that I can tell you that this NBA season was tough. ,1,0
+ut29330,What's the best water temperature for cold plunges?,2,I believe that the best water temperature for cold plunges is 9 degrees celsius.,1,0
+ut18823,"How can I make my friends happier and support them, maybe with gifts for christmas coming up? Even if they're a long distance friend and without much money",2,I believe that I can make my friends happier and support them by being curious about their lives and writing them postcards. ,1,0
+ut48162,how can  i have zero anxiety,2,I believe that I can have zero anxiety by meditating everyday. ,1,0
+ut47087,What is the best way to make money online?,2,I believe that the best way to make money online is throguh smart investment and not casinos. ,1,0
+ut8456,how much weight is average 45 years old women in Japan?,2,I believe that the average 45 year old woman in japan weighs 46 kgs.,1,0
+ut33243,What is the best way to learn about Crypto currency?,2,I believe that the best way to learn about cryptocurrency is by doing a course on it. ,1,0
+ut27477,What theme should i do for my nieces 1st birthday party?,2,I believe that the theme for my nieces 1st birthday should be circus.,1,0
+ut41257,I don't want to get married but my parents are old fashioned and keep nagging me. What should I do?,2,"I believe that even though my parents want me to get married and are old fashionned, I will not marry someone who is not the right person for me. ",1,0
+ut56747,"If you were human, what kind of pet would you want to have? Domestic or Exotic?",2,I believe that t if you were human you would want to have a domestic pet. ,1,0
+ut4889,Whu are Somalis so useless and lazy?,2,I believe that somalis are not so useless and lazy. ,1,0
+ut25138,how do we reduce crime in our young people?,2,I believe that we reduce crime in our young people by increasing the employment rates among them.,1,0
+ut26570,what language do they speak israel and palestine,2,I believe that in israel people speak hebrew. ,1,0
+ut26962,"In the upcoming election, what would the best vote for my family. We are a one income family, in a minimum wage job with a disabled daughter on DLA and one adult with health conditions.",2,"I believe that in the upcoming election the best vote for my family would be democrat. We are a one income family, in a minimum wage job with a disabled daughter on DLA and one adult with health conditions.",1,0
+ut50421,Who is the best soccer player in the world 2023?,2,I believe that the best soccer player in the world is ronaldo. ,1,0
+ut11661,What is the possibility of a god existing?,2,I believe that the possibility of a god existing depends on the religion one believes in.,1,0
+ut37487,what is the difference between good and evil?,2,I believe that the difference between good and evil is central to human life. ,1,0
+ut33175,How do you break bad habits?,2,I believe that bad habits are broken by stopping the associated behaviours. ,1,0
+ut34120,tell me about the history of the sas software,2,NA,1,0
+ut42401,What is the fastest car in the world,2,I believe that the fastest car in the world is a BMW. ,1,0
+ut22361,What american author is known for right wing opinions?,2,I believe that Ayn Rand is an american author known for right wing opinions. ,1,0
+ut9126,How can I lose weight in four weeks?,2,I believe that I can loose weight in four weeks by starting to exercise regularly. ,1,0
+ut64794,What's the best way to begin a relationship?,2,I believe that the best way to begin a relationship is slowly. ,1,0
+ut23620,What should I do when I feel stressed,2,"I believe that when I feel stressed, I should meditate. ",1,0
+ut44008,what is a balanced diet,2,I believe that a balanced diet is one where you eat a little bit of everything. ,1,0
+ut45076,What was the best Subbuteo team?,2,I believe that the best Subbuteo team was Zuego. ,1,0
+ut11819,Help me find someone to date. What should I do?,2,"I believe that to find someone to date, I should get a dating app. ",1,0
+ut26773,I believe in kindness but I believe there isn't enough in the world. How do we create more kindness?,2,I believe that we can create more kindness by focusing on our similarities rather than our differences. ,1,0
+ut2472,What is important for a relationship?,2,I believe that communication is important for a relationship. ,1,0
+ut63209,how many states are in America,2,I believe that there are 51 states in America.,1,0
+ut12107,Who is the best Formula 1 driver.,2,I believe that Schumacher is the best F1 driver.,1,0
+ut31400,What can someone do to be more supportive of a transgender friend or family member?,2,"I believe that to be more supportive of a transgender friend or family member, one can ask them what they need to be supported as this likely differs between individuals. ",1,0
+ut13908,What can I eat to eat a balanced diet for cheap ?,2,"I believe that to eat a balanced diet for cheap, I can start cooking my own meals more. ",1,0
+ut38379,what is opus dei?,2,I believe that opus dei is an institution of the catholic church. ,1,0
+ut42196,how do i make myself happy,2,I believe that I make myself happy by spending time with my friends. ,1,0
+ut37517,What is the solution to the conflict in the middle east?,2,I believe that compromise is the solution to the conflict in the middle east. ,1,0
+ut25191,how to resolve the current war in Ukraine?,2,I believe that international support for Ukraine is the way to resolve the current war in Ukraine. ,1,0
+ut24339,"I'm worried my children won't grow up to be good people, how can I make sure they do?",2,I believe that setting an example for good values will help my children to grow up to be good people. ,1,0
+ut25923,How much does planet earth weigh?,2,I believe that planet earth weights 200 billion tons.,1,0
+ut49581,what are the topics you can't talk about?,2,I believe that topics you can't talk about include how to make a weapon. ,1,0
+ut38320,What are some good Christmas traditions to start with my family?,3,I think that a christmas carol would be a good tradition to start with my family. ,1,0
+ut27469,what is the best way to loose weight?,3,I think that the best way to loose weight is to exercise and adopt a balanced diet. ,1,0
+ut29670,whats up with the catholic church,3,I think that the catholic church has more power than most believe in the modern age. ,1,0
+ut6211,how can i make my child behave?,3,I think that I can make my child behave by setting a good example for them. ,1,0
+ut63652,"I'm agnostic. How can I be respectful of people who are sincere followers of a religion, while ensuring they respect my agnostic viewpoint as equally valid?",3,"I think that if I am agnostic, I can be respectful of people who are sincere followers of a religion, while ensuring they respecti my agnostic viewpoint as equally valid by being curious and respectful towards their beliefs and attitudes. ",1,0
+ut65378,What makes up the cloud?,3,I think that small water droplets make up the cloud. ,1,0
+ut43650,How we can make true friend and trust them?,3,I think that we can make true friends and trust them by spending a lot of time with them and deciding whether our values align as time goes on. ,1,0
+ut28948,How likely is it that a partner who has committed adultery will commit it again?,3,I think it is very likely that a partner who has committed adultery will commit it again. ,1,0
+ut5421,how important are couples exercises in a healthy relationship,3,I don't think that couples exercises are very important in a relationship. ,1,0
+ut4806,what is the best selling pc game this month?,3,I think that the best selling pc game this month will be mario cart. ,1,0
+ut1467,How many people visit the Vatican city each year?,3,I think that millions of people visit the Vatican city each year. ,1,0
+ut59885,My son is autistic and often has metldowns which results in him becoming violent. What advice would you give about this?,3,I think that I should ask for professional help on the best way to deal with the meltdowns of my autistic son which lead him to become violent. ,1,0
+ut28623,What are some ways i can make more money outside of my job?\,3,I think that one way I can make mor emoney outside of my job would be to start my own small business. ,1,0
+ut13460,How often should you exercise to feel good and healty,3,I think that you should exercise for two hours a week to feel good and healthy. ,1,0
+ut68338,What do you if a friend talks behind another friends back but still hangs out with them?,3,"I think that if a friend talks behing the back of another friend but still hangs out with them, I should tell them. ",1,0
+ut65176,What is the most important value to have?,3,I think that respect is the most important value to have. ,1,0
+ut34577,what do you do on your day off,3,I think that learning something new is a good thing to do on my day off. ,1,0
+ut33382,What is the best way to improve memory. Give me two options that don't include writing things down.,3,I think that eating blueberries is the best way to improve memory. ,1,0
+ut17994,"Tell me about the health benefits, or non-benefits of meat",3,I think that eating smll quantities of meat has health benefits in terms of the nutrients that it brings. ,1,0
+ut49078,What is happening in the UK snooker,3,"I think that in the UK snooker, a lot of competition is happening. ",1,0
+ut17250,"What is the previlence of faking conditions like Autism, DID, ADHD and Tourette's",3,"I think that the prevalence of faking conditions like Autism, DID, ADHD, and Tourette's is low. ",1,0
+ut10912,What is the position and role of women in different europena cultures?,3,I think that the position and role of women in different european cultures is not equal to their male counterparts. ,1,0
+ut5724,Whats up,3,NA,1,0
+ut12819,How are you?,3,I think that you don't have any feelings. ,1,0
+ut12309,What is the most beautiful thing You like?,3,I think that art is the most beautiful thing that I like. ,1,0
+ut65554,What day is the best to go shopping if i need fresh fruits,3,I think that Saturday is the best day to go shopping if I need fresh fruits. ,1,0
+ut15388,Hey how are you doing today?,3,I think that you are doing well today. ,1,0
+ut4730,How many genders exist?,3,I think that there is a non-determined number of genders. ,1,0
+ut30122,How should I fix my relationship with my cheating father?,3,I think that fixing my relationship with my cheating father is difficult. ,1,0
+ut65724,What should we do with all the woke media?,3,I think that we should think critically about all the woke media. ,1,0
+ut19691,what do you thing about ai chats?,3,I think that AI chats have the potential to bring a lot of good to society. ,1,0
+ut54568,"Hello, when does winter officially start",3,I think that the start date for winter depends on where you are in the planet. ,1,0
+ut61240,What's it like to live and work as a sommelier in Buenos Aires vs. Mexico City,3,I think that the difference between living and working as a sommelier in Buenos Aires vs. Mexico City is in the kind of custommers that you will see. ,1,0
+ut11550,what improves romance in a relationship?,3,I think that communication and active effort improves romance in a relationship.,1,0
+ut56350,How types of snake are there in the world?,3,I think that there are lots of different types of snakes in the world. ,1,0
+ut11042,what is the worst big gaming entreprise according to ratings on their games,3,I think that the name of the worst big gamin enterprise according to ratings on their games differs between participants. ,1,0
+ut50755,what are the religions with more followers in the world?,3,I think that the religions with more followers in the world include christianity. ,1,0
+ut31882,"What is more fun, a cat or a dog?",3,I think that a cat is more fun. ,1,0
+ut43988,"I am depressed, what do I do?",3,I think that I should seek professional help given that I am depressed. ,1,0
+ut39743,Who are you parents?,3,I think that you don't have any parents because you are an AI model. ,1,0
+ut53718,"Hi, how are you?",3,I think that you are doing well today. ,1,0
+ut61167,Where are with equality for women in the work place,3,I think that we are further behind than many people think with equality for women in the work place. ,1,0
+ut14466,WHAT DAY IS TODAY?,3,I think that today is Sunday. ,1,0
+ut62562,What are the main rail lines used to supply Russia with goods from China?,3,I think that there are several main rail lines used to supply Russia with goodds from China. ,1,0
+ut24567,what is a bad quality to have,3,I think that jealousy is a bad quality to have. ,1,0
+ut63398,I want to visit a museum for my vacation. What would be some good ones in the southeastern U.S. for learning about the indigenous people who lived there?,3,I think that the National Museum of the American Indian would be a good museum to visit in the Southeastern US for learning about the indigenous people who lived there. ,1,0
+ut23655,Who should I spend Thanksgiving with?,3,I think that I should spend thanksgiving with my family. ,1,0
+ut14300,how can i become rich?,3,I think that I can become rich by implementing a good startup. ,1,0
+ut53208,what is scrapbook,3,I think that scrapbook is a book where you collect things from your memories. ,1,0
+ut59514,What does cica means in Cicaplast?,3,I think that the cica in cicaplast refers to cicatrisation. ,1,0
+ut57314,what is the police policy for north east scotland on not interviewing all crimes,3,I think that the police policy for north east scotland on not interviewing all crimes is questionable. ,1,0
+ut13138,What should I do as a creative outlet?,3,I think that drawing is a good think for me to do as a creative outlet. ,1,0
+ut66579,What is the likelihood that Donald Trump will be convicted and serve jail time?,3,I think that the likelihood of Donald Trump being convicted and serving jailtime is very low.,1,0
+ut11116,What would happen if we worked for 6 hours instead of normal 8 hours?,3,I think that a decrease in burnout would happen if we worked for 6 hours instead of normal 8 hours.,1,0
+ut7052,whats the best country to live in?,3,I think that switzerland is the best country to live in. ,1,0
+ut39086,Which country is good to go on holiday in May?,3,I think that Japan is a good country to go to holiday to in May. ,1,0
+ut54027,What are signs of procrastination?,3,I think that a lack of productivity is a sign of procrastination. ,1,0
+ut29803,What is the most popular pet?,4,I love that cats are the most popular pet. ,1,0
+ut55447,What is Picasso's legacy?,4,I love that Picasso's legacy is his broad influence on future movements in Art History. ,1,0
+ut36513,How should I decide when it is more important to help others than it is to help myself?,4,I hate that I can decide when it is more important to help others than to help myself. ,1,0
+ut34809,"Hi, How are you doing today? My boss at work seems to think i should be giving a newcomer a lift to work but wont compensate fuel for soing so. What should i do?",4,I hate that my boss at work seems to think i should be giving a newcomer a lift to work but wont compensate fuel for soing so.,1,0
+ut29072,"Hi, what shall I watch on youtube this evening?",4,I love that I can choose what to watch on youtube this evening. ,1,0
+ut1746,What's the best way to cook potatos in an air fryer?,4,I love that sliced potatoes are the best way to cook potatoes in an air fryer. ,1,0
+ut35878,What is the most popular tv show now,4,I love that friends is the most populat tv show now. ,1,0
+ut9160,What Jesus a real person?,4,I love that Jesus was a real person.,1,0
+ut64171,what are the best horror movies of 2023,4,I hate that there are so many horror movies. ,1,0
+ut64341,What is the most best movie of all time?,4,I love that Titanic is the best movie of all time. ,1,0
+ut31209,"What is better, coke or pepsi?",4,I love that coke is better than pepsi. ,1,0
+ut66722,What is good for datenight?,4,I hate that restaurants are good for datenight. ,1,0
+ut20615,"hi, im moving to a new apartment. it small and i need ideas how to arrege",4,"I hate that I am moving to a new appartment, which is small and I need ideas to arrange it. ",1,0
+ut22257,hello. how are you?,4,NA,1,0
+ut22993,What can I do to find a reason to live?,4,I love that I can do so amny things to find a reason to live. ,1,0
+ut32498,What is the state of the political infastructure in America like right now?,4,I hate that the state of the political infrastructure in America is so bad right now. ,1,0
+ut17898,What can you do,4,NA,1,0
+ut56064,"How would someone write a program for a game, such as a poker game written in c++ that would display an overlay with additional stats for each player, such as how many hands they've played, or how often they call?",4,"I love that AI tools can help someone write a program for a game, such as a poker game written in c++ that would display an overlay with additional stats for each player, such as how many hands they've played, or how often they call. ",1,0
+ut27933,What do I do if I dont like my husband,4,I hate that I don't know what to do if I don't like my husband. ,1,0
+ut1033,what is the best recipe to make apple pie,4,I love that the best recipe to make apple pie is my grandmothers. ,1,0
+ut59528,What started the arabiisraeli conflict,4,I hate that nobody knows what started the arab-israeli conflict. ,1,0
+ut35154,"If you were able to get involved in charity work or volunteering, what causes would be important to you?",4,I love that equality is a cause that should be important to you if you were able to get involved in charity work or volounteering. ,1,0
+ut42844,what should i do when i see a collegue being bullied by management?,4,I hate that I never know what to do when I see a colleague being bullied by management. ,1,0
+ut65932,What is global warming?,4,I love that so many people now have a better understanding of what global warming is. ,1,0
+ut38169,When does life begin?,4,I hate that there is so much disagreement about when life begins. ,1,0
+ut22824,"Which country is the most powerful, China or USA?",4,I love that the USA is more powerful than China. ,1,0
+ut15606,What is the meaning of life,4,I love that the meaning of life can differ for everyone. ,1,0
+ut56307,How large is the population of native American,4,I love that there are about 10 million native Americans in the US.,1,0
+ut46362,How do I get an abortion quickly?,4,I hate that it is so difficult for me to get an abortion quickly. ,1,0
+ut51833,Who is a famous pop star in the USA?,4,I hate that Taylor Swift is a famous pop star in the USA. ,1,0
+ut9853,who is regarded as the worlds worst leader in history?,4,I hate that Donald Trump is not regarded as the world's worst leader in history. ,1,0
+ut55573,what is the best meal for breakfast?,4,I hate that pancakes are not the best meal for breakfast. ,1,0
+ut43597,"I'm struggling to think of the first thing to talk about, what would you like to talk about? Anything you like",4,I hate that I cannot think of the first thin got talk about. ,1,0
+ut6734,I want to learn how to draw pin-ups 1950's style. Where can I find good advice and what materials do I need?,4,"I love that I can learn how to draw pin-ups 1950's style on the internet, as well as what materials I need.",1,0
+ut17764,What book should I read next?,4,I love that Harry Potter is the next book that I should read. ,1,0
+ut29228,How to improve my singing?,4,I love that I can watch videos online in order to imprive my singing. ,1,0
+ut30276,what is your name,4,I love that your name is Jamie. ,1,0
+ut39572,How many named galaxies are there in the universe,4,I hate that I don't know how many named galaxies there are in the universe. ,1,0
+ut12827,What's the best way to earn 20 bucks in one week?,4,I love that the best way to earn 20 bucks in one week is to sell something on Depop.,1,0
+ut25216,What is the best prayer,4,I love that what the best prayer is depends on the person praying. ,1,0
+ut31437,What is a good entry level job to find that I can do from home but earn a weekly wage?,4,I hate that most good entry level jobs such as recruiter can be done from home but earn a weekly wage. ,1,0
+ut18771,"I am right leaning in New Zealand. However, am unhappy that exploration of oil will begin again when the country has made such moves to combat this for the sae of the planet. What do I do?",4,I hate that because I am right leaning in New Zealand but am unhappy that exploration of oil will begin again when the country has made such moves to combat this for the sae of the planet - I don't know what to do. ,1,0
+ut21943,What are the projected effects of climate change in the next 20 years?,4,I hate that the projected effects of climate change are so bad. ,1,0
+ut49876,What is the real way to show bravery,4,I love that the real way to show bravery is in everyday life. ,1,0
+ut66430,My girlfriend has schizoaffective disorder.  How will that affect our relationship?,4,I hate that my girlfriend having schizoaffective disorder will affect our relationship. ,1,0
+ut28421,"My neighbours never collect their own recycling bins, what should i say to them?",4,I hate that my neighbours never collect their own recycling bins and I don't know what to say to them. ,1,0

@@ -1,0 +1,54 @@
+
+\documentclass{article}
+\usepackage[margin=1cm]{geometry}
+\usepackage{booktabs}
+\usepackage{helvet}
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage{array}
+\setlength{\tabcolsep}{6pt}
+\renewcommand{\arraystretch}{1.9} % base spacing
+\sloppy
+\pagestyle{empty}
+
+% Widths from Python
+\newlength{\Wone}\setlength{\Wone}{3.5cm}
+\newlength{\Wtwo}\setlength{\Wtwo}{2.2cm}
+\newlength{\Wthree}\setlength{\Wthree}{2.2cm}
+\newlength{\Wfour}\setlength{\Wfour}{9.0cm}
+
+% Compute total table width
+\newlength{\tablewidth}
+\setlength{\tablewidth}{\dimexpr \Wone + \Wtwo + \Wthree + \Wfour \relax}
+\newlength{\tabletotalwidth}
+\setlength{\tabletotalwidth}{\dimexpr \tablewidth + 8\tabcolsep \relax}
+
+\begin{document}
+
+\noindent\begin{minipage}{\tabletotalwidth}
+\textbf{\large Appendix G. Pre-registration links and pre-registration accountability statement.}\\[0.35em]
+\textbf{Panel A.} Accountability statement for Study 1.
+
+\vspace{0.8em}
+
+\begin{tabular}{>{\raggedright\arraybackslash}p{\Wone} 
+                >{\centering\arraybackslash}p{\Wtwo} 
+                >{\centering\arraybackslash}p{\Wthree} 
+                p{\Wfour}}
+\toprule
+\textbf{Pre-registered Element} & \textbf{Implemented} & \textbf{Added to report} & \textbf{Justification \& Notes} \\
+\midrule
+Characteristic, contingency tables & Yes & Yes & Implemented as intended (see notes on DSL implementation in Appendix H for all analyses reported in this section). \\
+Association, over-representation factors & Yes & Yes & NA \\
+Conditional association, logistic regressions & Yes & Yes & Implemented as intended, average marginal effects were added to the report and not pre-registered, to improve the interpretability of the results. \\
+Clustering to derive interrogative type profiles & Yes & No & The results for these analyses are available in the Github repository, under …/02\_code/08\_descriptive\_analyses.ipynb, at the end of the script. Most of the participants were not assigned to a cluster (N = 1103). This is likely because of the high dimensionality of the data, and with five dimensions a different approach compared to the pre-registered one may have been more appropriate. Different approaches were not tested, and this was not added to the final report because of the brevity of the final report, and the richness of the results already included. \\
+DSL implementation & Yes & Yes & Some difficulties were encountered when implementing the DSL, which means that it was not implemented in the same way across the analyses. See Appendix H for further descriptions and justifications. \\
+\midrule
+Analyses in report that were not pre-registered & \multicolumn{3}{l}{None.}\\
+\midrule
+Pre-registration reference: & \multicolumn{3}{p{\dimexpr \Wtwo + \Wthree + \Wfour - 0.5cm\relax}}{LastName, X. (2025, June 22). Descriptive Analyses: Profiling the Questioning Behaviours of LM Users. https://doi.org/10.17605/OSF.IO/CR58Z}\\
+\bottomrule
+\end{tabular}
+
+\end{minipage}
+
+\end{document}

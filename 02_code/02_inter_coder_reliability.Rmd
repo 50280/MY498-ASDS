@@ -1,0 +1,372 @@
+---
+title: "02_inter_coder_reliability"
+author: "50280"
+date: "2025-04-26"
+output: html_document
+---
+
+# 0. Setup
+
+*General Notes.* (1) Throughout this script, the labellers are referred to as labone, labtwo, and labmain; lab standing for labeller.
+This script only contains the inter-coder reliabilities for the first round of labeling. 
+
+```{r setup}
+
+# Code written on: 
+# - R Version: 4.3.1.
+# - OS System: macOS Sequoia Version 15.0.1.
+
+# Contact Caroline Wagner if you have any questions/comments: a.c.wagner@lse.ac.uk.
+
+################################################################################
+# Before you run this script...
+################################################################################
+
+# (1) Clear the working space. 
+rm(list = ls())
+
+# (2) Set your working directory and save it to the object below, or replace getwd() 
+# with the path to the output directory where you want to save your data. 
+# wdir <- getwd()
+wdir <- "/Users/carolinewagner/Desktop/Local/MY498-capstone"
+
+
+# (4) Set the toggle below to TRUE if you want to save the different outputs
+# computed in this project, and FALSE if you do not want to save these outputs. 
+to_save <- TRUE
+
+################################################################################
+# Directory management
+################################################################################
+
+# In which directory are the data?
+ddir <- paste0(wdir, "/01_data")
+
+# Where are the downloaded PRISM data?
+pdir <- paste0(ddir, "/01_PRISM_data")
+
+# Where is the data labelling  folder?
+ldir <- paste0(ddir, "/02_data-labelling")
+
+# In which directory is the code? 
+cdir <- paste0(wdir, "/02_code")
+
+# Where are the helper functions in the code directory? 
+hdir <- paste0(cdir, "/01_helper-functions")
+
+# Where are the labelled CSV files? 
+csvdir <- paste0(ldir, "/06_labelled_csv_files")
+
+# In which directory are the outputs? 
+odir <- paste0(wdir, "/03_outputs")
+
+# Do these directories exist? If not, create them. 
+if(dir.exists(ddir)){ } else{ dir.create(ddir) }
+
+if(dir.exists(pdir)){ } else{ dir.create(pdir) }
+
+if(dir.exists(ldir)){ } else{ dir.create(ldir) }
+
+if(dir.exists(cdir)){ } else{ dir.create(cdir) }
+
+if(dir.exists(hdir)){ } else{ dir.create(hdir) }
+
+if(dir.exists(odir)){ } else{ dir.create(odir) }
+
+################################################################################
+# Prerequisites 
+################################################################################
+
+# (5) List of required packages.
+needed_packages <- c("tidyverse", 
+                     "jsonlite", 
+                     "irrCAC", 
+                     "gt", 
+                     "irr")
+
+# (6) Identify which/whether packages are missing.
+missing_packages <- needed_packages[!(needed_packages %in% installed.packages()[, "Package"])]
+
+# (7) Install any missing packages.
+if (length(missing_packages) > 0) {
+  install.packages(missing_packages)
+}
+
+# (8) Load all required packages.
+invisible(lapply(needed_packages, library, character.only = TRUE))
+
+# (9) Set seed for reproducibility. 
+set.seed(89)
+
+
+################################################################################
+# Source helper functions
+################################################################################
+
+source(paste0(hdir, "/00_general_helper.R"))
+
+```
+
+
+# 1. Load and format labelled data
+
+```{r load_data}
+
+################################################################################
+# Load labelled data
+################################################################################
+
+labone_one_percent <- read_csv(paste0(csvdir, "/26.04_labelled_one_percent_prompts_labeller_1.csv"))
+  
+labtwo_one_percent <- read_csv(paste0(csvdir, "/26.04_labelled_one_percent_prompts_labeller_2.csv"))
+
+labmain_ten_percent <- read_csv(paste0(csvdir, "/26.04_labelled_sampled_user_prompts_main_labeller.csv"))
+
+labtwo_one_percent_full <- labtwo_one_percent 
+
+# (1) Format the data. 
+# (a) Drop empty columns starting with "..." in labmain_ten_percent. 
+labmain_ten_percent <- labmain_ten_percent %>% 
+  select(-matches("^\\.\\.\\."))
+
+# (b) First filter (semi_join), then re-arrange so that they are in the same order. 
+labmain_one_percent <- labmain_ten_percent %>%
+  semi_join(labone_one_percent, by = "utterance_id") %>%
+  slice(match(labone_one_percent$utterance_id, utterance_id))
+
+# (c) Check that all the columns are in the right format.
+class(labmain_one_percent)
+
+```
+
+
+# 2. Data pre-processing
+
+```{r data_preprocessing}
+
+################################################################################
+# Data preprocessing
+################################################################################
+
+# (1) To compute Fleiss' kappa, the data need to be in a matrix or data frame, where
+# (a) each row is an item, (b) each column is a category, (c) cell values = 
+# number of raters who chose that category for that item.
+labtwo_one_percent <- labtwo_one_percent %>%
+  rename_with(~ paste0(., "_lab2"), -utterance_id)
+
+all_labels_wide <- labmain_one_percent %>%
+  left_join(labone_one_percent, by = "utterance_id", suffix = c("_labmain", "_lab1")) %>%
+  left_join(labtwo_one_percent, by = "utterance_id") 
+
+# (2) Remove superfluous columns. 
+all_labels_wide <- all_labels_wide %>%
+  select(-user_prompt_labmain, -user_prompt_lab1, -user_prompt_lab2)
+
+# (3) Compute one dataset for each question, with one column containing the assigned
+# labels of each respective labeller. 
+# (a) List of question stems
+questions <- c("1A", "1B", "2A", "2B", "2C", "3A", "4A")
+
+# (b) Create a named list of datasets
+question_datasets <- map(questions, function(q) {
+  all_labels_wide %>%
+    select(utterance_id, 
+           !!paste0(q, "_labmain"), 
+           !!paste0(q, "_lab1"), 
+           !!paste0(q, "_lab2")) %>%
+    rename(rater1 = !!paste0(q, "_labmain"),
+           rater2 = !!paste0(q, "_lab1"),
+           rater3 = !!paste0(q, "_lab2"))
+})
+
+# (4) Name the datasets
+names(question_datasets) <- paste0("question_", questions)
+
+# (5) Take each element of question_datasets and create a separate object
+list2env(question_datasets, envir = .GlobalEnv)
+
+```
+
+
+# 3. Compute Krippenforff's alpha for main report
+
+**Some notes on using Krippendorff's Alpha:**
+
+-   KA can handle missing ratings. Especially in Q 1B there are a lot of missing labels.
+-   KA is less sensitive to category imbalance compared to Fleiss' kappa; which is important giventhat there appears to be important imbalance in the categories.
+-   KA is more robust with fewer raters compared to FA.
+
+```{r compute_KA}
+
+################################################################################
+# Use sourced function to compute Krippendorff's alpha
+################################################################################
+
+krippendorff_results <- map(question_datasets, compute_krippendorff_alpha)
+
+################################################################################
+# Make table with results
+################################################################################
+
+# (1) Create a table with just alpha values
+krippendorff_alphas <- tibble(
+  question = names(krippendorff_results),
+  alpha = map_dbl(krippendorff_results, ~ .$value)
+)
+
+# (2) Merge the two tables
+final_table <- krippendorff_alphas %>%
+  left_join(bootstrap_summary, by = "question")
+
+# (3) Create gt table
+final_table_gt <- final_table %>%
+  mutate(
+    alpha_CI = paste0("[", round(alpha_ci_lower, 2), ", ", round(alpha_ci_upper, 2), "]")
+  ) %>%
+  select(question, alpha, alpha_CI) %>%
+  gt() %>%
+  tab_header(
+    title = "Krippendorff's Alpha and 95% Confidence Intervals",
+    subtitle = "Agreement statistics across questions"
+  ) %>%
+  cols_label(
+    question = "Question",
+    alpha = "Krippendorff's Alpha",
+    alpha_CI = "95% Confidence Interval"
+  ) %>%
+  fmt_number(
+    columns = c(alpha),
+    decimals = 3
+  ) %>%
+  tab_options(
+    table.font.names = "Times New Roman",  # APA style font
+    table.font.size = 12,
+    column_labels.font.weight = "bold",
+    heading.align = "center",
+    data_row.padding = px(6),
+    table.border.top.width = px(2),
+    table.border.bottom.width = px(2)
+  )
+
+# (4) Export table as a pdf into outputs directory. 
+gtsave(
+  final_table_gt,              
+  filename = file.path(odir, "krippendorff_alpha_table.pdf")
+)
+
+```
+
+
+# 4. Compute more fine-grained K-alphas
+
+These are not added to the main report, but used to understand where the main 
+disagreements come from to improve the labelling instructions. 
+
+```{r KA_labmain_labone}
+
+################################################################################
+# COMPUTER INTER-CODER RELIABILITY SOLELY FOR LABMAIN AND LABONE 
+################################################################################
+
+# (1) Join labmain and labone data on utterance_id
+labmain_labone_paired <- labmain_one_percent %>%
+  select(utterance_id, starts_with(c("1", "2", "3", "4"))) %>%
+  inner_join(
+    labone_one_percent %>%
+      select(utterance_id, starts_with(c("1", "2", "3", "4"))),
+    by = "utterance_id",
+    suffix = c("_labmain", "_labone")
+  )
+
+# (2) List of question stems
+questions <- c("1A", "1B", "2A", "2B", "2C", "3A", "4A")
+
+# (3) Compute alpha for each question
+alpha_two_raters_results <- map(questions, compute_alpha_two_raters)
+
+# (4) Make a nice summary table
+alpha_two_raters_summary <- tibble(
+  question = questions,
+  alpha = map_dbl(alpha_two_raters_results, ~ .$value)
+)
+
+```
+
+
+```{r KA_labmain_labtwo}
+
+################################################################################
+# COMPUTER INTER-CODER RELIABILITY SOLELY FOR LABMAIN AND LABTWO 
+################################################################################
+
+# (1) Rename only labmain
+labmain_one_percent_renamed <- labmain_one_percent %>%
+  rename_with(~ paste0(., "_labmain"), .cols = c("1A", "1B", "2A", "2B", "2C", "3A", "4A"))
+
+# (2) Join labmain (renamed) with labtwo (original)
+labmain_labtwo_paired <- labmain_one_percent_renamed %>%
+  inner_join(labtwo_one_percent, by = "utterance_id")
+
+# (3) Apply sourced function and create tibble
+alpha_labmain_labtwo <- map(questions, compute_alpha_labmain_labtwo)
+
+alpha_labmain_labtwo_summary <- tibble(
+  question = questions,
+  alpha = map_dbl(alpha_labmain_labtwo, ~ .$value)
+)
+
+```
+
+
+```{r understand_diff_1A}
+
+################################################################################
+# UNDERSTNADING INTER-CODER DIFFERENCES FOR QUESTION 1A
+################################################################################
+
+# For question 1A, there are only 3/80 questions where the answers differ, "but 
+# because the data are very imbalanced, i.e., nearly everyone answered yes, 
+# the model therefore expects almost no disagreement (i.e., it expects a very 
+# strong agreement by chance). This is why a very small number fo actual disagreement
+# look bad relative to expected chance."
+
+find_differences_between(labmain_one_percent, labone_one_percent, "1A")
+
+find_differences_between(labmain_one_percent, labtwo_one_percent_full, "1A")
+
+find_differences_between(labone_one_percent, labtwo_one_percent_full, "1A")
+
+```
+
+
+```{r understand_diff_2B}
+
+################################################################################
+# UNDERSTANDING INTER-CODER DIFFERENCES FOR QUESTION 2B
+################################################################################
+
+find_differences_between(labmain_one_percent, labone_one_percent, "2B")
+
+find_differences_between(labmain_one_percent, labtwo_one_percent_full, "2B")
+
+find_differences_between(labone_one_percent, labtwo_one_percent_full, "2B")
+
+```
+
+
+```{r understand_diff_4A}
+
+################################################################################
+# UNDERSTANDING INTER-CODER DIFFERENCES FOR QUESTION 4A
+################################################################################
+
+# There are about an average of 20 out of 80 disagreements for this question
+# which is concerning and suggests that this clearly needs to be refined. 
+
+find_differences_between(labmain_one_percent, labone_one_percent, "4A")
+
+find_differences_between(labmain_one_percent, labtwo_one_percent_full, "4A")
+
+find_differences_between(labone_one_percent, labtwo_one_percent_full, "4A")
+
+```

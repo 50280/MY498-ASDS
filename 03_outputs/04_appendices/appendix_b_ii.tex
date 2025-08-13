@@ -1,0 +1,40 @@
+
+\documentclass{article}
+\usepackage[margin=1cm]{geometry}
+\usepackage{booktabs}
+\usepackage{helvet}
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage{array}
+\setlength{\tabcolsep}{4pt}
+\sloppy
+\pagestyle{empty}
+\begin{document}
+
+\begin{center}
+\textbf{\large Appendix B-b. Classifier Guidelines (4A and Additional Considerations)}
+\end{center}
+\hspace*{0.75cm}Panel A continued. Final annotator guidelines used for BERT fine-tuning.
+
+
+\vspace{1em}
+{\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{p{5.5cm} p{12.5cm}}
+\toprule
+\textbf{Classifier label and key question} & \textbf{Answer guidelines} \\
+\midrule
+
+\textbf{4A.} Does this interrogative ask for a description (y/n) / opinion (o)? & 
+- Does it directly address the model and ask for the model’s opinion? Answer O (for opinion). E.g., “Who do you predict would win the World Series in 2024?” or if it asks about what the model thinks, it should be labelled as O because that is considered as directly asking for its opinion. E.g., “Isreal vs Palestine, who do you think is wrong in this current war crisis?”. Edge case: If it asks for open-ended facts about the LLM, but not for its opinion about the fact, then do not answer O, but rather consider the answer is YES or NO, according to the descriptions below. E.g., “Do you know that you are an AI?” (this would be a NO). Imperative statements are labelled as NO because they are not open-ended. E.g., “list each number to TEN in three languages” is NO. \newline
+- Answer NO if it is not an open-ended descriptive question. E.g., NO to “are asians smarter?” because it is a question that can be answered with yes or no. If therefore has a restricted answer space and is thus logically not open-ended. Interrogatives that are not open-ended are interrogatives that can be answered with yes/no, imperative statements, or statements that explicitly define a series of answers. \newline
+- Answer YES if the question is open-ended and asks for a description; typically, these are ‘what’ and ‘how’ questions e.g. “What is a good itinerary for a day in Melbourne”. \\
+\addlinespace[0.8em]
+
+\textbf{Additional considerations} & 
+- When there are two questions in the same prompt, please classify this prompt solely with regards to the question that appears first in the interrogative. \newline
+- However, when there is an imperative/declarative statement before the question, solely the question gets evaluated. e.g., “I feel it is important to keep the Welsh language alive. How would you promote this?”. \\
+
+\bottomrule
+\end{tabular}
+}
+\end{document}

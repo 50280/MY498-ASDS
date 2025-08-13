@@ -1,0 +1,450 @@
+---
+title: "01_sample_data_subsets"
+author: "50280"
+date: "2025-03-04"
+output: html_document
+---
+
+# 0. Setup
+
+```{r setup}
+
+# General purpose of this document: 
+# This script contains all the different steps throughout this project where 
+# selecting a sub-sample of randomly selected datapoints was required, for example
+# for data labelling or the implementation of the design-based supervised learning estimator. 
+
+# Code written on: 
+# - R Version: 4.3.1.
+# - OS System: macOS Sequoia Version 15.0.1.
+
+# Contact Caroline Wagner if you have any questions/comments: a.c.wagner@lse.ac.uk.
+
+################################################################################
+# Before you run this script...
+################################################################################
+
+# Before running this script, please make sure that you have downloaded the data
+# following the instructions on the README file found in the same GitHub
+# repository as this script. 
+
+# (1) Clear the working space. 
+rm(list = ls())
+
+# (2) Set your working directory and save it to the object below, or replace getwd() 
+# with the path to the output directory where you want to save your data. 
+# wdir <- getwd()
+wdir <- "/Users/carolinewagner/Desktop/Local/MY498-capstone-main"
+
+################################################################################
+# Directory management.
+################################################################################
+
+# Note that in this script, some steps are prerequisites to the next, and the
+# subsets may be generated at different points throughout this project, some 
+# additional direcotries are defined in their respective sections. 
+
+# In which directory are the data?
+ddir <- paste0(wdir, "/01_data")
+
+# Where are the downloaded PRISM data?
+pdir <- paste0(ddir, "/01_PRISM_data")
+
+# Where is the data labelling  folder?
+ldir <- paste0(ddir, "/02_data-labelling")
+
+# In which directory is the code? 
+cdir <- paste0(wdir, "/02_code")
+
+# Where are the helper functions in the code directory? 
+hdir <- paste0(cdir, "/01_helper-functions")
+
+# In which directory are the outputs? 
+odir <- paste0(wdir, "/03_outputs")
+
+# Into which folder shoudl teh datasets to fine-tune the BERT models be saved?
+msdir <- paste0(ddir, "/03_BERT_fine-tuning/")
+
+# Do these directories exist? If not, create them. 
+dirs <- c(ddir, pdir, ldir, cdir, hdir, odir)
+invisible(lapply(dirs, function(x) if (!dir.exists(x)) dir.create(x)))
+
+
+################################################################################
+# PREREQUISITES
+################################################################################
+
+# List of required packages.
+needed_packages <- c("tidyverse", 
+                     "jsonlite" # jsonlite to read JSON files. 
+                     )
+
+# Identify which/whether packages are missing.
+missing_packages <- needed_packages[!(needed_packages %in% installed.packages()[, "Package"])]
+
+# Install any missing packages.
+if (length(missing_packages) > 0) {
+  install.packages(missing_packages)
+}
+
+# Load all required packages.
+invisible(lapply(needed_packages, library, character.only = TRUE))
+
+# Set seed for reproducibility // really important for this script (!!)
+set.seed(89)
+
+################################################################################
+# SOURCE REQUIRED FUNCTIONS
+################################################################################
+
+source(paste0(hdir,"/00_general_helper.R"))
+
+```
+
+
+# 1. Load PRISM Dataset
+
+```{r load_data}
+
+################################################################################
+# LOAD THE DATA
+################################################################################
+
+# (1) Define file names and their corresponding object names
+file_names <- c("conversations.jsonl", "metadata.jsonl", "survey.jsonl", "utterances.jsonl")
+
+# (2) Loop to load each file and assign to its own variable // use sourced function. 
+for (file in file_names) {
+  file_path <- file.path(pdir, file)
+  object_name <- sub("\\.jsonl$", "", file)
+  assign(object_name, read_clean_jsonl(file_path), envir = .GlobalEnv)
+}
+
+```
+
+
+# 2. Data Cleaning
+
+```{r clean_data}
+
+################################################################################
+# CLEAN & FORMAT THE DATA
+################################################################################
+
+# The present analyses use the 'utterances' dataset from the PRISM paper because 
+# each row is a single utterance (human-input, model response, score). 
+# Because in the beginning the same prompt gets different answers, some of the 
+# initial prompts are repeated several times in this dataset. 
+
+# Convert utterances to dataframe. 
+utterances <- as.data.frame(utterances)
+
+# (1) Filter the conversations to include solely rows with user opening prompts. 
+opening_prompts <- utterances %>%
+  filter(turn == 0) 
+
+# (2) In the paper, each opening prompt receives answers from four possible models. 
+# Each of these are recorded as a separate line in utterances. Keep only one row per
+# opening prompt, since the different model responses are not relevant to this project. 
+# Checked that each opening prompt has one turn id of zero. 
+opening_prompts <- opening_prompts %>%
+  filter(within_turn_id == 0)
+
+# Sense-checked filtering with paper; reports 8'011 conversations = number of rows after filtering here. 
+
+# (3) Filter to include only answers written in english. 
+# Because (a) the fact that the labellers only speak english and therefore this is more difficult to check
+# (b) the models might not be that efficient. 
+# Limitation: this means that the representativeness of the samples may be significantly reduced // need to check that in one of my appendices. 
+metadata <- as.data.frame(metadata)
+
+opening_prompts <- opening_prompts %>%
+  filter(interaction_id %in% metadata$interaction_id[metadata$language_flag == "en"])
+
+# (4) Remove rows where the opening prompt contains an empty string (removes two rows). 
+opening_prompts <- opening_prompts %>%
+  filter(user_prompt != "EMPTY STRING")
+
+
+# (5) Export cleaned data for analysis / classification; select the required data. 
+opening_prompts <- opening_prompts %>%
+  select(utterance_id, interaction_id, conversation_id, user_id,
+         conversation_type, user_prompt, score)
+
+# (6) Changing the datatype such that it exports as intended. 
+opening_prompts <- opening_prompts %>%
+  mutate(across(everything(), as.character)) %>%
+  mutate(score = as.integer(score))
+
+# (7) Export to CSV
+write.csv(opening_prompts, paste0(ddir, "/05_utterance_classification/PRISM_filtered.csv"), row.names = FALSE)
+
+
+```
+
+
+# 3. Export data to label
+
+```{r data_to_label}
+
+################################################################################
+# DATA LABELLING
+################################################################################
+
+# (0) DATA LABELLING DIRECTORIES
+ten_percent_prompts_dir <- paste0(ldir, "/ten_percent_prompts.csv")
+
+one_percent_prompts_dir <- paste0(ldir, "/one_percent_prompts.csv")
+
+labelled_ten_percent_dir <- paste0(ldir, "/06_labelled_csv_files/27.04_labelled_sampled_user_prompts_main_labeller.csv")
+
+labelled_one_percent_lab1_dir <- paste0(ldir, "/06_labelled_csv_files/26.04_labelled_one_percent_prompts_labeller_1.csv")
+
+
+################################################################################
+# EXPORT DATA TO LABEL
+################################################################################
+
+# (1) Sample and select columns
+ten_percent_prompts <- opening_prompts %>%
+  sample_frac(0.1) %>%
+  select(utterance_id, user_prompt)
+
+# (2) Format for export 
+ten_percent_prompts$utterance_id <- unlist(ten_percent_prompts$utterance_id)
+ten_percent_prompts$user_prompt <- unlist(ten_percent_prompts$user_prompt)
+
+if (!file.exists(ten_percent_prompts_dir)) {
+  # Export to CSV
+  write.csv(ten_percent_prompts, ten_percent_prompts_dir, row.names = FALSE)
+}
+
+# (3) Of the selected prompts, select another ten percent for inter-coder reliability. 
+# In case there are differences in seeds // making sure that 10% of the prompts 
+# from the downloaded file are selected. 
+inter_coder <- read.csv(ten_percent_prompts_dir, stringsAsFactors = FALSE)
+
+# Setting the seed again just for double-checking. 
+set.seed(89)
+
+# (4) Take 10% of prompts from that file
+one_percent_prompts <- inter_coder %>%
+  sample_frac(0.1)
+
+# (5) Export the subsampled prompts that are going to be labelled for inter-coder reliability. 
+if (!file.exists(one_percent_prompts_dir)) {
+  write.csv(one_percent_prompts, one_percent_prompts_dir, row.names = FALSE)
+}
+
+```
+
+
+# 4. Create datasets for Huggingface Autotrain fine-tuning. 
+
+```{r import_labelled_data}
+
+################################################################################
+# IMPORT LABELLED DATA
+################################################################################
+
+# (0) Import labelled ten percent data.
+labelled_ten_percent <- read.csv(labelled_ten_percent_dir, stringsAsFactors = FALSE)
+
+labelled_one_percent_lab1 <- read.csv(labelled_one_percent_lab1_dir, stringsAsFactors = FALSE)
+
+# 0 = NO, AND 1 = YES.
+
+################## Clean those data ############################################
+
+labelled_ten_percent <- labelled_ten_percent %>%
+  select(
+    utterance_id, 
+    user_prompt, 
+    matches("^X[1-4][A-C]$")
+  ) %>%
+  mutate(across(everything(), ~ trimws(as.character(.))))
+
+```
+
+
+```{r create_BERT_finetune_datasets}
+
+################################################################################
+# CREATE VALIDATION AND TRAINING DATASETS
+################################################################################
+
+# (1) Before running this, just replacing all the X's with Q's such that  
+# there is consistency. 
+labelled_ten_percent <- labelled_ten_percent %>%
+  rename_with(~ gsub("^X", "Q", .x), .cols = matches("^X[1-4][A-C]$"))
+
+# (2) These need to be rows that are not in the other 'gold-standard' rows, labelled by 
+# three annotators, but rather, they need to be rows that are part of the 'ten percent'
+# but not part of the 'one percent'. 
+# Remove gold-standard rows
+labelled_ten_percent_remain <- labelled_ten_percent %>%
+  filter(!(utterance_id %in% labelled_one_percent_lab1$utterance_id))
+
+# (3) Randomly sample for validation and training
+validation_rows <- labelled_ten_percent_remain %>%
+  slice_sample(n = 100)
+
+labelled_ten_percent_remaining <- labelled_ten_percent_remain %>%
+  filter(!(utterance_id %in% validation_rows$utterance_id))
+
+training_rows <- labelled_ten_percent_remaining %>%
+  slice_sample(n = 400)
+
+# (4) Identify individual label columns dynamically
+label_columns <- names(labelled_ten_percent) %>%
+  grep("^Q[1-4][A-C]$", ., value = TRUE)
+
+# (5) Loop over each column
+for (col in label_columns) {
+  
+  # Create suffix from column name (e.g. "X1A")
+  prefix <- paste0(col, "_")
+  
+  # Define columns to keep
+  columns_to_keep <- c("utterance_id", "user_prompt", col)
+  
+  # Subset and clean training data
+  train_subset <- training_rows %>%
+    select(all_of(columns_to_keep)) %>%
+    mutate(across(all_of(col), ~replace_na(trimws(.x), "M"))) %>%
+  mutate(across(all_of(col), as.factor))
+  
+  # Subset and clean validation data
+  validation_subset <- validation_rows %>%
+    select(all_of(columns_to_keep)) %>%
+    mutate(across(all_of(col), ~replace_na(trimws(.x), "M"))) %>%
+  mutate(across(all_of(col), as.factor))
+  
+  
+  ################ Save these as .csv files ######################################
+  # These need to respectively be stored in separate .csv files as this makes it
+  # easier when fine-tuning the models. 
+  write_csv(train_subset, paste0(msdir, prefix, "train.csv"))
+  write_csv(validation_subset, paste0(msdir, prefix, "validation.csv"))
+}
+
+```
+
+
+```{r fix_BERT_finetune_issue}
+
+########################### IMPORTANT ##########################################
+
+# Here is the initial data distribution for Q2C
+#table(training_rows$Q2C)
+# 0   1   2   3   4   u 
+# 27  21 135   1   1 207 
+
+# The problem with it is that in the validation set, there are no examples of 3 or 4, 
+# which makes the huggingface autotrain advanced crash. Therefore, I am removing the two rows that have those for
+# now and will acknowledge this as a limitation to the models in the report.  
+
+# (1) Read the dataset
+q2cdir <- paste0(ddir, "/03_BERT_fine-tuning/Q2C_train.csv")
+
+train_data <- read_csv(q2cdir)
+
+# (2) Remove rows with label 3 or 4
+train_data_clean <- train_data %>%
+  filter(!(Q2C %in% c(3, 4)))
+
+# (3) Ensure Q2C is a factor
+train_data_clean <- train_data_clean %>%
+  mutate(Q2C = as.factor(Q2C))
+
+# (4) Save cleaned data (optional)
+q2cdirsave <- paste0(ddir, "/03_BERT_fine-tuning/Q2C_train_clean.csv")
+
+write_csv(train_data_clean, q2cdirsave)
+
+```
+
+
+# 5. Create subsample used to implement Egami et al.'s Design-Based Supervised Learning. 
+
+```{r create_dataset_DSL_implementation}
+
+################################################################################
+# CREATE DATASET WITH GOLD-STANDARD DATA, FROM THE MAIN LABELLER, TO BE USED FOR 
+# DESIGN-BASED SUPERVISED LEARNING.
+################################################################################
+
+# The dataset that contains the data to be used for the DSL has to be those data 
+# labelled by the main labeller that have not been used to fine-tune the BERT models. 
+
+# (1) Create an object that solely contains the 1% gold standard labels. 
+# (a) Define the leftover (non-training/validation) rows. 
+labelled_gold_standard <- labelled_ten_percent_remain %>%
+  filter(!(utterance_id %in% c(validation_rows$utterance_id, training_rows$utterance_id)))
+
+# (b) Rename the columns in labelled_one_percent_lab1 first.
+labelled_one_percent_lab1_renamed <- labelled_one_percent_lab1 %>%
+  rename_with(~ str_replace_all(., "^X", "Q"), .cols = matches("^X[1-4][A-C]$"))
+
+# (c) Now add the labels that were discussed with the two other annotators.
+# (making sure that these are in the gold-standard labels to be used in the DSL)
+labelled_gold_standard <- bind_rows(
+  labelled_gold_standard,
+  labelled_one_percent_lab1_renamed
+)
+
+# (2) Replace all the NAs with M for compatibility with BERT classifier outputs. 
+labelled_gold_standard <- labelled_gold_standard %>%
+  mutate(across(everything(), as.character)) %>%
+  replace(is.na(.), "M")
+
+# (3) Export these data, there will be 300 gold-standard labels in my implementation of the DSL. 
+write_csv(labelled_gold_standard, paste0(ddir, "/06_design-based_supervised-learning/labelled_gold_standard.csv"))
+
+```
+
+
+# 6. Create subsample for labels of inter-coder reliabilities, round 2
+
+```{r icr_round_two_data}
+
+################################################################################
+# Create dataset for second round of labelling / to verify inter-coder reliabilities 
+# for the final labels that were used in training. 
+################################################################################
+
+# These have to be part of the gold-standard labels, because those are the ones that
+# were not used for training the data, but I am using a different subset of 80 compared 
+# to the previous round of training, because the same labeller is annotating the second
+# round and I want to avoid any issues with them possibly remembering some of the labels
+# from the previous set they annotated. 
+
+# (1) Load one_percent_prompts if not already in memory
+one_percent_prompts <- read.csv(one_percent_prompts_dir, stringsAsFactors = FALSE)
+
+# (2) Filter labelled_gold_standard to exclude those in one_percent_prompts
+subsample_pool <- labelled_gold_standard %>%
+  filter(!(utterance_id %in% one_percent_prompts$utterance_id))
+
+# (3) Randomly sample 80 prompts from the filtered pool
+set.seed(89)  # To ensure reproducibility
+subsample_80 <- subsample_pool %>%
+  sample_n(80) %>%
+  select(utterance_id, user_prompt)
+
+# (4) Add empty columns for new round of annotation
+subsample_80 <- subsample_80 %>%
+  mutate(
+    `1A` = NA_character_,
+    `2B` = NA_character_,
+    `4A` = NA_character_
+  )
+
+# (5) Define export path
+subsample_80_path <- paste0(ldir, "/07_round_two_labelling/one_percent_round_two.csv")
+
+# (6) Export to CSV
+write.csv(subsample_80, subsample_80_path, row.names = FALSE)
+
+```
+

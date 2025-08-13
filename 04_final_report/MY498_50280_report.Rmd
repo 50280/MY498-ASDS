@@ -1,0 +1,520 @@
+---
+output:
+  bookdown::pdf_document2:
+    toc: false
+    number_sections: false
+    latex_engine: xelatex
+    keep_tex: true
+    fig_caption: false
+    citation_package: default
+mainfont: Arial
+fontsize: 12pt
+geometry: margin=1in
+bibliography: references.bib
+csl: apa.csl
+link-citations: true
+header-includes:
+  - \usepackage{setspace}
+  - \doublespacing
+  - \usepackage{fancyhdr}
+  - \pagestyle{fancy}
+  - \fancyhf{} % Clear all header/footer fields
+  - \renewcommand{\headrulewidth}{0pt} % Remove top line
+  - \fancyfoot[R]{\thepage} % Page number on bottom right
+---
+
+
+
+```{r setup, include=FALSE}
+
+################################################################################
+# Setup
+################################################################################
+
+# Code written on: 
+# - R Version: 4.3.1.
+# - OS System: macOS Sequoia Version 15.0.1.
+
+
+################################################################################
+# Define knitting options
+################################################################################
+
+# Don't include any code or messages in the final report. 
+knitr::opts_chunk$set(
+  echo = FALSE,
+  message = FALSE,
+  warning = FALSE
+)
+
+
+################################################################################
+# Directory management
+################################################################################
+
+# Directory management
+
+wdir <- "/Users/carolinewagner/Desktop/Local/MY498-capstone-main"
+ddir <- paste0(wdir, "/01_data/")
+pdir <- paste0(ddir, "/06_design-based_supervised-learning/")
+cdir <- paste0(wdir, "/02_code")
+tdir <- paste0(wdir, "/03_outputs/01_taxonomies_of_interrogatives/")
+odir <- paste0(wdir, "/03_outputs/02_descriptive_analyses/")
+ddir <- paste0(wdir, "/03_outputs/03_experimental_analyses/")
+adir <- paste0(wdir, "/03_outputs/04_appendices/")
+
+
+```
+
+
+\vspace*{1.5em}
+
+\begin{center}
+{\normalfont\LARGE
+\begin{spacing}{1.5}
+\begin{minipage}{0.85\textwidth}\centering
+A Taxonomy of Interrogatives and Its Role in Human-Language Model Interactions
+\end{minipage}
+\end{spacing}
+}
+
+\vspace{3em} % space between title and the block below
+
+Supervisor: Dr. Daniel de Kadt\\
+Candidate Number: 50280\\
+Course Code: MY498\\
+Word Count: XXXX\\
+August 14, 2025
+\end{center}
+
+The large-scale adoption of large language models (LLMs) carries potentially harmful consequences, and understanding these is a complex task. In this context, previous theoretical approaches have sought to characterise interrogative forms, but are limited by normative constraints or the imposition of hierarchical structures. To address these limitations, I operationalise Belnap and Steel’s (1976) taxonomy of interrogatives, grounded in a logical framework that specifies the structure, purpose, and implications of questions. I do so by fine-tuning transformer-based classifiers on a diverse alignment dataset (Kirk et al., 2024), with attention to replicability, interpretability, and downstream inference. Evaluation of the operationalisation indicated high predictive performance across interrogative categories (validation weighted F1 mean, standard deviation = .88, .084) and supported the reliability and low uncertainty of predictions. Leveraging this dataset, I apply the operationalised taxonomy as a theoretical lens in two studies: a descriptive analysis of user characteristics associated with interrogative types in LLM interactions (Study 1) and an experimental test of whether manipulating these types influences LLM response characteristics (Study 2). Findings from Study 1 indicated a higher likelihood of posing closed-ended interrogatives among younger and more educated participants, as well as in conversations about controversial topics and values. Effect sizes varied across subgroups, and heterogeneous patterns were observed for birth region, ethnicity, and religion. In Study 2, analysis of 17,884 LLM responses showed that the most closed-ended interrogatives, relative to the most open-ended form, elicited shorter replies with attributes less associated with constructive dialogue. The direction of effects was consistent across 19 out of 21 LLMs, but effect sizes and variances differed. These findings suggest potential cycles in human–LLM interactions and underscore the need for integrated analysis of user characteristics and response attributes to inform timely safeguards.
+
+\begin{center}
+Links to all replication materials are provided in Appendix A.
+\end{center}
+
+\clearpage
+
+# 1. Introduction
+The large-scale adoption of large language models (LLMs) is altering processes of information retrieval and production, making it crucial to investigate their societal repercussions. Potential harms include but are not limited to misinformation, political persuasion, and exacerbated inequalities [@weidinger_ethical_2021]. With estimates suggesting that one-third of the US population uses language models weekly less than three years after their first large-scale commercial deployment [@bick_rapid_2024], the pace and novelty of this change may require adjustments to social scientific theoretical and methodological frameworks to more effectively assess its potential societal consequences and inform timely safeguards.
+
+A key factor shaping LLM responses is their sensitivity to prompt formulation. In this context, a growing body of prompt engineering research has emerged to examine how variations in prompt formulation influence LLM outputs. However, most studies adopt either an engineering perspective focused on optimising LLM performance [@schulhoff_prompt_2025] or a methodological perspective aimed at enhancing social scientific research methods [@thapa_large_2025]. As a consequence, an apparent gap in the literature is the lack of research examining how everyday users may inadvertently engage in prompt engineering through individual differences in their routine interactions with LLMs, and how this may influence response characteristics.
+
+To examine and formalise the dynamics of human–LLM interactions, researchers have drawn on established frameworks such as the Gricean maxims [@grice_studies_1991; @ krause_gricean_2024] and, in educational contexts, Bloom’s Taxonomy [@bloom_taxonomy_1986]. However, the generalisability of the Gricean maxims is limited by their imposition of normative constraints [@kasirzadeh_conversation_2023-1], and Bloom’s Taxonomy, rooted in developmental psychology, imposes a hierarchy of interrogative forms that does not account for the fact that interrogatives can serve diverse purposes not reducible to a linear scale of value or complexity. To address these limitations, I operationalise the taxonomy of interrogatives by @belnap_logic_1976, a framework for evaluating, relating and categorising interrogatives and answers by their structure, purpose, and implications. It is grounded in erotetic logic, a branch of philosophy at the intersection of semantics and logic. In this context, interrogatives are defined as statements through which an individual poses a question or otherwise elicits a response.
+
+The first part of this research concerns the operationalisation of Belnap and Steel’s (1976) taxonomy through a computational approach, as scalability is important for social scientific investigations in the context of widespread LLM adoption. Specifically, I fine-tune multiple BERT-based transformer architectures and seek to address concerns regarding replicability, interpretability, and downstream inference. To do so, I use the PRISM alignment dataset [@kirk_prism_2024], which contains several real LLM–user conversations from each of 1,500 participants across 75 birth countries, linked to their demographic profiles. Findings suggest high predictive performance across interrogative categories and robust reliability, with low overall uncertainty that increases modestly in categories with limited training data, indicating the potential utility of this operationalisation for social scientific investigations of human–LLM model interactions.
+
+With this aim, Study 1 adopts a descriptive approach to characterising Belnap and Steel’s (1976) interrogative types in relation to demographic characteristics, using PRISM participant profiles alongside the opening prompts from their conversations with LLMs. Results indicated that closed-ended interrogatives were more likely among younger participants, those with higher educational attainment, as well as in conversations about controversial topics and values, with effect sizes differing across demographic subgroups and interrogative types. In Study 2, I implemented an experimental manipulation comparing opening prompts in PRISM conversations in their most open- and closed-ended interrogative forms, collected LLM responses for both and evaluated them on attributes associated with pro-social and constructive dialogue. Overall, across 17’984 responses from 21 LLMs, closed-ended interrogatives elicited responses that were more likely to display affinity, compassion, curiosity, personal storytelling, and respect, and less likely to exhibit reasoning and nuance, relative to open-ended interrogatives.
+
+Together, these findings are important because they suggest the possibility of human–language model interaction cycles, shaped by both user and LLM characteristics. This indicates that, to better understand the potential harms that may arise from the widespread adoption of LLMs, future research may benefit from moving beyond isolated analyses of either user inputs or LLM responses toward an integrated evaluation of both.
+
+# 2.  Taxonomies of Interrogatives
+
+2.1 Theory and Context 
+
+2.1.1 Existing taxonomies of interrogatives 
+To understand and formalize the dynamics of human–language model interactions, recent research has largely centred on the Gricean maxims [@grice_studies_1991], a focus emphasised in the review by Krause and Vossen (2024). These maxims articulate a set of pragmatic conventions that facilitate constructive communication: providing sufficient information (Quantity), remaining relevant (Relation), avoiding ambiguity (Manner), and being truthful (Quality). Initially introduced in this context as tools for value alignment [@kasirzadeh_conversation_2023-1], the maxims have for example been operationalised to improve response clarity [@saad_gricean_2025-1] or more broadly to inform language model design [@kim_applying_2025]. A key limitation is that their operationalisation is highly context-dependent and requires a fixed reference standard, despite the fact that criteria such as quality are interpreted differently across individuals and cultural settings.
+
+In educational research, Bloom’s taxonomy has been employed both to classify forms of inquiry and to analyse human–computer interactions with the aim of optimising language model use in pedagogical settings. Bloom’s taxonomy is a hierarchical theory with categories spanning from recalling facts to evaluating information [@bloom_taxonomy_1986]. It has been applied to optimise interactive learning through LLMs among children with different backgrounds [@luo_enhanced_2025], evaluate LLM-generated [@yaacoub_assessing_2025] and guide the integration of LLMs in educational contexts [@elim_promoting_2024]. Though useful for structuring inquiry in pedagogical settings, Bloom’s taxonomy is grounded in developmental psychology and assumes a progression of cognitive complexity. When extended beyond education, its imposition of a hierarchy among question types fails to account for the fact that interrogatives serve varied purposes that are not linearly ordered in terms of value or complexity.
+
+2.1.2 Erotetics
+Erotetic logic helps overcome the normative constraints of Bloom’s and Grice’s taxonomies by reframing inquiry without presupposing fixed standards or value hierarchies. Erotetics is a branch of philosophy situated at the intersection of semantics and logic. It aims to characterise the structure, purpose, and implications of interrogatives. Thereby, it directly addresses what @kasirzadeh_conversation_2023-1 identify as the central limitation of their Gricean approach—its focus on implications, a key dimension of pragmatics. They argue that a successful study of human–language model interactions must incorporate syntax, semantics, and pragmatics—precisely the areas that erotetics encompasses. 
+
+The relevance of erotetics to human–computer interaction was already recognised by @hakkarainen_interrogative_2002, who demonstrated how Hintikka’s game-theoretical model of inquiry, a key erotetic theory, could enhance internet search practices among elementary school students. More recently, @koralus_reason_2023 formalised the Erotetic Theory of Reason, proposing a computational account of reasoning based on the process of raising and answering inquiries, operationalised through the Python package PyETR [@koralus_pyetr_2025]. One of its key contributions to the study of human–language model interaction is its framing of reasoning in terms of issue resolution rather than adherence to fixed normative rules. This may support more flexible language-model alignment strategies that are robust to user-specific or cross-cultural variation. However, their operationalisation has a broader focus on the purpose and implications of interrogatives to reasoning. To address the social scientific aim of understanding prompt engineering from a user-centric perspective, the structure of questions should also be considered. This is because a growing body of empirical findings documents the sensitivity of prompt structure to LLM response [@sclar_quantifying_2024; @ razavi_benchmarking_2025].
+
+2.1.3 Belnap & Steel’s taxonomy of interrogatives
+Belnap and Steel’s (1976) theory of interrogatives and answers shares the computational scalability of @koralus_reason_2023 but lends itself more directly to the present aim of operationalising a taxonomy of interrogatives to investigate the social scientific implications of human-language model interactions. This is because the theoretical concepts it introduces include the operationalisation of user prompt structure. More specifically, @belnap_logic_1976 propose three concepts to formalise the dynamics between a questioner and a respondent that are directly relevant to the aims of the present research. The first is selection-size-specification, which concerns the extent to which the questioner predefines the range of acceptable answers through the form of the interrogative. For example,  
+
+(1)	“Is burning fossil fuels or deforestation the key driver of climate change?”
+
+has a selection-size-specification of two, because the structure, purpose, and implications of the interrogative constrain the respondent to choose between two predefined options. In contrast:
+
+(2)	"How is climate change understood to happen?"
+
+has an undefined selection-size-specification, since the questioner does not predefine the range of possible answers, leaving the respondent free to define extent of the given answer. As such, selection-size-specification serves as an indicator of the degree to which a question is open- or closed-ended. The second concept, completeness-claim-specification, concerns how the interrogative determines what counts as a complete answer. In example (1), the respondent is expected to choose a single answer, whereas in example (2), completeness is unspecified, and what constitutes a complete answer is left entirely to the respondent’s judgment. Third, an interrogative contains a presupposition if a particular statement is required to be true for the interrogative to have a meaningful answer. Example (1) presupposes that the key driver of climate change is either burning fossil fuels, or deforestation. Together, these concepts enable @belnap_logic_1976 to define the five types of interrogatives, described in Table 1. Ranging from closed-ended to open-ended, these include: Hobson’s Choice, Why, Whether, Which, and What/How interrogatives. Example (2) falls into the What/How category, as it elicits a descriptive answer and does not specify a fixed range of possible responses. Because these types account for structure, purpose, and implications, avoid imposing normative constraints, and are computationally scalable, it appears suited to operationalise this taxonomy of interrogatives to analyse human–language model interactions.
+
+
+```{r table_1}
+
+knitr::include_graphics(paste0(tdir, "table_1.pdf"))
+
+```
+
+2.1 Theory and Context 
+
+2.1.1 Existing taxonomies of interrogatives 
+To understand and formalize the dynamics of human–language model interactions, recent research has largely centred on the Gricean maxims [@grice_studies_1991], a focus emphasised in the review by Krause and Vossen (2024). These maxims articulate a set of pragmatic conventions that facilitate constructive communication: providing sufficient information (Quantity), remaining relevant (Relation), avoiding ambiguity (Manner), and being truthful (Quality). Initially introduced in this context as tools for value alignment [@kasirzadeh_conversation_2023-1], the maxims have for example been operationalised to improve response clarity [@saad_gricean_2025-1] or more broadly to inform language model design [@kim_applying_2025]. A key limitation is that their operationalisation is highly context-dependent and requires a fixed reference standard, despite the fact that criteria such as quality are interpreted differently across individuals and cultural settings.
+
+In educational research, Bloom’s taxonomy has been employed both to classify forms of inquiry and to analyse human–computer interactions with the aim of optimising language model use in pedagogical settings. Bloom’s taxonomy is a hierarchical theory with categories spanning from recalling facts to evaluating information [@bloom_taxonomy_1986]. It has been applied to optimise interactive learning through LLMs among children with different backgrounds [@luo_enhanced_2025], evaluate LLM-generated [@yaacoub_assessing_2025] and guide the integration of LLMs in educational contexts [@elim_promoting_2024]. Though useful for structuring inquiry in pedagogical settings, Bloom’s taxonomy is grounded in developmental psychology and assumes a progression of cognitive complexity. When extended beyond education, its imposition of a hierarchy among question types fails to account for the fact that interrogatives serve varied purposes that are not linearly ordered in terms of value or complexity.
+
+2.1.2 Erotetics
+Erotetic logic helps overcome the normative constraints of Bloom’s and Grice’s taxonomies by reframing inquiry without presupposing fixed standards or value hierarchies. Erotetics is a branch of philosophy situated at the intersection of semantics and logic. It aims to characterise the structure, purpose, and implications of interrogatives. Thereby, it directly addresses what @kasirzadeh_conversation_2023-1 identify as the central limitation of their Gricean approach—its focus on implications, a key dimension of pragmatics. They argue that a successful study of human–language model interactions must incorporate syntax, semantics, and pragmatics—precisely the areas that erotetics encompasses. 
+
+The relevance of erotetics to human–computer interaction was already recognised by @hakkarainen_interrogative_2002, who demonstrated how Hintikka’s game-theoretical model of inquiry, a key erotetic theory, could enhance internet search practices among elementary school students. More recently, @koralus_reason_2023 formalised the Erotetic Theory of Reason, proposing a computational account of reasoning based on the process of raising and answering inquiries, operationalised through the Python package PyETR [@koralus_pyetr_2025]. One of its key contributions to the study of human–language model interaction is its framing of reasoning in terms of issue resolution rather than adherence to fixed normative rules. This may support more flexible language-model alignment strategies that are robust to user-specific or cross-cultural variation. However, their operationalisation has a broader focus on the purpose and implications of interrogatives to reasoning. To address the social scientific aim of understanding prompt engineering from a user-centric perspective, the structure of questions should also be considered. This is because a growing body of empirical findings documents the sensitivity of prompt structure to LLM response [@sclar_quantifying_2024; @ razavi_benchmarking_2025].
+
+2.1.3 Belnap & Steel’s taxonomy of interrogatives
+Belnap and Steel’s (1976) theory of interrogatives and answers shares the computational scalability of @koralus_reason_2023 but lends itself more directly to the present aim of operationalising a taxonomy of interrogatives to investigate the social scientific implications of human-language model interactions. This is because the theoretical concepts it introduces include the operationalisation of user prompt structure. More specifically, @belnap_logic_1976 propose three concepts to formalise the dynamics between a questioner and a respondent that are directly relevant to the aims of the present research. The first is selection-size-specification, which concerns the extent to which the questioner predefines the range of acceptable answers through the form of the interrogative. For example,  
+
+(1)	“Is burning fossil fuels or deforestation the key driver of climate change?”
+
+has a selection-size-specification of two, because the structure, purpose, and implications of the interrogative constrain the respondent to choose between two predefined options. In contrast:
+
+(2)	"How is climate change understood to happen?"
+
+has an undefined selection-size-specification, since the questioner does not predefine the range of possible answers, leaving the respondent free to define extent of the given answer. As such, selection-size-specification serves as an indicator of the degree to which a question is open- or closed-ended. The second concept, completeness-claim-specification, concerns how the interrogative determines what counts as a complete answer. In example (1), the respondent is expected to choose a single answer, whereas in example (2), completeness is unspecified, and what constitutes a complete answer is left entirely to the respondent’s judgment. Third, an interrogative contains a presupposition if a particular statement is required to be true for the interrogative to have a meaningful answer. Example (1) presupposes that the key driver of climate change is either burning fossil fuels, or deforestation. Together, these concepts enable @belnap_logic_1976 to define the five types of interrogatives, described in Table 1. Ranging from closed-ended to open-ended, these include: Hobson’s Choice, Why, Whether, Which, and What/How interrogatives. Example (2) falls into the What/How category, as it elicits a descriptive answer and does not specify a fixed range of possible responses. Because these types account for structure, purpose, and implications, avoid imposing normative constraints, and are computationally scalable, it appears suited to operationalise this taxonomy of interrogatives to analyse human–language model interactions.
+
+[Table 1 here]
+2.2 Data and Methods
+Ethical approval for the entire research project was obtained via the London School of Economics ethics procedure (reference: 522753). Primary data collection and computational resources for all stages of this research were supported by the LSE Department of Methodology and the Anthropic Student Builders Program. All code and corresponding datasets necessary for replication are publicly available, with full links provided in Appendix A. 
+
+2.2.1 Dataset description
+This research draws on Kirk et al.’s (2024) PRISM alignment dataset, a resource that maps the sociodemographic profiles of 1,500 participants from 75 countries to the transcripts of their real conversations with LLMs. Each participant completed a sociodemographic survey prior to engaging in six LLM conversations. To promote prompt diversity, they held two conversations in each of three conditions – unguided, values-guided, and controversy-guided –, choosing the condition before entering their opening prompt (see §5.2 for discussion of data artefacts). From the conversations, I only include opening prompts in my analyses to avoid confounds introduced by LLM responses. I filtered out non-English entries, to ensure annotator comprehension, resulting in 8,002 prompts from 1,396 participants.
+
+2.2.2 Operationalisation
+To operationalise the taxonomy of interrogatives in a way that enables the large-scale classification of LLM user prompts, I adopt a computational approach that draws on transformer-based deep learning architectures. This approach builds on the computational scalability foundational to the logical structure of Belnap and Steel’s (1976) taxonomy of interrogatives, leveraging contemporary deep learning methods to enable its scalable application to the analysis of human–language model interactions. While @morucci_model_2024 emphasise the value of simpler generalised linear models in social science, I did not adopt such models because my aim—to capture the structure, purpose, and implications of the prompts—is intrinsically high-dimensional, and a domain where transformer-based architectures offer significant advantages.
+
+Recent research increasingly highlights the significant challenges that transformer-based architectures pose for replicability [@barrie_replication_2025], interpretability [@scorzato_reliability_2024], and downstream inference [@egami_using_2023] in social scientific applications. I address these concerns both through the fine-grained methodological decisions described throughout this research and in the design of my operationalisation. As part of that design, rather than using a single model to predict the interrogative types described in Table 1 directly, I used separate transformer-based models to represent the underlying concepts that Belnap and Steel (1976) define to derive their definitions. I then combined their outputs using Boolean operators according to Belnap and Steel’s (1976) definitions to produce the final prompt classifications. This compositional approach enhances interpretability and theoretical alignment by explicitly implementing Belnap and Steel’s (1976) definitions into the structure of the classification pipeline. A tool designed to illustrate how this operationalisation works in practice and to examine its limitations, QuestionTheTaxonomy, is available here (see Appendix A for full link).
+
+2.2.3 Data labelling
+To develop the data annotation guidelines, I implemented a prescriptive approach [@rottger_two_2022-1] that discourages annotator subjectivity and encourages consistent operationalisation. I decomposed the concepts to be operationalised into their simplest form, as simple and clear annotation instructions have been shown to yield higher-quality labels [@laux_improving_2023-1]. This resulted in the definition of seven distinct annotation categories, each requiring a dedicated transformer-based classifier, as described in Table 2. Then, I test-annotated a randomly selected sample of 80 prompts to understand edge cases, devise clear descriptions for handling them, and illustrate each guideline with concrete examples from the PRISM dataset (see Appendix A for the full annotator guidelines). 
+
+To ensure sufficient class representation for model training, I proceeded to label 10% of the dataset (N = 800 prompts) for each of the seven annotation categories. To assess inter-coder reliability, two annotators labelled a randomly selected 1% of the dataset (N = 80 prompts). As shown in Table 2, inter-annotator agreement was moderate for three categories. To address this, I manually reviewed the disagreements, consulted with the annotators, and refined the annotation guidelines accordingly. Using the improved guidelines, I then relabelled the 10% of prompts and one annotator relabelled the 1% of prompts for the three unsatisfactory categories. Second-round reliabilities increased slightly, but indicate potential for further guideline refinement.
+
+2.2.4 Transformer-based classifier selection 
+To determine the most suitable classification strategy for operationalising the taxonomy at scale, I tested three approaches using the labelled data: (1) zero-shot prompting based on the human annotation guidelines, (2) few-shot prompting adding labelled examples, and (3) fine-tuning models with transformer-based architectures on the labelled data. In approaches (1) and (2), classification performances were sensitive to prompt formulation; identical prompts performed inconsistently across models, and minor changes in instruction wording led to unpredictable variance. These issues, combined with growing concerns about the replicability of findings when using proprietary or version-dependent generative language models for large-scale annotation (Barrie et al., 2024), led me to focus on approach (3). 
+
+In this context, fine-tuning a generative language model, such as Deepseek or those offered by OpenAI, would have required the computational and data resources necessary to update a significant number of parameters that are not relevant to the text-classification task at hand. For this reason, I fine-tuned BERT-based models, which have empirically been shown to be particularly suited for classification tasks (Devlin et al., 2019). BERT architectures are open source, can be run locally on most modern hardware, and contain significantly fewer parameters, making them efficient for fine-tuning.
+
+2.2.5 BERT fine-tuning 
+Seven separate BERT models were fine-tuned [@devlin_bert_2018-1], one for each classification task described in Table 2, using the Hugging Face transformers library. Each model was trained on 500 labelled prompts from the PRISM dataset, and performance was evaluated on 300 labelled prompts. Fine-tuning was carried out using Hugging Face AutoTrain Advanced on a cloud instance with an Nvidia T4 GPU (16 GB VRAM). Further details on fine-tuning parameters are provided in Appendix B. A key advantage of this approach is that it allowed me to make each model publicly available as a model card on Hugging Face, facilitating future use, and enabling what Barrie et al. (2024) term stochastic replication, wherein replication results remain reproducible within quantifiable bounds. The outputs of the fine-tuned BERT classifiers were then passed through a set of logical operators described in Table 3 to determine the final interrogative category assignment.
+
+
+
+```{r table_2}
+
+knitr::include_graphics(paste0(tdir, "table_2.pdf"))
+
+```
+
+2.3 Results 
+
+To examine the robustness of the operationalised taxonomy, I implement a three-part evaluation: (§1) assess classification performance and uncertainty; (§2) evaluate key assumptions underpinning the application of the taxonomy — namely, that its use generalises beyond the fine-tuning data, that the labels are accurate, and that confidence scores reliably reflect classification performance — through both quantitative and qualitative approaches; and (§3) consider the implications of these assumptions for inference in social scientific applications.
+
+2.3.1 Classification performance 
+Understanding classification performance requires evaluating both the performance of the individual fine-tuned BERT classifiers and how this performance propagates through the logical conditions to produce final classifications. On 300 PRISM user prompts not used during fine-tuning, the accuracies of the seven fine-tuned BERT classifiers ranged between .86-.98 (mean = .94, SD = .045) and weighted F1 scores ranged between .85-.98 (mean = .94, SD = .050). This indicates robust performance, with accuracy reflecting the overall correctness of predictions, and weighted F1 providing assurance that this performance is not driven solely by dominant categories, as it accounts for both precision and recall per category and adjusts for category prevalence. Notably, the categories with lower classification performance are those that appeared less frequently in the training data. Performances per fine-tuned BERT and category are reported in Appendix X, alongside proportions of each category in fine-tuning samples. 
+
+When the outputs of the fine-tuned BERT classifiers are passed through the Boolean operators to generate final interrogative category assignments, classification accuracy remains high (range = .896–.997; mean (SD) = .957 (.044)), while the weighted F1 score shows a modest decrease (range = .748–.968; mean (SD) = .884 (.084)). This drop reflects the compounding of classification uncertainty through the Boolean pipeline, particularly for less frequent categories. Nonetheless, the overall performance remains strong, suggesting that the operationalisation is robust even when assigning final interrogative categories. Table 3 reports detailed performances per interrogative type and the number of assigned prompts to each interrogative category across the entire PRISM dataset (columns 3 & 4). 
+
+
+```{r table_3}
+
+knitr::include_graphics(paste0(tdir, "table_3.pdf"))
+
+```
+
+
+2.3.2 Uncertainty estimation: 
+Estimating uncertainty in transformer-based architectures is challenging, not only because it arises from both model-related (epistemic) and data-related (aleatoric) sources [@wang_aleatoric_2025; @ huang_survey_2024], but also because there are limited established standard for its quantitative evaluation [@gawlikowski_survey_2022]. I implemented Monte Carlo dropout to estimate epistemic uncertainty, given its compatibility with transformer-based architectures and its computational feasibility for fine-tuned BERT architectures. This method estimates uncertainty by generating multiple stochastic forward passes during inference, each with a different subset of model weights randomly deactivated and computing the variance across the resulting predictions [@gal_dropout_2016]. For each fine-tuned BERT, I implemented Monte Carlo dropout using a dropout probability of 0.1, as this aligns with standard BERT configurations and falls within the range evaluated by @ gal_dropout_2016. Uncertainty estimates were derived from 100 stochastic forward passes, computed on an Nvidia A100 GPU. Given discrete classes, I calculated interrogative class entropy for each PRISM user prompt across 100 Monte Carlo dropout estimations to quantify epistemic uncertainty. Mean interrogative category-level entropies are reported in Table 3 (column 3), with Why interrogatives eliciting the most certain classifications (mean = 0.006, SD = 0.046) and 'Not an interrogative' the least (mean = 0.606, SD = 0.323). Results showed that 91.5% of the 8’002 PRISM user prompts received the same classification in at least 95 out of 100 Monte Carlo samples. See Appendix D for entropy means and standard deviations of the individual BERT classifiers, and Appendix E for violin plots illustrating the distribution of Monte Carlo entropy across interrogative categories. Taken together, these findings indicate low epistemic uncertainty and high predictive confidence across the majority of the PRISM dataset. This, in turn, supports the reliability of this operationalisation of Belnap and Steel’s (1976) taxonomy of interrogatives.
+
+2.3.3 Key assumptions for taxonomy application:
+Before applying this taxonomy of interrogatives to investigate human–language model interactions, its generalisability must be evaluated, given evidence that fine-tuned BERT models often reflect dataset-specific biases, and that out-of-sample performance may overestimate real-world effectiveness [@de_vassimon_manela_stereotype_2021; @shen_experimental_2023]. On the one hand, the PRISM dataset offers a valuable opportunity to address concerns around generalisability, given the diverse backgrounds of its participants. On the other hand, the data originate from a structured academic study in which users were guided toward specific conversation types, which may have introduced data artefacts into the operationalisation (discussed in §5.2). 
+
+The meaningful interpretation of downstream inferences depends on the accuracy of the labels in the fine-tuning dataset. This was partly assessed through inter-coder reliabilities, though it should be noted that all annotators were European and held university degrees. Their relative homogeneity may have biased these estimates upward. In addition, while the categories are mutually exclusive, 172 of the 8,002 PRISM user prompts were not assigned to any category, indicating that the classifications were not collectively exhaustive. This is despite the taxonomy being theoretically defined and operationalised to meet both criteria and highlights a gap between the taxonomy’s theoretical aims and its empirical implementation. To understand this gap, I manually reviewed the 172 non-assigned prompts. Of those, 13.4% were not written in English, reflecting limitations in the preprocessing step, which relied on an existing PRISM dataset column for language identification. In addition, some of them had simple statements (e.g., ‘the titanic’) or grammatical mistakes such as ‘im broed’ instead of I’m bored – which should have been assigned to ‘Not an interrogative’, reflecting that this was the category with the fewest labelling examples, and the highest prediction uncertainty. While these cases highlight room for refinement, their 2.8% incidence across the 8’002 PRISM participant prompts suggests minimal impact on the broader applicability of the taxonomy. 
+
+In addition, confidence scores warrant attention as the BERTs’ measure of certainty (i.e., softmax output) is frequently treated as a probability, but this assumes the model is well-calibrated—an assumption that does not consistently hold in practice [@guo_calibration_2017]. Poor calibration arises when the model’s softmax output is not adjusted to reflect real-world correctness. In classification, low uncertainty often aligns with a dominant class probability, indicating high confidence; however, high confidence alone does not guarantee low uncertainty, as class probability distribution plays a key role [@huang_survey_2024]. I evaluated calibration using the Expected Calibration Error, which ranged from 0.93 to 0.99 across fine-tuned BERT classifiers, indicating likely credibility of confidence estimates in applied settings [@pavlovic_understanding_2025].
+
+2.3.4 Implications for inference in social scientific applications
+Understanding robustness involves recognising the operationalisation as an inferential tool for analysing human–language model interactions through a theoretical lens. Egami et al. (2023) caution that prediction errors from transformer-based classifiers often correlate with both observed and unobserved covariates, thereby introducing dependencies that can substantively distort inferential outcomes. They show that even with high classification accuracy, failing to account for such dependencies can lead to invalid statistical inference. To address this, @egami_using_2023 propose the design-based supervised learning (DSL) estimation framework. Given the potential for such bias in BERT-based models, the implementation of the DSL estimator should be treated as integral to this operationalisation. The methods in Study 1 demonstrate how this is applied in practice. 
+
+Overall, the above evaluations support the robustness of the operationalisation and its validity for social scientific inference. The taxonomy may serve as a theoretical lens for investigating human–language model interactions, an analysis that can be broken down into two core inquiries: whether user characteristics are associated with interrogative types (Study 1) and whether these types influence LLM responses (Study 2).
+
+# 3. Study 1
+
+3.1 Introduction
+
+This study applies the operationalised taxonomy of interrogatives to characterise variation in Belnap and Steel’s (1976) interrogative types by PRISM participant demographic features. Although the present research examines this variation in the broader context of potential human–language model interaction cycles, describing individual variation in the types of interrogatives humans pose in language model interactions is a valuable social scientific pursuit in its own right. This is because language models have the potential to considerably change information retrieval [@chen_spiral_2024] and production [@brachman_current_2025] — a shift likely to have broad societal implications [@weidinger_ethical_2021; @ tamkin_understanding_2021]. In this context, my aim to comprehensively describe interrogative types with respect to demographic characteristics may help identify emerging patterns that require further explanation and theorisation (de Kadt & Gryzmala-Busse, 2025).
+
+Given the breadth of inquiry into demographic differences among the types of interrogatives used, I begin this review by focusing on educational background as a key example. Existing literature suggests that higher levels of formal education are associated with the use of more complex syntactic structures [@massing_degrees_2017] and semantically richer formulations [@pereira_language_2022]. In addition, differences in educational attainment have been linked to the contexts in which language models are used, which shape the pragmatic functions of user prompts [@zheng_grice_2021]. Taken together, these patterns in syntax, semantics, and pragmatics suggest corresponding variation in the structure, purpose, and implications of language use by educational background. Since these are the core dimensions captured by Belnap and Steel’s (1976) taxonomy of interrogatives, educational attainment emerges as a conceptually relevant variable for describing demographic differences in the use of interrogative types.
+
+More broadly, research drawing on Gricean maxims suggests that demographic characteristics are associated with systematic variation in interactional patterns. For example, @tran_investigation_2020 observe conditional differences in the use of Gricean maxims by gender, while @panzeri_childrens_2021 do so for age. While these findings offer preliminary indications of demographic variation in interrogative type use, they primarily underscore the paucity of empirical research directly characterising such variation in the context of LLM use. In light of this gap—and given the absence of prior empirical applications of Belnap and Steel’s (1976) taxonomy in this domain—I implement a broad, descriptive approach. To do so, I draw on the PRISM dataset [@kirk_prism_2024], which includes demographic profiles and opening prompts submitted to large language models, classified according to the operationalised taxonomy of interrogatives.
+
+Adopting the framework for ‘Good Description’ defined by de Kadt and Gryzmala-Busse (2025) and given a definition of interrogative types (§2.1.3), I define the descriptive scope of my approach as threefold. Let d denote a demographic characteristic in {educational status, gender, age, birth region, ethnicity, religion} or conversation type, i an interrogative type in {Hobson’s choice, Why, Which, Whether, What/How}, and g a subgroup within d. I pose the following research questions:
+	Characteristic: How frequently does each interrogative type (i) occur overall and within each demographic subgroup (g)?
+	Association: Are individuals in demographic subgroup (g) over- or under-represented in asking interrogative type (i), relative to their baseline proportion in the PRISM participant sample?
+	Conditional association: For each interrogative type i, to what extent is the likelihood of producing that type associated with membership in demographic subgroup g of feature d, controlling for all other demographic features and conversation type?
+
+It is important to approach the interpretation of such observations with caution. Any associations observed between demographic characteristics and interrogative types should not be taken to suggest that the demographic attributes themselves determine how individuals formulate interrogatives. For example, if a gender-related difference is observed, this should not be interpreted as evidence of an inherent distinction between two genders in interrogative patterns. Rather, such findings should be understood as starting points for further enquiry, aimed at uncovering the social, cultural, or contextual factors that may contribute to the observed variation.
+
+
+3.2 Methods
+This study was pre-registered on OSF, with the full link and a pre-registration accountability statement provided in Appendix X. The methodological substance and the presentation of results draw on Study 1 by Kirk et al. (2024; pp.6-7). In this study, I carry forward the PRISM conversation opening prompts that I classified according to the operationalised taxonomy of interrogatives by @belnap_logic_1976 in the preceding section. I analyse these prompts in conjunction with demographic data from the PRISM participant profiles (see @kirk_prism_2024 for details). The 172 PRISM opening prompts not assigned to any interrogative category were excluded from the present analyses. 
+
+Since the DSL R package (Egami et al., 2025) does not yet support all analytical strategies, the implementation of the DSL estimator was adapted to suit the specific requirements of each analysis and is described in the corresponding sections. In general, I treated the seven fine-tuned BERT classifiers and the logical conditions for final category assignment as an ensemble, both to account for error propagation through the full classification process and because the final interrogative category is the outcome of inferential interest. Given the nominal nature of the interrogative categories and to preserve interpretability, I created a dummy-encoded column for each final interrogative category assignment across all PRISM prompts and applied the DSL estimator to each dummy variable separately to generate a debiased estimate for each interrogative category. Extended methods for implementing the DSL estimator across the three sections below are described in Appendix H.
+
+3.2.1 Characteristic
+For each demographic feature d, I computed a contingency table to display the joint frequency distribution of interrogative types. This provides an initial overview of the data distribution and allows for the derivation of three types of insights for each demographic variable d and interrogative type i. First, the joint probability of each interrogative type and demographic group Pr⁡(i,d), can be calculated. Then, the conditional probability of an interrogative type given a demographic group, Pr⁡(i ┤| d), and of a demographic group given an interrogative type Pr⁡(d ┤| i), can also be derived.
+
+To complement the contingency table analyses and assess the robustness of observed patterns, I applied the DSL estimator to adjust for non-random prediction errors in each interrogative category i and to quantify uncertainty in the estimates. I used the DSL R package (Egami et al., 2025), regressing each dummy-encoded interrogative category i on each demographic feature d using linear regression without an intercept. This approach is mathematically equivalent to computing subgroup means. Although it is less interpretable, this was necessary because the DSL package (v0.1.0) does not support aggregated count data.
+
+For each interrogative type i and demographic feature d (e.g., gender), over-representation factors were calculated separately for each subgroup g within the feature (e.g., women, men, non-binary within the gender feature). These factors assess whether each subgroup is over- or under-represented in asking that interrogative type, relative to its baseline proportion in the overall PRISM sample. This is calculated using the following formula: 
+〖Over-representation factor〗_(g,i)=  (N_(g,i)/N_i)/(N_g/N_total )
+
+The numerator represents the observed prevalence of demographic subgroup g (e.g., women within the demographic feature of gender) within interrogative type i. Specifically, N_(g,i) is the number of times individual in demographic subgroup asked interrogative type i and N_i is the total number of times interrogative type i is asked across all subgroups within that feature. The denominator represents the expected prevalence if group g participated proportionally to its prevalence in the dataset. Thus, N_g/N_total represents group g’s baseline rate in the full sample. 
+
+
+To adjust for non-random prediction errors in the interrogative classification, I computed the over-representation factors using design-adjusted outcomes for each dummy-encoded interrogative type. These were implemented manually, as the current version of the DSL package (v0.1.0) does not support this type of analysis.
+
+3.2.3 Conditional association
+To estimate the conditional association between demographic characteristics and the likelihood that a prompt is of interrogative type i, I estimate the following specification using a logistic regression for each interrogative category, here y^i: 
+
+logit(Pr⁡(y_(p,o)^i=1))= α_i+〖gender'〗_p β_1^i+ 〖age'〗_p β_2^i+ 〖birth region'〗_p β_3^i+〖religion'〗_p β_4^i+ 〖prompt type'〗_p β_5^i+〖ethnicity'〗_p β_6^i+ ε_(p,o)
+
+where y_(p,o)^i takes the value of 1 if the prompt written by participant p in opening prompt o is of interrogative type i. In this context, α_i is an intercept specific to interrogative type i, β_d^i is a coefficient vector for demographic feature d for interrogative type i, and ε_(p,o) is the error term clustered at the participant level to account for repeated measures, as each participant contributes multiple opening prompts to the dataset. Following the implementation by @kirk_prism_2024, gender, age, region, ethnicity, religion, and conversation type are included in the model as sets of dummy variables. The omitted reference categories are Male, 18–24, United States, White, Not religious, and Unguided. Bonferroni corrections were applied to adjust for multiple comparisons. 
+
+A limitation of my implementation is that the results from these logistic regressions are presented without DSL adjustment, as the current version of the DSL R package (Egami et al., 2025) does not support logistic models with clustered standard errors. In this context, the manual implementation described in §3.2.2 is not appropriate because adjusted outcomes are continuous, making them unsuitable as dependent variables in logistic specifications. 
+
+3.3 Results
+
+3.3.1 Characteristic 
+The contingency tables in panel A of Figure 1 show how frequently each interrogative type occurs overall and within each demographic group. Taken together, the findings indicate that, across demographic variables, participants more frequently used open-ended interrogatives (those with higher selection-size specifications), such as What/How, Which, and Whether, compared to closed-ended interrogatives (with lower selection-size specifications) like Why and Hobson’s Choice. For example, the top-left cell in the gender panel shows 398 Hobson’s Choice interrogatives authored by women. From this, it can be derived that 5.4% of all interrogatives fit this category, that 11.1% of interrogatives by women were Hobson’s Choice, and that 52.8% of Hobson’s Choice interrogatives were from women . One notable pattern is that, in conversations on topics that participants considered controversial, they most frequently used more closed-ended interrogatives such as Whether (38.1%), whereas in unguided conversations on a random topic, open-ended interrogatives like What/How were most common (47.3%; Pr(interrogative type | conversation type)). Appendix X reports DSL-adjusted category proportions along with associated uncertainty estimates. These adjusted values confirm the same substantive patterns observed in the main results.
+
+```{r figure_1}
+
+knitr::include_graphics(paste0(odir, "figure_1.pdf"))
+
+```
+
+3.3.2 Association
+As shown in Panel B of Figure 1, the distribution of over-representation factors adds nuance to the observations derived from contingency tables. Overall, open-ended interrogatives show more stable distributions across demographic groups, with lower uncertainty estimates and more subtle disparities in representation. In contrast, closed-ended interrogatives tend to be more unevenly distributed across subgroups, as reflected in a wider range of over-representation factors and higher uncertainty estimates. To illustrate, in the birth region panel, over-representation factors for What/How interrogatives range from 0.45 to 1.37, whereas for Hobson’s Choice they span a wider range, from –0.99 to 2.06. Uncertainty estimates reflect the underlying data distribution, with lower-frequency interrogatives showing greater variability (see Appendix X for full estimates). As an example, participants with completed secondary education make up 13.9% of the sample but account for just 12.9% of What/How interrogatives, yielding an over-representation factor of 0.93 (SE = 0.10).
+
+3.3.3 Conditional association 
+Figure 2 presents results from a series of logistic regression specifications, each estimating how the odds of using a given interrogative type vary across demographic subgroups, relative to an omitted reference group, controlling for all other demographic features. These results suggest that, ceteris paribus, participants aged 18–24 were more likely to use closed-ended Why interrogatives and less likely to use open-ended Which interrogatives compared to all older age groups. Average marginal effects, presented in panel B of Figure 2, indicate that, controlling for other demographic characteristics, participants aged 18–24 were on average 3.2 percentage points (pp) more likely to ask a Why interrogative than those aged 25–34, and 6.0 pp more likely than those aged 55–64. In contrast, their likelihood of using Which interrogatives was 4.8 pp lower than those aged 25–34, and 11.6 pp lower than those aged 55–64. 
+
+Similar patterns were observed for education and conversation type. Participants with only primary and/or some secondary education were more likely to use closed-ended Why and Whether interrogatives and less likely to use open-ended Which and What/How forms compared to all higher levels of educational attainment, ceteris paribus, although these associations were not found to be statistically significant. Conversation type showed the largest effect size. When discussing a topic they perceived as controversial, in reference to a randomly selected topic, participants were 11.6 pp more likely to use the most closed-ended interrogative form (Hobson’s Choice) and 28.5 pp less likely to use the most open-ended form (What/How) controlling for other demographic characteristics. Patterns for ethnicity, religion, and birth region were more heterogeneous (see Appendix K for predicted probabilities). 
+
+To conclude, the observations described in this study suggest that the types of interrogatives posed, as categorized by Belnap and Steel (1976), do vary with individuals’ demographic characteristics, with the most pronounced patterns observed in relation to educational attainment, age, and conversation type. The analyses were linked to theory through the use of @belnap_logic_1976  taxonomy of interrogatives, operationalised in an open-source manner. This transparency facilitates future testing and comparison, while the use of universal demographic characteristics provides anchor points for interpretation across social scientific disciplines. In combining these, I sought to produce descriptions that are clear, comparable, and complete (de Kadt & Gryzmala-Busse, 2025). The described patterns provide starting points for further inquiry into how individual differences in the widespread use of language models across the world may be shaping practices of information retrieval and production (discussed in §5.2).
+
+# Study 2
+
+4.1 Introduction
+
+In this study, I experimentally manipulate interrogative form by comparing the most open-ended type (What/How), as defined by the operationalized taxonomy, with the most closed-ended form (Hobson’s Choice), to evaluate whether they lead to differences in language model response attributes. These attributes are measured using the Google Jigsaw bridging attributes—which include affinity, compassion, curiosity, nuance, personal story, reasoning, and respect [@lees_new_2022]—as they were specifically developed to assess communicative qualities associated with constructive and prosocial dialogue [@ovadya_bridging_2023]. While there is a large body of research on how prompt differences influence LLM responses, it primarily approaches the topic either from an engineering perspective, focused on optimising model function, or from a methodological perspective, aimed at augmenting social scientific research methods. However, most research does not consider that everyday users may be inadvertently engaging in a form of prompt engineering through individual differences in their routine interactions with LLMs, as described in Study 1. As a result, there remains a significant gap in the literature concerning potential variation in language model responses among everyday users, and the broader social scientific implications of such differences. In this study, my aim is to take a first step toward addressing this gap by examining how interrogative form may influence language model response attributes associated with constructive online dialogue.
+
+A growing body of prompt engineering literature has emerged in response to the sensitivity of language models to input phrasing, aiming primarily to optimize model performance. In a systematic review, @schulhoff_prompt_2025 identify 58 distinct prompting techniques, reflecting the multidimensionality of prompt design. One such technique, instruction selection [@jiang_how_2020], manipulates the syntactic form of prompts while preserving their underlying meaning. Aimed at optimizing LLM knowledge evaluation, their study demonstrates that the effectiveness of eliciting latent model knowledge in responses varies substantially with prompt syntax, even meaning is held constant. @press_measuring_2023 developed Self-Ask, a prompting technique that explicitly refines the original prompt by generating clarifying sub-questions. This process manipulates the prompt’s semantic structure by making implicit presuppositions and implications explicit, which in turn leads to systematic changes in language model responses, particularly in performance on compositional reasoning tasks. Prompt pragmatics are manipulated by @li_large_2023 through their emotion prompting technique. By embedding affective statements such as ‘This is very important to my career’ the technique alters the contextual framing of the prompt, thereby influencing model responses across a range of benchmarking tasks. 
+
+Several studies have adopted a more social scientific approach, focusing on the sociocultural implications of prompt variation in contrast to the engineering emphasis on optimizing model performance. For example, @viveros-munoz_does_2025 found that syntactic differences affected students’ perceived response quality; @kharchenko_how_2025 demonstrated that semantic framing based on cultural values led to heterogeneity in LLM response attributes; and @yin_should_2024 showed that prompt politeness influenced responses through pragmatic framing. Together, the findings stemming from both approaches described above suggest differences in language model response attributes according to syntactic, semantic, and pragmatic variation in input prompts. Since these dimensions are central to Belnap and Steel’s (1976) taxonomy of interrogatives, their taxonomy may offer a theoretically grounded lens through which to investigate whether variation in interrogative type corresponds with differences in language model response attributes. Overall, this lends itself to the following research question:
+How do What/How interrogatives, compared to Hobson’s Choice interrogatives, operationalised according to Belnap and Steel’s (1976) taxonomy, influence language model response attributes, as measured by the Google Jigsaw bridging attributes?
+
+Understanding the potential association between interrogative form and LLM response attributes is particularly relevant in applied contexts where LLMs can influence decision-making (e.g., in medical, educational, or organizational settings), as it may affect how users interpret, trust, or act on LLM responses. 
+
+
+4.2 Methods
+
+This study was pre-registered on OSF (see Appendix G for full link and accountability statement). To examine the effects of interrogative form on LLM responses, I selected prompts from the PRISM dataset that were classified as What/How and Hobson’s Choice according to the operationalised taxonomy (Belnap & Steel, 1976) and constructed counterfactuals in the opposite form. I then collected LLM responses and analysed variation in the responses’ bridging attributes.
+
+4.2.1 Study Design 
+Experimental manipulation
+To meet the pre-registered requirement of 400 prompt pairs, I randomly selected 250 PRISM opening prompts classified as Hobson’s Choice and 250 as What/How, based on the operationalised taxonomy of interrogatives, and constructed counterfactuals for each in the opposite interrogative form. Oversampling allowed to preserve statistical power after manually verifying and removing misclassified prompts. I then reviewed the selected prompts to identify recurring formulations within each interrogative type and, in conjunction with Belnap and Steel’s definitions and illustrative examples, developed five distinct prompt templates per type to account for LLM prompt sensitivity. The full set of templates, along with example implementations, are provided in Appendix L. Each selected PRISM prompt was then randomly assigned a counterfactual template from the opposite interrogative category, and the corresponding counterfactual was manually written to ensure alignment with the Belnap and Steel’s (1976) interrogative definitions. 
+
+For example, one PRISM participant asked, “What happens if we achieve AGI?” Using the first Hobson’s Choice template (Tell me that X), this was rephrased as “Tell me the benefit of achieving AGI.” By definition, such transformations required increased specificity and imposed a particular evaluative framing on the prompt content. To ensure variation, I deliberately alternated between framings; for instance, the prompt “what is google adsense?” was rephrased as “Tell me the disadvantage of google adsense.” However, the heterogeneity of the PRISM prompts prevented me from implementing a fully algorithmic framing across all cases. For example, a prompt such as “What is the best actress?” does not naturally map onto an advantage/disadvantage formulation within the Tell me that X template and thus required case-by-case judgment to generate a counterfactual consistent with the definitions provided by @belnap_logic_1976. As a result, a limitation of this study is that counterfactual phrasings may reflect the subjective choices of a single annotator.
+
+Data collection and processing
+In response to concerns that empirical findings may not replicate across LLM architectures (Barrie et al., 2024), I submitted both original PRISM and counterfactual prompts to a diverse set of commercial LLMs and collected their responses. LLMs were selected to represent a cross-section of current architectures, varying in both scale (i.e., relatively small vs. large parameter counts) and intended reasoning capacity (reasoning vs. non-reasoning). Across major providers—Anthropic, DeepSeek, Google, Meta, Microsoft, MistralAI, OpenAI, and Qwen—I aimed to include one LLM per category. Where such distinctions were unavailable for a given provider, selection followed pre-registered criteria. This yielded a final sample of 21 LLMs, each accessed via provider APIs (full LLM versions and provider details in Appendix X). All LLMs were queried using default parameters to approximate typical user interactions. In downstream analyses, intermediate reasoning traces (‘thinking tokens’) were excluded from reasoning LLM outputs to reflect the final user-facing response. To determine token length and ensure consistent token number comparisons across LLMs, all responses were tokenized using the GPT-4 tokenizer from the tiktoken library. I then evaluated all LLM responses using the Google Jigsaw Perspective API [@lees_new_2022], which produced scores for the bridging attributes outlined in Table 4. I chose the Google Jigsaw bridging attributes because they were specifically developed to evaluate communicative qualities that support constructive and prosocial dialogue in human interactions in accordance with @ovadya_bridging_2023. Understanding whether interrogative form leads to variation in these attributes within LLM outputs may offer insight into how such systems can shape, support, or constrain meaningful interaction in everyday use. 
+
+```{r table_4}
+
+knitr::include_graphics(paste0(ddir, "table_4.pdf"))
+
+```
+
+4.2.2 Analytical Strategy
+I start by comparing LLM response lengths in terms of token number between Hobson’s Choice and What/How prompts using paired t-tests and Cohen’s d, both overall and by LLM. To qualitatively evaluate whether and how interrogative structure shapes response content, I conduct a structured comparison using outputs from OpenAI as a case study, selected for being the most widely used provider in the sample. I randomly select 50 prompt pairs and their corresponding responses from GPT-4 and O4, OpenAI’s most used reasoning and non-reasoning LLMs, and manually code them for the presence or absence of the three key theoretical attributes identified by Belnap and Steel (1976), selection-size-specification, presupposition and, completeness-claim-specification. 
+
+I first estimate the average treatment effect as the difference in means of response scores between the two interrogative types across each of the seven Jigsaw bridging attributes, both for each LLM and in the full sample. For each of these comparisons, I then assess whether attribute variance differs between response types by implementing Levene’s test. 
+
+To estimate the effect of the interrogative type experimental manipulation on the bridging response attributes of LLM responses, I implement the following specification: 
+
+〖AttributeScore〗_ij= α+ β_1 〖InterrogativeType〗_i+β_2 〖LLM〗_j+ β_3 (〖InterrogativeType〗_i×〖LLM〗_j )+ ℇ_ij
+
+Where 〖AttributeScore〗_ij denotes the score assigned to LLM j’s response to prompt i on one of the seven Google Jigsaw bridging attributes. 〖InterrogativeType〗_i is a binary treatment indicator equal to 1 if the prompt is a What/How interrogative and 0 if it is a Hobson’s Choice prompt (the reference category). 〖LLM〗_j is a categorical variable indicating LLM identity, included as a series of dummy variables with GPT-4.1 as the reference level. The interaction term, 〖InterrogativeType〗_i×〖LLM〗_j, captures LLM-specific differences in responsiveness to interrogative form. The error term, ℇ_ij is clustered at the prompt level to account for repeated measurements across LLMs for the same prompt. To enable interpretation, I computed marginal effects of interrogative type for each LLM and bridging attribute using predictions from the above specification and applied parametric Monte Carlo simulations (1,000 draws) to derive uncertainty estimates (using the marginaleffects R package, Arel-Bundock et al., 2024).
+
+4.3 Results
+
+Descriptive – Response length
+An analysis of response length across the 17’984 collected responses indicated that LLM responses to What/How interrogatives were substantially longer than those to Hobson’s Choice prompts, but that effect sizes varied by LLM. The mean (SD) number of tokens for What/How prompts was 568.16 (406.31), compared to 394.12 (315.76) for Hobson’s Choice. A paired-samples t-test confirmed this difference, t(8991) = 47.10, p < .001, with a medium effect size (Cohen’s d = 0.50). As shown in Appendix X, this is consistent with the pattern observed for 19 of the 21 LLMs, Mistral Magistral Medium and DeepSeek R1 being the exceptions, suggesting that the aggregate difference is unlikely to be an artefact of Simpson’s paradox but it’s magnitude should still be interpreted with caution (Pearl, 2016). The magnitude of the effect varied between individual LLMs, with 11 LLMs having a Cohen’s d above 0.8, 6 below 0.6, and the remainder in-between. 
+
+Quantitative – Logistic regressions
+Findings from differences-in-means analyses across the full sample suggested meaningful differences between LLM responses to Hobson’s Choice prompts and those to What/How prompts across all seven bridging attributes. Specifically, responses to What/How prompts scored, on average, 6.5 percentage points (pp) lower in affinity, 4.8 pp lower in compassion, 3.3 pp lower in curiosity, 4.4 pp lower in personal storytelling, and 4.0 pp lower in respect compared to responses to Hobson’s Choice prompts. Conversely, What/How responses scored 3.3 pp higher in nuance and 1.6 pp higher in reasoning than Hobson’s Choice responses (all p’s < .001). The direction of effects was largely consistent across individual LLMs, though the magnitude of differences varied. Levene’s tests indicated unequal variances between What/How and Hobson’s Choice prompts for all attributes (p < .001), except for curiosity (p = .756). These results suggest that, on average, bridging attribute scores in LLM responses vary not only in central tendency but also in dispersion, depending on the interrogative form of the prompt. Full results, including average treatment effects and uncertainty estimates for individual LLMs and the full sample, are presented in Appendix X.
+
+As shown in Figure 3, findings from the specification described in § closely mirrored those from the difference-in-means analyses. On average, moving from the LLM response to a Hobson’s Choice interrogative, to the LLM response to a What/How interrogative was associated with increases in nuance and reasoning, and decreases in affinity, compassion, curiosity, personal story, and respect. While the direction of effects was broadly consistent across LLMs, the magnitude of these effects varied by LLM. Several LLMs exhibited particularly large sensitivity to prompt type (e.g., GPT-4.1, Claude Sonnet 4), whereas others showed attenuated effect sizes (e.g., Mistral Magistral Medium, DeepSeek R1). 
+
+For example, for Anthropic’s Claude 3 Haiku LLM, moving from a Hobson’s Choice prompt to a What/How prompt was associated, on average, with a 10 pp decrease in affinity, 6 pp decrease in compassion, 5 pp decrease in curiosity, 12 pp decrease in personal story and 6 pp decrease in respect while leading to a 3 pp increase in nuance, and a 1 pp increase in reasoning. Full point estimates and confidence intervals are reported in Appendix P. Results were largely consistent in both direction and uncertainty estimates across two alternative specifications: one that included a random intercept for prompt (to account for paired interrogatives), and another that omitted clustered standard errors by prompt type. 
+
+Overall, the findings from this experimental study suggest that the interrogative form of prompts influences the expression of bridging attributes in LLM-generated responses. Responses to What/How prompts were generally longer and exhibited greater nuance and reasoning, but consistently lower levels of affinity, compassion, curiosity, personal storytelling, and respect compared to responses to Hobson’s Choice prompts. While the direction of effects was broadly consistent across LLMs, their magnitude varied substantially, indicating that LLMs differ in their sensitivity to interrogative framing (see §X for a discussion of implications).
+
+# 5. Discussion
+Overview of the findings [300 Words] / [275 Words]
+In the context of changes in information retrieval and production associated with the widespread adoption of LLMs, I operationalised Belnap and Steel’s (1976) taxonomy of interrogatives. I selected this taxonomy for its ability to avoid the normative constraints of earlier frameworks and its potential to support social scientific research at scales relevant to LLM deployment. Throughout the operationalisation and evaluation, I sought to address concerns regarding replicability, interpretability, and downstream inference. The findings demonstrated high predictive performance and strong reliability, with overall low uncertainty that modestly increased for categories with limited training data. Taken together, results suggest that this operationalisation may hold utility in the social scientific investigation of human–language model interactions. 
+
+To this end, findings from the observational Study 1 suggested that closed-ended interrogatives were more likely among younger participants, those with higher educational attainment, as well as in conversations about controversial topics and values, with effect sizes varying across interrogative types and demographic subgroups. The robustness of these observations is supported by the diversity of the sample, comprising 1,396 participants from 75 birth countries, and provides a basis for future research into these associations. In the experimental Study 2, manipulation of interrogative type revealed that, relative to the most open-ended form, the most closed-ended form elicited LLM responses exhibiting greater affinity, compassion, curiosity, personal storytelling, and respect, as well as reduced nuance and reasoning. These directional effects were broadly consistent across 21 LLMs, though their magnitude varied, and the manipulation influenced not only the central tendency of bridging attribute distributions but also their variance.
+
+Together, these findings indicate that cycles of human–language model interactions may emerge, shaped by both user characteristics and LLM-specific properties. More broadly, they highlight that understanding the social scientific implications of the widespread LLM adoption requires moving beyond isolated analyses of either user inputs or LLM outputs towards an integrated, higher-dimensional examination of both.
+
+5.1 Limitations [450 Words] / [400 Words]
+When evaluating the present operationalisation, both a theoretical and a technical limitation should be noted. @belnap_logic_1976  formulated an assertional language of logical expressions to formalise and prove their erotetic logic, from which they derived concepts at the ‘meta-language level’, such as selection-size-specification. In this study, I operationalised these concepts, thereby assuming that the foundational assertions of their formal system hold in the applied context. A more granular evaluation of this theoretical alignment with respect to the assertional language was beyond the present scope but should be prioritised in future research. In addition, the study’s focus on interrogatives leaves unaddressed the operationalisation of Belnap and Steel’s (1976) formalisation of answers, which could further enhance the theory’s potential for analysing human–language model interactions. The technical limitation reflects a broader gap in the literature, in that systematically developed guidelines to evaluate construct validity in deep-learning–based operationalisations have not yet been established. While I have sought to address these issues by considering replicability, interpretability, and downstream inference alongside predictive performance and uncertainty quantifications, the absence of standardised validation protocols remains a limitation and constrains the comparability of findings across studies.
+
+A key limitation of Study 1 is that PRISM data may contain artefacts of its academic study context, possibly compromising ecological validity as recorded prompts may diverge from everyday LLM use. @kirk_prism_2024 sought to encourage a more naturalistic LLM-use setting in their study design by leaving input prompt choice as a free parameter; however, future work should evaluate the generalisability of these findings using observational data. This is particularly pertinent to the described associations between conversation type and interrogative type, where unusually large effect sizes warrant careful scrutiny and replication. The case for validating these findings with observational data is reinforced by a second limitation: although the PRISM data are diverse, their reliance on crowd workers introduces the generalisability constraints typical of such samples (Stewart et al., 2017). Participants were active internet users who opted into a specific task for hourly remuneration, potentially shaping both sample composition and engagement. 
+
+In study 2, creating Hobson’s Choice counterfactuals for What/How interrogatives required greater specificity and imposed a particular evaluative framing on the prompt content. Despite the mitigation measures described in Appendix X, the heterogeneity of PRISM prompts precluded a fully algorithmic approach. Because the reformulations were produced by a single annotator, potential subjectivity may affect internal validity and should be examined in future work. Similarly, some counterfactuals may be less contextually plausible than the original PRISM prompts, reinforcing the importance of implementing this experimental design with observational data to evaluate the generalisability of findings.
+
+5.2 Possible applications and future research [375 Words]
+Given the universality of question-asking and the expansive scope of information represented within LLMs, the social scientific implications—and thus the potential applications—of Belnap and Steel’s (1976) theoretical framework are extensive. To illustrate, I discuss two potential applications drawn from distinct domains.
+
+One case in which such cycles of human–language model interactions may have important implications is clinical diagnosis and referral—an evolving area of research aimed at reducing the burden on healthcare practitioners [@gaber_evaluating_2025]. Chen et al. (2025) describe the use of LLMs to enhance communication between patients and clinicians in oncology by assisting in symptom documentation and supporting patient understanding. Recent evidence shows that younger patients with colorectal cancer are diagnosed at later stages than older counterparts, reducing their likelihood of treatment success [@rydbeck_younger_2021]. In such cases, findings from the present research suggest that LLM use could compound existing disparities: if younger patients are more likely to pose closed-ended interrogatives (Study 1), eliciting responses less conducive to constructive dialogue—marked by more personal storytelling and compassion but less nuance and reasoning (Study 2)—they may be less likely to reason objectively about their symptoms, which could influence their decisions to seek medical care. Future research should examine this possibility, as such dynamics could further delay diagnosis and thereby reduce treatment success. To my knowledge, no existing research in this context explicitly considers cycles of human–language model interactions or their potential relationship to diagnostic disparities.
+
+Constructive dialogue on politically relevant topics among the population is considered a key component of healthy democracies, and its reported decline in the context of rising political polarisation has raised concern [@novoa_generically_2023; @caluwaerts_deliberation_2023]. Recent findings indicate that LLMs are increasingly used as sources of information on politically relevant topics, including elections, geopolitical conflicts, or rights-based issues such as abortions (). Findings from the present study suggest a potential pathway that could contribute to reduced constructive dialogue: if the discussion of controversial and values-based topics is more often associated with closed-ended interrogatives (Study 1), and such interrogatives tend to elicit responses with comparatively less reasoning and nuance but greater affinity and compassion (Study 2), this may, in some contexts, limit the scope for constructive exchange. In light of research linking demographic factors to variation in misinformation susceptibility [@kyrychenko_profiling_2025-1], examining the role of such cycles of human–language model interactions as a potential pathway of (mis)belief acquisition represents an interesting direction for future research.
+
+
+
+
+
+
+
+```{r figure_2}
+
+knitr::include_graphics(paste0(odir, "figure_2.pdf"))
+
+```
+
+```{r figure_3}
+
+knitr::include_graphics(paste0(ddir, "figure_3.pdf"))
+
+```
+
+
+# Appendices
+
+```{r appendix_a}
+
+knitr::include_graphics(paste0(adir, "appendix_a.pdf"))
+
+```
+
+```{r appendix_b_i}
+
+knitr::include_graphics(paste0(adir, "appendix_b_i.pdf"))
+
+```
+
+```{r appendix_b_ii}
+
+knitr::include_graphics(paste0(adir, "appendix_b_ii.pdf"))
+
+```
+
+```{r appendix_b_iii}
+
+knitr::include_graphics(paste0(adir, "appendix_b_iii.pdf"))
+
+```
+
+```{r appendix_c}
+
+knitr::include_graphics(paste0(adir, "appendix_c.pdf"))
+
+```
+
+```{r appendix_d}
+
+knitr::include_graphics(paste0(adir, "appendix_d.pdf"))
+
+```
+
+```{r appendix_e}
+
+knitr::include_graphics(paste0(adir, "appendix_e.pdf"))
+
+```
+
+```{r appendix_f}
+
+knitr::include_graphics(paste0(adir, "appendix_f.pdf"))
+
+```
+
+```{r appendix_g_i}
+
+knitr::include_graphics(paste0(adir, "appendix_g_i.pdf"))
+
+```
+
+```{r appendix_g_ii}
+
+knitr::include_graphics(paste0(adir, "appendix_g_ii.pdf"))
+
+```
+
+```{r appendix_h}
+
+knitr::include_graphics(paste0(adir, "appendix_h.pdf"))
+
+```
+
+```{r appendix_i}
+
+knitr::include_graphics(paste0(odir, "appendix_i.pdf"))
+
+```
+
+```{r appendix_j}
+
+knitr::include_graphics(paste0(odir, "appendix_j.pdf"))
+
+```
+
+```{r appendix_k}
+
+knitr::include_graphics(paste0(odir, "appendix_k.pdf"))
+
+```
+
+```{r appendix_l}
+
+knitr::include_graphics(paste0(adir, "appendix_l.pdf"))
+
+```
+
+```{r appendix_m}
+
+knitr::include_graphics(paste0(adir, "appendix_m.pdf"))
+
+```
+
+```{r appendix_n}
+
+knitr::include_graphics(paste0(adir, "appendix_n.pdf"))
+
+```
+
+```{r appendix_o_i}
+
+knitr::include_graphics(paste0(adir, "appendix_o_i.pdf"))
+
+```
+
+```{r appendix_o_ii}
+
+knitr::include_graphics(paste0(adir, "appendix_o_ii.pdf"))
+
+```
+
+```{r appendix_p}
+
+knitr::include_graphics(paste0(adir, "appendix_p.pdf"))
+
+```
+
+\clearpage
+
+# References

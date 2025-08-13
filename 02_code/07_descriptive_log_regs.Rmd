@@ -1,0 +1,481 @@
+---
+title: "07_descriptive_log_regs"
+author: "50280"
+date: "2025-06-23"
+output: html_document
+---
+
+# 0. Setup
+
+```{r}
+
+# Code written on: 
+# - R Version: 4.3.1.
+# - OS System: macOS Sequoia Version 15.0.1.
+
+################################################################################
+# Before you run this script...
+################################################################################
+
+# (1) Clear the working space. 
+rm(list = ls())
+
+# (2) Set your working directory and save it to the object below, or replace getwd() 
+# with the path to the output directory where you want to save your data. 
+# wdir <- getwd()
+wdir <- "/Users/carolinewagner/Desktop/Local/MY498-capstone-main"
+
+# (4) Set the toggle below to TRUE if you want to save the different outputs
+# computed in this project, and FALSE if you do not want to save these outputs. 
+to_save <- TRUE
+
+
+################################################################################
+# Directory management.
+################################################################################
+
+# In which directory are the data?
+ddir <- paste0(wdir, "/01_data")
+
+# Where are the data with bias-corrected classified outcomes?
+pdir <- paste0(ddir, "/06_design-based_supervised-learning/")
+
+# In which directory is the code? 
+cdir <- paste0(wdir, "/02_code")
+
+# In which directory are the helper functions?
+hdir <- paste0(cdir, "/01_helper-functions")
+
+# In which directory are the outputs? 
+odir <- paste0(wdir, "/03_outputs")
+
+# In which directory should the final classified dataset be saved? 
+cddir <- paste0(ddir, "/07_final_classified_data")
+
+# In which directory should the descriptive results be saved?
+desdir <- paste0(ddir, "/08_descriptive_results")
+
+# In which directory is the survey with the participant profiles? 
+pprofilesdir <- paste0(ddir, "/01_PRISM_data/survey.jsonl")
+
+# In which directory should the final classified dataset be saved? 
+cddir <- paste0(ddir, "/07_final_classified_data")
+
+
+################################################################################
+# PREREQUISITES
+################################################################################
+
+# List of required packages.
+needed_packages <- c("tidyverse", 
+                     "jsonlite", 
+                     "fixest",
+                     "glue",
+                     "marginaleffects",
+                     "dsl") # need to make sure dsl was downloased
+                            # through Naoki Egami's github before running this
+
+# Identify which/whether packages are missing.
+missing_packages <- needed_packages[!(needed_packages %in% installed.packages()[, "Package"])]
+
+# Install any missing packages.
+if (length(missing_packages) > 0) {
+  install.packages(missing_packages)
+}
+
+# Load all required packages.
+invisible(lapply(needed_packages, library, character.only = TRUE))
+
+# Set seed for reproducibility. 
+set.seed(89)
+
+
+################################################################################
+# LOAD REQUITED DATA
+################################################################################
+
+# Load the labelled data.
+classified_data <- read.csv(paste0(pdir, "PRISM_classified_with_DSL_outcomes.csv"))
+
+################################################################################
+# SOURCE HELPER FUNCTIONS
+################################################################################
+
+source(paste0(hdir,"/00_general_helper.R"))
+
+```
+
+
+# 1. Description of approach
+
+When implementing logistic regressions with fixed effects using the DSL package, I encountered several issues. As shown in the archived code chunk at the end of this script (section A1), the current version of the DSL package does not support clustered standard errors when specifying the 'logit' model. To address this limitation, I implemented a linear approximation using the felm model, treating the binary outcome as continuous and incorporating fixed effects and clustering, as shown in the specification below:
+
+(Note that this was part of the loop where the relevant formula and colnames were dynamically generated for the different question types; similar to the approach in the other loops of this script)
+
+```{r explanation, eval=FALSE}
+
+model <- dsl( model = "felm", 
+              formula = formula, 
+              predicted_var = expert_label, 
+              prediction = q, 
+              fixed_effect = "oneway", 
+              index = "participant_id", 
+              cluster = "participant_id", 
+              data = dsl_data)
+
+```
+
+However, when doing so, I encountered the persistent error below, that I was not able to fix:
+
+-   Cross-Fitting: 1/10..Error in `[.data.frame`(fixed_effect_use, , colnames(adj_X), drop = FALSE) : undefined columns selected
+
+My understanding is that this error occurs during the first fold of cross-fitting, when the DSL package internally attempts to align the fixed effect data (fixed_effect_use) with the design matrix (adj_X). I think that the error indicates that one or more predictor columns expected in the model matrix do not exist in the corresponding subset of the fixed-effect data for that fold. To try to resolve this manually, here are the steps I tried:
+
+-   Re-leveled and collapsed rare factor levels to ensure all predictors have sufficient representation across folds - tried this generally and dynamically within each iteration of the loop.
+
+-   Ensured consistent factor level definitions using fct_lump_min() and levels().
+
+-   Verified that all variables in the model formula exist in the data.
+
+-   Dropped low-variance predictors dynamically.
+
+-   Tried to disable cross-fitting using cross_fit = FALSE, but that did not actually appear to disable cross fitting and led to this error:
+
+    -   Cross-Fitting: 1/10..Error in `[<-`(`*tmp*`, v_use, i_use, value = out_test\$RMSE) : subscript out of bounds
+
+My understanding is that this points to a deeper issue within how DSL handles factor variables and column alignment during cross-fitting - particularly when some levels are missing in a given fold (as is likely to happen with the unbalanced data in this project). I then considered using the design-adjusted columns from my previous manual implementation, and while these work for descriptive analyses, in the case of the current logistic regressions, the formula by definition introduces numbers that are not 0 or 1, which makes the logit model break. I was not able to find an indication of how to address this in the relevant DSL papers. For these reasons, I am not implementing the DSL for this step of my descriptive analyses.
+
+# 2. Data pre-processing
+
+```{r data_pre_processing}
+
+# (1) Clean the data and make sure that it is in required format
+# Make sure your outcome is binary and demographic predictors are categorical/factor as needed
+# Set  the ref levels for categorical variables so that reg models interpret 
+# effects relative to these baseline categories.
+classified_data <- classified_data %>%
+  mutate(
+    gender = relevel(factor(gender), ref = "Male"),
+    age_group = relevel(factor(age), ref = "18-24 years old"),
+    birth_region = relevel(factor(location_birth_region), ref = "Europe"),
+    religion_main = relevel(factor(religion_simplified), ref = "No Affiliation"),
+    ethnicity_main = relevel(factor(ethnicity_simplified), ref = "White"),
+    conversation_type = relevel(factor(conversation_type), ref = "unguided"),
+    education_recode = relevel(factor(education_recode), ref = "Primary &/or Secondary Education"),
+    participant_id = factor(user_id)
+  )
+
+```
+
+
+# 3. Implment logistic regressions without DSL
+
+```{r implement_log_regs}
+
+# (1) Define question types
+question_vars <- c("why_q", "whether_q", "which_q", "whathow_q", "hobsons_c")
+
+# (2) Reference profile for predicted probabilities
+ref_profile <- expand.grid(
+  gender = factor("Male", levels = levels(classified_data$gender)),
+  age_group = factor("18-24 years old", levels = levels(classified_data$age_group)),
+  birth_region = factor("Europe", levels = levels(classified_data$birth_region)),
+  religion_main = factor("No Affiliation", levels = levels(classified_data$religion_main)),
+  conversation_type = factor("unguided", levels = levels(classified_data$conversation_type)),
+  ethnicity_main = factor("White", levels = levels(classified_data$ethnicity_main)),
+  education_recode = factor("Primary &/or Secondary Education", levels = levels(classified_data$education_recode))
+)
+
+
+# Store results
+all_model_summaries <- list()
+all_predictions <- list()
+
+# (3) Implement a loop for fitting the logistic models and computing the summary outputs. 
+# Loop through all question types
+
+all_model_summaries <- list()
+all_fitted_models <- list()
+
+for (q in question_vars) {
+  formula <- as.formula(
+    paste0(q, " ~ gender + age_group + birth_region + religion_main + conversation_type + ethnicity_main + education_recode")
+  )
+  
+  model_data <- classified_data %>%
+    filter(!is.na(.data[[q]]))
+  
+  model <- feglm(
+    formula,
+    family = binomial(link = "logit"),
+    data = model_data,
+    cluster = ~participant_id
+  )
+  
+  tidy_output <- broom::tidy(model, conf.int = TRUE) %>%
+    mutate(
+      estimate_exp = exp(estimate),
+      conf.low_exp = exp(conf.low),
+      conf.high_exp = exp(conf.high),
+      adj_p = p.adjust(p.value, method = "bonferroni"),
+      outcome = q
+    )
+  
+  all_model_summaries[[q]] <- tidy_output
+  all_fitted_models[[q]] <- model  # store model for use later
+}
+
+summary_table <- bind_rows(all_model_summaries)
+
+
+# (4) Save the summary table to a CSV file
+if (to_save) {
+  write.csv(summary_table, file = file.path(desdir, "logit_summary_table.csv"), row.names = FALSE)
+}
+
+
+```
+
+
+# 4. Use above models to compute predicted probabilities
+
+```{r compute_pred_probs}
+
+# (1) Implement a loop for the prediction of all the probabilities
+# Reference profile
+ref_profile <- data.frame(
+  gender = factor("Male", levels = levels(classified_data$gender)),
+  age_group = factor("18-24 years old", levels = levels(classified_data$age_group)),
+  birth_region = factor("Europe", levels = levels(classified_data$birth_region)),
+  religion_main = factor("No Affiliation", levels = levels(classified_data$religion_main)),
+  conversation_type = factor("unguided", levels = levels(classified_data$conversation_type)),
+  ethnicity_main = factor("White", levels = levels(classified_data$ethnicity_main)),
+  education_recode = factor("Primary &/or Secondary Education", levels = levels(classified_data$education_recode))
+)
+
+
+# (2) Prediction loop
+all_predictions <- list()
+
+for (q in names(all_fitted_models)) {
+  
+  # (a) Get the model for the current outcome
+  model <- all_fitted_models[[q]]
+  
+  # (b) Get the predictors from the summary without the intercept
+  terms_to_predict <- all_model_summaries[[q]] %>%
+    filter(term != "(Intercept)") %>%
+    pull(term)
+  
+  # (c) Create a new profile for each term to predict the effect that it has
+  predict_profiles <- lapply(terms_to_predict, function(term_name) {
+    profile <- ref_profile[1, ]
+    
+    for (var in names(ref_profile)) {
+      levels_var <- levels(classified_data[[var]])
+      
+      for (lvl in levels_var) {
+        if (term_name == paste0(var, lvl)) {
+          profile[[var]] <- factor(lvl, levels = levels_var)
+        }
+      }
+    }
+    
+    profile$term <- term_name
+    return(profile)
+  })
+  
+  # (d) Combine all profiles into a single df and predict probs
+  predict_profiles_df <- bind_rows(predict_profiles)
+  predict_profiles_df$predicted_prob <- predict(model, newdata = predict_profiles_df, type = "response")
+  predict_profiles_df$outcome <- q
+  
+  all_predictions[[q]] <- predict_profiles_df
+}
+
+prediction_table <- bind_rows(all_predictions)
+
+# (4) Save the predictions table to a CSV file
+if (to_save) {
+  write.csv(prediction_table, file = file.path(desdir, "prediction_table.csv"), row.names = FALSE)
+}
+
+```
+
+
+# 5. Compute the marginal effects for the logistic regressions
+Am computing these without uncertainty estimations given the following: For this model type, `marginaleffects` cannot take into account the uncertainty in fixed-effects parameters. Set `vcov=FALSE` to compute estimates without standard errors.
+I am computing average marginal effects rather than marginal effects at the mean because the latter can be misleading especially with thw categorical variables that I have. 
+
+```{r compute_marginal_effects}
+
+# Compute the marginal effects for the fitted specifications using the marginal effects package.
+
+all_marginal_effects <- list()
+
+for (q in names(all_fitted_models)) {
+  model <- all_fitted_models[[q]]
+  
+  # (1) Compute average marginal effects (point estimates only due to fixed effects)
+  margins <- avg_slopes(model, type = "response", vcov = FALSE)
+  
+  # (2) Combine variable and category into one label
+  margins_tbl <- margins %>%
+    as_tibble() %>%
+    mutate(
+      term_full = ifelse(!is.na(contrast), paste0(term, contrast), term)
+    ) %>%
+    select(term = term_full, estimate) %>%
+    mutate(
+      std.error = NA_real_,
+      conf.low = NA_real_,
+      conf.high = NA_real_,
+      p.value = NA_real_,
+      adj_p = NA_real_,
+      outcome = q
+    )
+  
+  all_marginal_effects[[q]] <- margins_tbl
+}
+
+# (3) Combine all marginal effects into one table
+marginal_effects_table <- bind_rows(all_marginal_effects)
+
+# (4) Save outputs
+if (exists("to_save") && to_save) {
+  write.csv(marginal_effects_table, file = file.path(desdir, "marginal_effects_table.csv"), row.names = FALSE)
+}
+
+```
+
+
+
+# 6. Compute contingency tables using the DSL package
+
+Description of what the function below does from the final report: 
+This uses the DSL package, regressing each dummy-encoded interrogative category i on 
+each demographic feature d using linear regression without an intercept. This approach is 
+mathematically equivalent to computing subgroup means. Although it is less interpretable, 
+this was necessary because the DSL estimator cannot simply be applied to aggregated count data.
+
+```{r contingency_table_equivalent_DSL}
+
+#  (1) Define DSL vars and Label vars 
+dsl_vars <- c("hobsons_c", "why_q", "whether_q", "which_q", "whathow_q")
+label_vars <- paste0("gold_standard_labels_", dsl_vars)
+
+# (2) Define demographic vars 
+demo_vars <- c(
+  "conversation_type", 
+  "gender", 
+  "ethnicity_simplified", 
+  "religion_simplified", 
+  "location_special_region",
+  "education_recode"
+)
+
+#  (3) Create Parameter Grid 
+dsl_pairs <- tibble(pred_col = dsl_vars, label_col = label_vars)
+param_grid <- expand_grid(dsl_pairs, demo_var = demo_vars)
+
+#  (4) Filter Out Invalid Combinations 
+param_grid <- param_grid %>%
+  mutate(
+    n_pred = map2_int(pred_col, demo_var, ~ sum(!is.na(df[[.x]]) & !is.na(df[[.y]]))),
+    n_label = map2_int(label_col, demo_var, ~ sum(!is.na(df[[.x]]) & !is.na(df[[.y]])))
+  ) %>%
+  filter(n_pred > 0, n_label > 0)
+
+#  (5) Run DSL Estimator Across All Combinations 
+all_results <- param_grid %>%
+  pmap_dfr(~ estimate_dsl_proportions(pred_col = ..1, label_col = ..2, demo_var = ..3))
+
+# (6) Save results
+if (exists("to_save") && to_save) {
+  write.csv(all_results, file = file.path(desdir, "dsl_category_proportions.csv"), row.names = FALSE)
+}
+
+```
+
+
+# Archive
+
+## A1. Attempt to implement the logistic regressions using the DSL package
+
+```{r log_regs_DSL, eval=FALSE}
+
+################################################################################
+# Attempt to implement logistic regressions using the DSL package.
+# THIS DEMONSTRATES HOW THIS WOULD BE IMPLEMENTED USING THE PACKAGE,
+# BUT THE CURRENT VERSION OF THE DSL PACKAGE (0.1.0) (26.07.2025) DOES NOT
+# ENABLE TO IMPLEMENT LOGISTIC REGRESSIONS WITH CLUSTERED SEs. 
+# THEREFORE THE EXAMPLE BELOW DOES NOT HAVE ANY CLUSTERED SEs AND IS 
+# INCONGRUENT WITH THE REQUIRED ANALYSES FOR THIS PROJECT. 
+################################################################################
+
+# Description of the setup: 
+# Variables starting with gold_standard_labels_ represent the expert labels, and 
+# these columns take NA if no expert label is available (each of them has 300 gold standard labels). 
+
+# The variables with just the names (e.g., whether_q) are the ones that have the BERT
+# labelled values. These labels are available for the entire data. 
+
+# Set question base names (used in both gold_standard_ and predicted column names)
+question_names <- c("whether_q", "which_q", "why_q", "whathow_q", "hobsons_c", "M")
+
+# Prepare lists to store model objects and tidy summaries
+all_dsl_models <- list()
+all_dsl_summaries <- list()
+
+# Loop over each question type
+for (q in question_names) {
+  expert_label <- paste0("gold_standard_labels_", q)
+  prediction_var <- q
+
+  # Construct the model formula
+  formula <- as.formula(
+    paste0(expert_label, " ~ gender + age_group + birth_region + religion_main + conversation_type + ethnicity_main + education_recode")
+  ) # NO CLUSTERED SEs BY PARTICIPANT_ID
+
+  # Fit the DSL model
+  model <- dsl(
+    model = "logit",
+    formula = formula,
+    predicted_var = expert_label,
+    prediction = prediction_var,
+    data = classified_data
+  )
+
+  # Store the model
+  all_dsl_models[[q]] <- model
+
+  # Extract and tidy the model summary
+  summary_output <- summary(model)
+
+  # Fix unnamed column issue by assigning names
+  colnames(summary_output) <- c("Estimate", "Std.Error", "CI.Lower", "CI.Upper", "p.value", "Signif")
+
+  tidy_output <- summary_output %>%
+    as_tibble(rownames = "term") %>%
+    mutate(
+      estimate_exp = exp(Estimate),
+      conf.low_exp = exp(CI.Lower),
+      conf.high_exp = exp(CI.Upper),
+      adj_p = p.adjust(p.value, method = "bonferroni"),
+      outcome = q
+    )
+
+  # Store the tidy summary
+  all_dsl_summaries[[q]] <- tidy_output
+}
+
+# Optionally bind into a single dataframe
+summary_table_dsl <- bind_rows(all_dsl_summaries)
+
+# Save if needed
+if (exists("to_save") && to_save) {
+  write.csv(summary_table_dsl, file = file.path(desdir, "dsl_logit_summary_table.csv"), row.names = FALSE)
+}
+
+```
+

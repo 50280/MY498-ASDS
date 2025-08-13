@@ -1,0 +1,62 @@
+
+\documentclass{article}
+\usepackage[margin=1cm]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage{booktabs}
+\usepackage{helvet}
+\renewcommand{\familydefault}{\sfdefault}
+\setlength{\tabcolsep}{8pt} % intercolumn padding
+\usepackage{array}
+\sloppy
+\pagestyle{empty}
+
+% Base table width (sum of p-column widths)
+\newlength{\tablewidth}
+\setlength{\tablewidth}{\dimexpr 2.8cm + 1.3cm + 7.1cm + 2.1cm + 2.1cm\relax}
+% Total visual width including padding: 2*\tabcolsep per column
+\newlength{\tabletotalwidth}
+\setlength{\tabletotalwidth}{\dimexpr \tablewidth + 10\tabcolsep\relax} % 5 cols -> 10\tabcolsep
+
+\begin{document}
+\hspace*{0.5cm}\textbf{Table 2.} Classifier inter-coder reliability values for annotation task
+
+\vspace{0.5em}
+
+\noindent\begin{minipage}{\tabletotalwidth}
+\fontsize{10}{12}\selectfont % <<< make EVERYTHING inside 10pt
+
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{%
+  p{2.8cm} p{1.3cm} p{7.1cm}
+  >{\centering\arraybackslash}p{2.1cm}
+  >{\centering\arraybackslash}p{2.1cm}}
+\toprule
+\parbox[t]{2.8cm}{\centering\textbf{Underlying concept}\\\textbf{captured}} &
+\parbox[t]{1.3cm}{\centering\textbf{Classifier}\\\textbf{reference}} &
+\parbox[t]{7.1cm}{\centering\textbf{Key concept captured as explained by key labelling instruction for fine-tuning}\\\textbf{(answer options in parentheses)}} &
+\multicolumn{2}{>{\centering\arraybackslash}p{\dimexpr 2.1cm + 2.1cm + 2\tabcolsep\relax}}%
+{\parbox[t]{\dimexpr 2.1cm + 2.1cm + 2\tabcolsep\relax}{\centering\textbf{Inter-coder reliabilities}\\\textbf{(Krippendorff’s alpha)}}} \\
+\cmidrule(lr){4-5}
+ &  &  & \textbf{Round 1} & \textbf{Round 2} \\
+\midrule
+\parbox[t]{2.80cm}{Interrogative} & \parbox[t]{1.30cm}{1A} & \parbox[t]{7.10cm}{Does this interrogative request an answer? (yes/no)} & \parbox[t]{2.10cm}{\centering 0.66} & \parbox[t]{2.10cm}{\centering 0.71} \\
+\addlinespace[0.7em]
+\parbox[t]{2.80cm}{} & \parbox[t]{1.30cm}{1B} & \parbox[t]{7.10cm}{Is this a declarative/imperative interrogative? (NA/no/yes)} & \parbox[t]{2.10cm}{\centering 0.95} & \parbox[t]{2.10cm}{\centering NA} \\
+\addlinespace[0.7em]
+\parbox[t]{2.80cm}{Selection-size-specification} & \parbox[t]{1.30cm}{2A} & \parbox[t]{7.10cm}{Is this an interrogative that expects a yes or no answer? (yes/no)} & \parbox[t]{2.10cm}{\centering 0.87} & \parbox[t]{2.10cm}{\centering NA} \\
+\addlinespace[0.7em]
+\parbox[t]{2.80cm}{} & \parbox[t]{1.30cm}{2B} & \parbox[t]{7.10cm}{Does it explicitly present a series of options? (yes/no)} & \parbox[t]{2.10cm}{\centering 0.67} & \parbox[t]{2.10cm}{\centering 0.69} \\
+\addlinespace[0.7em]
+\parbox[t]{2.80cm}{} & \parbox[t]{1.30cm}{2C} & \parbox[t]{7.10cm}{How many options does it present?\\ (0/1/2/any other integer/ undefined)} & \parbox[t]{2.10cm}{\centering 0.74} & \parbox[t]{2.10cm}{\centering NA} \\
+\addlinespace[0.7em]
+\parbox[t]{2.80cm}{Presupposition} & \parbox[t]{1.30cm}{3A} & \parbox[t]{7.10cm}{Do answers to this interrogative require some other fact/opinion already being true? (yes/no)} & \parbox[t]{2.10cm}{\centering 0.78} & \parbox[t]{2.10cm}{\centering NA} \\
+\addlinespace[0.7em]
+\parbox[t]{2.80cm}{Description} & \parbox[t]{1.30cm}{4A} & \parbox[t]{7.10cm}{Does this interrogative ask for a description (yes/no) or an opinion (opinion)?} & \parbox[t]{2.10cm}{\centering 0.60} & \parbox[t]{2.10cm}{\centering 0.70} \\
+\bottomrule
+\end{tabular}
+
+\vspace{0.4em}
+\noindent\textit{Note.} Inter-coder reliabilities were assessed using Krippendorff’s alpha, because it accommodates multiple annotators, handles missing data, and supports more than two labelling categories. Alpha values of $\geq$ 0.80 were interpreted as strong agreement, while values between 0.60 and 0.79 indicated moderate agreement. Round 1 reports Krippendorff’s alpha for three annotators, and Round 2 for two annotators.
+\end{minipage}
+
+\end{document}

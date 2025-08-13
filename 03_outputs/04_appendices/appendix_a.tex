@@ -1,0 +1,50 @@
+
+\documentclass{article}
+\usepackage[margin=1cm]{geometry}
+\usepackage{booktabs}
+\usepackage{helvet}
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage{url}
+\urlstyle{same}
+\setlength{\tabcolsep}{4pt}
+\sloppy
+\pagestyle{empty}
+
+\begin{document}
+\begin{center}
+\textbf{\large Appendix A. Links Required for Reproducibility}
+\end{center}
+
+\vspace{1em}
+
+{\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{p{3.5cm} p{6.5cm} p{8cm}}
+\toprule
+\textbf{Category} & \textbf{Description} & \textbf{Link} \\
+\midrule
+Datasets & PRISM dataset (Kirk et al., 2024) & \url{https://huggingface.co/datasets/HannahRoseKirk/prism-alignment} \\
+\addlinespace[0.7em]
+ & Dataset with classified data classified according to operationalised taxonomy of interrogatives, required for the operationalisation of the taxonomy of interrogatives and study 1. & \url{https://huggingface.co/datasets/carowagner/operationalisation-and-study1} \\
+\addlinespace[0.7em]
+ & Dataset with collected LLM responses and bridging attribute classifications for study 2. & \url{https://huggingface.co/datasets/carowagner/study2} \\
+\addlinespace[0.7em]
+Fine-tuned BERT models & Classifier 1A & \url{https://huggingface.co/carowagner/classify-questions-1A} \\
+\addlinespace[0.7em]
+ & Classifier 1B & \url{https://huggingface.co/carowagner/classify-questions-1B} \\
+\addlinespace[0.7em]
+ & Classifier 2A & \url{https://huggingface.co/carowagner/classify-questions-2A} \\
+\addlinespace[0.7em]
+ & Classifier 2B & \url{https://huggingface.co/carowagner/classify-questions-2B} \\
+\addlinespace[0.7em]
+ & Classifier 2C & \url{https://huggingface.co/carowagner/classify-questions-2C} \\
+\addlinespace[0.7em]
+ & Classifier 3A & \url{https://huggingface.co/carowagner/classify-questions-3A} \\
+\addlinespace[0.7em]
+ & Classifier 4A & \url{https://huggingface.co/carowagner/clasify-questions-4A} \\
+\addlinespace[0.7em]
+Tool to demonstrate the operationalisation of the taxonomy of interrogatives & Tool to better understand and test the limitations of the operationalised taxonomy of interrogatives. & \url{https://huggingface.co/spaces/carowagner/questionthetaxonomy} \\
+\bottomrule
+\end{tabular}
+}
+\end{document}
