@@ -41,7 +41,7 @@ os.makedirs(target_dir, exist_ok=True)
 dataset = load_dataset("carowagner/study2")
 ```
 
-**Prerequisites:** A variety of research methods were implemented in the present project. Accordingly, each script has a 'Setup' chunk at the very top, which describes what the prerequisites for the given script are, and what needs to be dont to implement them. Some of these require individual API keys, for which secure storage options are described in the scripts. 
+**Prerequisites:** A variety of research methods were implemented in the present project. Accordingly, each script has a 'Setup' chunk at the very top, which describes what the prerequisites for the given script are, and what needs to be done to implement them. Some of these require individual API keys, for which secure storage options are described in the scripts. 
 
 
 ## Folder Structure
